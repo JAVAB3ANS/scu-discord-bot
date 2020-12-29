@@ -17,7 +17,7 @@ module.exports = {
             }
             
             if(data.length > 2000) return message.channel.send({ embed: { description: `Please provide text shorter than 2000 characters`, color: client.config.school_color}});
-        
+         
             message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `, color: client.config.school_color}});
         })
     }
