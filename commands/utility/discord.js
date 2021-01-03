@@ -7,7 +7,7 @@ module.exports  = {
     async execute(client, message, args) {
 
         //STATUS CHECKERS  
-        const response = await fetch(`https://status.discord.com/api/v2/status.json`);  
+        const response = await fetch(client.config.api.discord);  
         
         const body = await response.json();
 

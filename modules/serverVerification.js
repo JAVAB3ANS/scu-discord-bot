@@ -41,7 +41,7 @@ module.exports.run = async (client) => {
   //This will start on port 2000, if this collides with another service you may change it
   const verifyMSG = {
     title: "VERIFICATION SERVER",
-    description: `Verification listening at port 5354 [here](${client.config.verification.verifyURL})! ✅`,
+    description: `Verification listening at port 2000 [here](${client.config.verification.verifyURL})! ✅`,
     color: "GREEN", 
     timestamp: new Date()
   }

@@ -17,11 +17,10 @@ module.exports = async (client) => {
 		client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: 'online'}) 
 
 		require("../modules/serverVerification.js").run(client); //start server verification module in ready event 
-		require("../modules/serverStatus.js").run(client); //start verification server checker module in ready event
-		require("../modules/questionofDay.js").run(client); //start question module in ready event 
+		require("../modules/serverStatus.js").run(client); //start verification server checker module in ready event 
 
 		/* DISCORD STATUS CHECKER */
-		const url = client.config.verification.status;
+		const url = client.config.api.discord;
 		const response = await fetch(url);
 		const body = await response.json();
 
