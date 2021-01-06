@@ -10,14 +10,14 @@ module.exports = {
             const response = await fetch(client.config.api.zoom);
             const data = await response.json();
             
-            data.components.forEach(i => {
+            for (i in data.components) {
                 let connected = data.components[i].status == "operational";
                 chunk += `**${data.components[i].name}** ${connected ? ":white_check_mark:\n" : ":x:\n"}`;
-            }); 
+            }
 
-            message.channel.send({ embed: { description: chunk }, color: client.config.school_color});
+            message.channel.send({ embed: { title: `Zoom Meetings Status`, description: chunk, color: client.config.school_color}});
         } catch (e) {
-         client.console(e, "error", "zoom");
+         console.log(e, "error", "zoom");
         }
     }
   };

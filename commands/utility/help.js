@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { checkPermissions, noPermissionMessage } = require(`../../modules/permissions.js`);
 
 module.exports = {
 	name: 'help',
@@ -15,13 +16,7 @@ module.exports = {
 			
 			if (!command) return message.reply({ embed: { description: `That\'s not a valid command!`, color: client.config.school_color}});
 			 
-  			const guildRole = client.config.serverRoles;
-			
-			if (command.category === "Admin" && guildRole.modRoles.forEach(modRole => !(message.member.roles.cache.has(modRole)))) {
-				await message.delete(); 
-				await message.channel.send(`<@${message.author.id}>`, { embed: { description: `You don't have one of the following roles: \`OWNER\`, \`ADMIN\`, \`MOD\``, color: client.config.school_color}});
-				return false;
-			} 
+			if ((!checkPermissions(client, message)) && command.category === "Admin") return noPermissionMessage(client, messgae);
 			
 			const secHelpEmbed = new MessageEmbed()
 			.setTitle(`${command.name.toUpperCase()} Command`)
@@ -36,7 +31,7 @@ module.exports = {
 			.setFooter(`Use ${client.config.prefix}help [command name] to get specific commmand info!`) 
 			
 			return message.channel.send(secHelpEmbed);
-		}
+		} 
 
 		const mainHelpEmbed = new MessageEmbed()
 		.setTitle(`**SCU BOT COMMANDS**`)
