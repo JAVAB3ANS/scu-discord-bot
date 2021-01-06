@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { checkPermissions, noPermissionMessage } = require(`../../modules/permissions.js`);
+const { checkPermission, noPermissionMessage } = require(`../../modules/permissions.js`);
 
 module.exports = {
 	name: 'help',
@@ -16,7 +16,7 @@ module.exports = {
 			
 			if (!command) return message.reply({ embed: { description: `That\'s not a valid command!`, color: client.config.school_color}});
 			 
-			if ((!checkPermissions(client, message)) && command.category === "Admin") return noPermissionMessage(client, messgae);
+			if ((!checkPermission(client, message)) && command.category === "Admin") return noPermissionMessage(client, messgae);
 			
 			const secHelpEmbed = new MessageEmbed()
 			.setTitle(`${command.name.toUpperCase()} Command`)
