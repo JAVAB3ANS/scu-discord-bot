@@ -12,6 +12,7 @@ module.exports.checkPermission = async (client, message) => {
 
 module.exports.noPermissionMessage = async (client, message) => {
     let embed = new MessageEmbed();
-    embed.setTitle('❌ ERROR ❌').setDescription("***You don't have permission to use this command***").setColor(client.config.school_color);
-    message.channel.send(embed);
-}; 
+    embed.setTitle('❌ ERROR ❌').setDescription(`***<@${message.author.id}>, You don't have permission to use this command***`).setColor(client.config.school_color);
+    await message.channel.send(embed);
+    await message.delete();
+} 
