@@ -17,16 +17,15 @@ module.exports = {
 			function checkMembers(guild) {
 				let memberCount = 0;
 				guild.members.cache.forEach(member => {
-				if(!member.user.bot) memberCount++;
+					if(!member.user.bot) memberCount++;
 				});
 				return memberCount;
 			}
 
-			let sicon = message.guild.iconURL();
 			let serverembed = new MessageEmbed()
 			.setDescription(`__**${message.guild.name} - Statistics**__`)
 			.setColor(client.config.school_color)
-			.addField('Server Owner', `<@${client.config.serverRoles.owner}>`, true)
+			.addField('Server Owner', `<@${message.guild.owner}>`, true)
 			.addField('Server Region', message.guild.region, true) 
 			.addField("Server Name", message.guild.name, true)
 			.addField('Verification level', message.guild.verificationLevel, true)
