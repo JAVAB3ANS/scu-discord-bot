@@ -16,5 +16,5 @@ module.exports.run = async (client) => {
     
     setInterval(function() {
         fetch(url).then(checkStatus);
-    }, 300000); //check server status every 5 minutes!
+    }, 600000); //check server status every 5 minutes!
 }

@@ -1,11 +1,12 @@
 const { MessageEmbed, Collection } = require(`discord.js`); //requires Discord.js integration package 
 const sendMessage = require(`../modules/sendMessage.js`);
 const { modmail } = require(`../modules/modmail.js`); 
+const { serverVerification, serverStatus } = require(`../modules/verifyTools.js`);
 const { checkPermission } = require(`../modules/permissions.js`); 
 const cooldowns = new Collection(); 
 
 module.exports = async (client, message) => { 
-  modmail(client, message);
+  modmail(client, message); 
        
 /*
 ==================================================================================

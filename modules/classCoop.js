@@ -18,28 +18,13 @@
 - send them confirmation -> the end lol
 */
 
-module.exports.run = (client, config) => {
-  const express = require("express");
-  const cors = require("cors");
-  const helmet = require("helmet");
-  var app = express();
-  const sendMessage = require(`./sendMessage.js`);
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const app = express();
+const sendMessage = require(`./sendMessage.js`);
 
-  /* ADD THIS OBJECT TO YOUR CONFIG FILE (or move the properties somewhere else)
-    {
-        verification: {
-            "guildID": "string of guild enabled in",
-            "key": "string for basically a password to authenticate requests", //get a random string of some sort?
-        }
-    }
-    INCOMING OBJECT FROM GOOGLE FORMS
-    {
-        "name": "First name",
-        "courses": "List of general ED courses", 
-        "discord": "Discord Username with Tag"
-    }
-  */
-
+module.exports.classCoop = (client, config) => {
   //define guild from ID in config
   const guild = client.guilds.cache.get(config.verification.guildID);
   app.use(express.json());

@@ -16,8 +16,8 @@ module.exports = async (client) => {
 	try {
 		client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: 'online'}) 
 
-		require("../modules/serverVerification.js").run(client); //start server verification module in ready event 
-		require("../modules/serverStatus.js").run(client); //start verification server checker module in ready event 
+		require(`../modules/serverVerification`).run(client);
+		require(`../modules/serverStatus.js`).run(client);
 
 		/* DISCORD STATUS CHECKER */
 		const url = client.config.api.discord;
