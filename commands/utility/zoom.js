@@ -1,13 +1,24 @@
-module.exports = {
-    name: `zoom`,
-    description: `Get Zoom Meetings statsu!`,
-    category: `Utility`,
-    cooldown: `5`,
-    async execute (client, message, args) {
-        const fetch = require("node-fetch");
+const { Command } = require(`discord.js-commando`);
+const fetch = require("node-fetch");
+
+module.exports = class ZoomCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "zoom",
+            description: "Get Zoom Meetings status!",
+            group: "utility",
+            memberName: "zoom",
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
+    }
+
+    async run (client, message) {
         let chunk = "";
         try {
-            const response = await fetch(client.config.api.zoom);
+            const response = await fetch("https://14qjgk812kgk.statuspage.io/api/v2/components.json");
             const data = await response.json();
             
             for (i in data.components) {
@@ -20,4 +31,4 @@ module.exports = {
          console.log(e, "error", "zoom");
         }
     }
-  };
+  }; 

@@ -1,9 +1,20 @@
- module.exports =  {  
-	name: 'restart',
-	description: 'Restart the bot!',
-	cooldown: 15,
-	category: 'Admin',  
-	async execute(client, message, args) {   
+const { Command } = require(`discord.js-commando`);
+
+module.exports = class restartCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'restart',
+            memberName: 'restart',
+            description: 'Restart the bot!',
+            group: 'admins',  
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
+    }
+
+	async run (message) {   
             try {
                 const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
 

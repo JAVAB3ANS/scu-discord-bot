@@ -1,13 +1,24 @@
+const { Command } = require(`discord.js-commando`);
 const fetch = require(`node-fetch`);
 
-module.exports  = {
-    name: 'discord',
-    description: 'Checks app statuses of school platforms!',
-    category: 'Utility', 
-    async execute(client, message, args) {
+module.exports = class discordCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'discord',
+            description: 'Checks Discord status!',
+            group: 'utility',  
+            memberName: 'discord',
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        })
+    }
+
+    async run (client, message) {
 
         //STATUS CHECKERS  
-        const response = await fetch(client.config.api.discord);  
+        const response = await fetch("https://srhpyqt94yxb.statuspage.io/api/v2/status.json");  
         
         const body = await response.json();
 

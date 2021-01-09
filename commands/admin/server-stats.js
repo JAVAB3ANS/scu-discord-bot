@@ -1,11 +1,21 @@
 const { MessageEmbed } = require(`discord.js`); //for embed functionality 
-let sendMessage = require(`../../modules/sendMessage.js`);
+const { Command } = require(`discord.js-commando`);
 
-module.exports = {
-    name: 'server-stats',
-    description: 'Get general server statistics!',
-    category: 'Admin',  
-    async execute(client, message, args) { 
+module.exports = class serverStatsCommand extends Command {
+    constructor(client) {
+        super(client, {
+			name: 'server-stats',
+			memberName: 'server-stats',
+			description: 'Get general server statistics!',
+			group: "admins",
+            throttling: {
+                usages: 2,
+                duration: 5,
+			},
+		});
+	}
+	
+    async run (message) {
 			function checkBots(guild) {
 				let botCount = 0;
 				guild.members.cache.forEach(member => {
@@ -36,6 +46,6 @@ module.exports = {
 			.addField('Guild Created At:', message.guild.createdAt, true)
 			.setTimestamp() 
 
-			sendMessage(client, client.config.channels.auditlogs, serverembed); 
+			message.channel.send(serverembed); 
 	} 
 } 

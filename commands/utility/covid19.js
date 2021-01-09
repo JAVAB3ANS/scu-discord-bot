@@ -1,13 +1,24 @@
 const { MessageEmbed } = require(`discord.js`);
+const { Command } = require(`discord.js-commando`);
 const fetch = require(`node-fetch`);
 const cheerio = require(`cheerio`); 
   
-module.exports = {
-    name: 'covid19',  
-    description: 'Get daily and instant COVID-19 data at SCU here...', //here is a change in the file
-    category: 'Utility',
-    async execute (client, message, args) {  
-        const response = await fetch(client.config.api.covidStats);
+module.exports = class covid19Command extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'covid19',  
+            description: 'Get daily and instant COVID-19 data at SCU here...',  
+            group: 'utility',
+            memberName: 'covid19',
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
+    }
+
+    async run (client, message) {  
+        const response = await fetch("https://www.scu.edu/preparedscu/covid-19/confirmed-cases/");
         const body = await response.text();
         
         if(response.ok) {

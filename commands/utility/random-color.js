@@ -1,10 +1,20 @@
-const { MessageEmbed } = require(`discord.js`); //for embed functionality
+const { MessageEmbed } = require(`discord.js`); //for embed functionality 
+const { Command } = require(`discord.js-commando`);
 
-module.exports = {
-    name: 'random-color', //forked from Raptor SA
-    description: 'Generate a random color!', //here is a change in the file
-    category: 'Utility',
-    async execute (client, message, args) {
+module.exports = class randomColorCommand extends Command {
+  constructor(client) {
+    super(client, {
+        name: 'random-color',  
+        description: 'Generate a random color!',  
+        group: 'utility',
+        memberName: 'random-color',
+        throttling: {
+            usages: 2,
+            duration: 5,
+        },
+    });
+  }
+    async run (message) {
     
         const randomNumber = Math.floor(Math.random()*16777215).toString(16);
 

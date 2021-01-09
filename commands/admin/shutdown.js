@@ -1,8 +1,20 @@
-module.exports =  {  
-    name: 'shutdown',
-    description: 'Shut down the bot!',
-    category: 'Admin',  
-    async execute(client, message, args) { 
+const { Command } = require(`discord.js-commando`);
+
+module.exports = class shutdownCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'shutdown',
+            description: 'Shut down the bot!',
+            group: 'admins',  
+            memberName: 'shutdown',
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
+    }
+            
+        async run (message) { 
             try {
                 const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
 
