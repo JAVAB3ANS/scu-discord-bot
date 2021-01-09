@@ -4,7 +4,5 @@ node_modules/
 .github
 config.json
 eslintjrc.json
-package.json
-package-lock.json
 json.sqlite
 events/modmailLogs/ 
