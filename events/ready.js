@@ -9,7 +9,7 @@
 ==========================================================================================                                    
 */
 
-let sendMessage = require(`../modules/sendMessage.js`);
+const { sendMessage } = require(`../modules/modules.js`); 
 const fetch = require(`node-fetch`);
 
 module.exports = async (client) => {
