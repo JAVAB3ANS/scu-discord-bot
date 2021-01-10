@@ -6,6 +6,7 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "aki-api": "^5.2.1",
+<<<<<<< HEAD
     "async": "^3.2.0",
     "better-sqlite3": "^7.1.0",
     "chalk": "^4.1.0",
@@ -18,6 +19,18 @@
     "discord.js-pagination": "^1.0.3",
     "enmap": "^5.8.2",
     "eslint": "^7.13.0",
+=======
+    "better-sqlite3": "^7.1.2",
+    "chalk": "^4.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "chrono-node": "^1.4.8",
+    "common-tags": "^1.8.0",
+    "cors": "^2.8.5",
+    "discord.js": "^12.5.0",
+    "discord.js-pagination": "^1.0.3",
+    "enmap": "^5.8.2",
+    "eslint": "^7.16.0",
+>>>>>>> 8518d105bf9cfac1b0e41592c34ac7d1a7ac3b28
     "express": "^4.17.1",
     "figlet": "^1.5.0",
     "fluent-ffmpeg": "^2.1.2",
@@ -25,6 +38,7 @@
     "helmet": "^4.2.0",
     "inspirational-quotes": "^1.0.8",
     "install": "^0.13.0",
+<<<<<<< HEAD
     "jimp": "^0.14.0",
     "jsdom": "^16.4.0",
     "jshint": "^2.12.0",
@@ -35,6 +49,18 @@
     "node-pre-gyp": "^0.15.0",
     "node-schedule": "^1.3.2",
     "overwatch-api": "^0.8.2",
+=======
+    "jimp": "^0.16.1",
+    "jsdom": "^16.4.0",
+    "jshint": "^2.12.0",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.0",
+    "node-gyp": "^7.0.0",
+    "node-html-parser": "^1.4.9",
+    "node-pre-gyp": "^0.17.0",
+    "node-schedule": "^1.3.2",
+    "overwatch-api": "^0.10.4",
+>>>>>>> 8518d105bf9cfac1b0e41592c34ac7d1a7ac3b28
     "pm2": "^4.5.0",
     "quick.db": "^7.1.3",
     "random-puppy": "^1.1.0",
