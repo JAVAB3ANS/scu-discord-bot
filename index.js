@@ -13,6 +13,7 @@ client.registry
   .registerGroups([  
     ["admins", "Admin"],
     ["utility", "Utility"],
+    ["fun", "Fun"],
   ])
   .registerDefaultGroups()
   .registerDefaultCommands({
@@ -34,5 +35,7 @@ client.dispatcher.addInhibitor((msg) => {
 client
     .on('ready', () => require('./events/ready')(client))
     .on('message', (message) => require('./events/message')(client, message))
+    .on('guildMemberAdd', (member) => require('./events/guildMemberAdd')(client, member))
+    .on('guildMemberRemove', (member) => require('./events/guildMemberRemove')(client, member))
 
 client.login(client.config.token);
