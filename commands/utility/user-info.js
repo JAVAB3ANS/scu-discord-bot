@@ -29,7 +29,7 @@ module.exports = class userInfoCommand extends Command {
           url: `${user.user.displayAvatarURL()}`,
         },
         timestamp: Date.now(),
-        color: client.config.school_color,
+        color: this.client.config.school_color,
         footer: {
           text: `${this.client.config.prefix}user command`,
         },

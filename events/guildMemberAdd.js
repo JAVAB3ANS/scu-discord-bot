@@ -1,6 +1,5 @@
 const { MessageEmbed } = require(`discord.js`);
-const emojiCharacters = require(`../modules/emoji-characters.js`);
-let sendMessage = require(`../modules/sendMessage.js`);
+let { sendMessage } = require(`../modules/modules.js`);
 
 module.exports = async (client, member) => {
   if(member.user.bot) return; //ignore members who are bot users
@@ -31,11 +30,11 @@ module.exports = async (client, member) => {
   const welcome_Embed2 = new MessageEmbed() //personal message to new user
     .setTitle(`Invent the life you want to lead at Santa Clara University.`)
     .setDescription(
-      `${emojiCharacters.one} If you are new to Discord, this short [tutorial](https://youtu.be/rnYGrq95ezA) can help you get started! \n\n` +
-      `${emojiCharacters.two} __**Please**__ fill out the Google Form :clipboard: in the <#${client.config.channels.roles}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
-      `${emojiCharacters.three} Read the <#${client.config.channels.info}> channel and introduce yourself :wave: in the <#${client.config.channels.intros}> channel! \n\n` +
-      `${emojiCharacters.four} Check out SCU updates :mega: in <#${client.config.channels.updates}> and keep your eyes peeled for cool servers :cool: in <#${client.config.channels.promos}>! \n\n` +
-      `${emojiCharacters.five} If you have any technical issues :computer:, feel free to contact **ADMIN** or **MOD** for help!\n\n` +
+      `:one:  If you are new to Discord, this short [tutorial](https://youtu.be/rnYGrq95ezA) can help you get started! \n\n` +
+      `:two: __**Please**__ fill out the Google Form :clipboard: in the <#${client.config.channels.roles}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
+      `:three: Read the <#${client.config.channels.info}> channel and introduce yourself :wave: in the <#${client.config.channels.intros}> channel! \n\n` +
+      `:four: Check out SCU updates :mega: in <#${client.config.channels.updates}> and keep your eyes peeled for cool servers :cool: in <#${client.config.channels.promos}>! \n\n` +
+      `:five: If you have any technical issues :computer:, feel free to contact **ADMIN** or **MOD** for help!\n\n` +
       `Thank you for your cooperation and Go Broncos! :racehorse:`
     )
     .attachFiles([`./assets/logo-pic.png`])

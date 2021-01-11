@@ -11,7 +11,6 @@ module.exports = class announceCommand extends Command {
           duration: 5,
 			},
       description: "Make a formatted announcement using Embed data",
-      guildOnly: true,
       // format: "announce [#channel] [message goes here]\nannounce edit [message id] [new message]\nannounce append [message id] [text to append\nannounce embed [embed JSON]",
       // examples: [""],
       args: [
@@ -45,11 +44,12 @@ module.exports = class announceCommand extends Command {
             m.edit({
               embed: {
                 description: body,
+                color: this.client.config.school_color
               },
             });
           });
         } catch (e) {
-          return this.client.error(e + "Channel not found, you must run in same channel as message!", message);
+            console.log(e + "Channel not found, you must run in same channel as message!", message);
         }
         break;
       case "append":
@@ -58,11 +58,12 @@ module.exports = class announceCommand extends Command {
             m.edit({
               embed: {
                 description: m.embeds[0].description + " " + body,
+                color: this.client.config.school_color
               },
             });
           });
         } catch (e) {
-          return this.client.error("Channel not found, you must run in same channel as message!", message);
+          console.log("Channel not found, you must run in same channel as message!", message);
         }
         break;
       case "embed":
@@ -72,15 +73,15 @@ module.exports = class announceCommand extends Command {
             embed: JSON.parse(body),
           });
         } catch (e) {
-          return this.client.error(e, message);
+            console.log(e, message);
         }
         break;
       case "msg":
         try {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({ embed: { description: body } });
+          announceChannel.send({ embed: { description: body, color: this.client.config.school_color } });
         } catch (e) {
-          return this.client.error(e, message);
+          console.log(e, message);
         }
         break;
     }

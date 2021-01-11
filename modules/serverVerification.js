@@ -14,8 +14,8 @@ module.exports.run = async (client) => {
   const express = require("express");
   const cors = require("cors");
   const helmet = require("helmet");
-  var app = express();
-  const sendMessage = require(`./sendMessage.js`);
+  const app = express();
+  const { sendMessage } = require(`./modules.js`);
 
   /* ADD THIS OBJECT TO YOUR client.config FILE (or move the properties somewhere else)
     {

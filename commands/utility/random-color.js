@@ -14,7 +14,7 @@ module.exports = class randomColorCommand extends Command {
         },
     });
   }
-    async run (message) {
+    async run (client, message) {
     
         const randomNumber = Math.floor(Math.random()*16777215).toString(16);
 
@@ -29,6 +29,6 @@ module.exports = class randomColorCommand extends Command {
         .setFooter(`Brought to you by the server lords!`)
         .setTimestamp()
 
-        await message.channel.send(randomNumberEmbed).catch(err => `Error: ${err}`)
+        message.channel.send(randomNumberEmbed);
         }
 }

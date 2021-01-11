@@ -18,13 +18,13 @@ module.exports = class gitPullCommand extends Command {
     async run (client, message) {
         try {
             const frames = [`□`, `□□□□ 25%`, `□□□□□□□□ 50%`, `□□□□□□□□□□□□ 75%`, `□□□□□□□□□□□□□□□□ 100%`, `Finished pulling from [scu-discord-bot](${client.config.verification.githubLink})!`];
-            const msg= await message.channel.send("Pulling...");
+            const msg = await message.channel.send("Pulling...");
         
             child_proc.exec("git pull origin master");
         
             for (const frame of frames) {
                 setTimeout(() => {}, 4000);
-                await msg.edit({ embed: { description: frame, color: client.config.school_color}});
+                await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
             }
         } catch (err) {
             console.log(err.message);

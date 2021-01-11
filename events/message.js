@@ -1,7 +1,7 @@
 const { MessageEmbed, Collection } = require(`discord.js`);
 const db = require(`quick.db`);
 const fs = require(`fs`);
-const { sendMessage } = require(`../modules/sendMessage.js`);
+const { sendMessage } = require(`../modules/modules.js`);
 const jsdom = require(`jsdom`);
 const { JSDOM } = jsdom;
 const dom = new JSDOM();

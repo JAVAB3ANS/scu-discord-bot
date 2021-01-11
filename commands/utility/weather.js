@@ -1,18 +1,35 @@
 const fetch = require(`node-fetch`);
 const toTitleCase = require(`to-title-case`);
 const moment = require('moment'); //here is a change in the file
-const { MessageEmbed } = require(`discord.js`);
+const { MessageEmbed } = require(`discord.js`); 
+const { Command } = require("discord.js-commando");
 
-module.exports = {
-	name: 'weather', //project adapted from https://github.com/ShadeBot/ShadeBot-Discord-Bot/blob/master/commands/weather.js
-    description: 'Get your daily weather statistics here depending on your zip code!',
-    args: true,
-    usage: `[zip code]`,
-    category: 'utility',
-	async execute(client, message, args) {
-      
-        let zipCode = args[0];
-        
+module.exports = class weatherCommand extends Command {
+    constructor(client) {
+		super(client, {
+		  name: "weather",
+		  group: "utility",
+		  memberName: "weather",
+		  description: "Check the weather based on your zip code location!",
+		  throttling: {
+			usages: 2,
+			duration: 5,
+		  },
+		  args: [
+			{
+			  key: "zipCode",
+			  prompt: "Enter a zip code to lookup",
+			  type: "string",
+			  validate: zipCode => {
+				  if((!zipCode.includes(`/^([^0-9]*)$/`) || zipCode.length != 5)) return 'Enter a five-digit zip code!' 
+			  }
+			},
+		  ],
+		});
+	  }
+
+
+	async run(client, message, { zipCode }) {  
 	    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${client.config.api.weather}`);
     	const body = await response.json();
 
@@ -36,7 +53,7 @@ module.exports = {
 	    else body.wind.speed += "m/s";
 
 	    let weatherEmbed = new MessageEmbed()
-		.setColor(client.config.school_color)
+		.setColor(this.client.config.school_color)
 		.setTitle(`:flag_${body.sys.country.toLowerCase()}: ${body.name}, ${body.sys.country}`)
 		.setURL(`https://openweathermap.org/city/${body.id}`)
 		.setThumbnail(`https://openweathermap.org/img/w/${body.weather[0].icon}.png`)

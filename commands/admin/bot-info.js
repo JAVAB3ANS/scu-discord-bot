@@ -1,38 +1,49 @@
-const package = require(`../../package.json`);
+const { Command } = require(`discord.js-commando`);
+const info = require(`../../package.json`);
 
-module.exports = { 
-    name: 'bot-info',
-    description: 'Get the bot\'s info!',
-    category: 'Admin',  
-    async execute(client, message, args) {
+module.exports = class botInfoCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'bot-info',
+            memberName: 'bot-info',
+            description: 'Get bot info!',
+            group: 'admins',  
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
+    }
+
+    async run(client, message) {
             const botInfo = {
-                color: client.config.school_color,
+                color: this.client.config.school_color,
                 author: {
-                  name: "SCU Discord Network",
-                  icon_url: client.user.avatarURL()
+                  name: this.message.guild.name,
+                  icon_url: this.client.user.avatarURL()
                 },
-                url: `${package.homepage}`,
+                url: `${info.homepage}`,
                 title: `Bot Information`,
-                description: `${package.description}`,
+                description: `${info.description}`,
                 fields: [
                   {
                     name: "Prefix",
-                    value: `\`${client.config.prefix}\``,
+                    value: `\`${this.client.config.prefix}\``,
                     inline: true
                   },
                   {
                     name: "Version",
-                    value: `\`${package.version}\``,
+                    value: `\`${info.version}\``,
                     inline: true
                   },
                   {
                     name: "License",
-                    value: `\`${package.license}\``,
+                    value: `\`${info.license}\``,
                     inline: true
                   },
                   {
                     name: "Dependencies Used",
-                    value: `${Object.entries(package.dependencies).join(", ")}`,
+                    value: `${Object.entries(info.dependencies).join(", ")}`,
                     inline: false
                   },
                 ],

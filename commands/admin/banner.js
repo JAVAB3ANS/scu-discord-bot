@@ -1,21 +1,36 @@
 const { MessageEmbed } = require(`discord.js`); //for embed functionality 
+const { Command } = require(`discord.js-commando`);
 
-module.exports = {
-    name: 'banner',
-    description: 'Create a cool embed banner with images in my folder!',
-    args: true,
-    usage: `[file name and extension]`, 
-    category: 'Admin',  
-    async execute (client, message, args) {
+module.exports = class bannerCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "banner",
+            memberName: "banner",
+            description: "Create an image banner from the images in my folder!", 
+            group: "admins",
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+            args: [
+                {
+                    key: "fileName",
+                    prompt: "Please provide a proper file name!",
+                    type: "string",
+                    validate: fileName => {
+                        if(!fileName.includes(fileType => fileType.name === [".jpg", ".png", ".jpeg", ".gif", ".jfif"])) return 'Please enter a proper file type!' 
+                    }
+                },
+            ],
+        });
+    }   
+
+    async run (client, message, { fileName }) {
             try {
-                const input = args[0]; 
-
-                if(input.includes(`/`)) return message.channel.send({ embed: { description: `Not a file!`, color: client.config.school_color}});
-
                 const imageEmbed = new MessageEmbed()
-                .attachFiles([`./assets/${input}`])
-                .setImage(`attachment://${input}`)
-                .setColor(client.config.school_color)
+                .attachFiles([`./assets/${fileName}`])
+                .setImage(`attachment://${fileName}`)
+                .setColor(this.client.config.school_color)
 
                 message.channel.send(imageEmbed);
             } catch (err) {

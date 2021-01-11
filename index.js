@@ -1,5 +1,6 @@
-  const { CommandoClient } = require("discord.js-commando");  
+const { CommandoClient } = require("discord.js-commando");  
 const path = require(`path`);  
+const { checkPermission, noPermissionMessage } = require(`./modules/modules.js`);
 
 const client = new CommandoClient({
   commandPrefix: `${require("./config.json").prefix}`,
@@ -17,7 +18,7 @@ client.registry
   ])
   .registerDefaultGroups()
   .registerDefaultCommands({
-    unknownCommand: false,
+    unknownCommand: true,
     prefix: false, 
   })
   .registerCommandsIn(path.join(__dirname, "commands")); 

@@ -1,14 +1,28 @@
-const fetch = require(`node-fetch`);
-const { MessageEmbed } = require(`discord.js`);
-let sendMessage = require(`../../modules/sendMessage.js`);
+const { Command } = require("discord.js-commando");
+const { sendMessage } = require(`../../modules/modules.js`);
 
-module.exports = {
-    name: "github",
-    description: "Get someone's GitHub profile information!",
-    args: true,
-    usage: `[username]`,
-    category: 'Utility',
-    async execute (client, message, args) {
+module.exports = class githubCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: "github",
+      group: "utility",
+      memberName: "github",
+      description: "Get a user's GitHub profile!",
+      throttling: {
+        usages: 2,
+        duration: 5,
+      },
+      args: [
+        {
+          key: "username",
+          prompt: "Enter a username to lookup",
+          type: "string",
+        },
+      ],
+    });
+  }
+
+  async run(client, message, { username }) {
 
         try {
             const username = args[0].toLowerCase().split(" ");
@@ -30,12 +44,12 @@ module.exports = {
                 profileEmbed.addField(`Followers`, data.followers || 'none', true)
                 profileEmbed.addField(`Following`, data.following || 'none', true)
                 profileEmbed.addField(`\u200B`, `\u200B`, true)
-                profileEmbed.setColor(client.config.school_color)
+                profileEmbed.setColor(this.client.config.school_color)
                 profileEmbed.setURL(data.html_url)
 
-            message.channel.send(profileEmbed);
+                message.channel.send(profileEmbed);
         } catch(err) {
-            sendMessage(client, client.config.channels.auditlogs, {embed: {description: `The following user - ${username} - does not exist.`, color: client.config.school_color}})
+            sendMessage(client, client.config.channels.auditlogs, {embed: {description: `The following user - ${username} - does not exist.`, color: this.client.config.school_color}})
             console.log(err => `Error: ${err}`)
         }
     }

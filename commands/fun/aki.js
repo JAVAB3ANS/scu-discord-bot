@@ -12,20 +12,26 @@
 const { Client, MessageEmbed } = require("discord.js");
 const { Aki } = require("aki-api");
 const emojis = ["👍", "👎", "❔", "🤔", "🙄", "❌"];
-const Started = new Set();
+const Started = new Set(); 
+const { Command } = require("discord.js-commando");
 
-//FORKED FROM https://github.com/TheMaestro0/Akinator-Bot
-
-module.exports = {
-    name: 'aki',
-    description: 'Play with the Akinator!',
-    category: 'Fun',
-    cooldown: 60,
-    async execute(client, message, args) {  
+module.exports = class akiCommand extends Command {
+    constructor(client) {
+      super(client, {
+        name: "aki",
+        group: "fun",
+        memberName: "aki",
+        description: "Play with the akinator!",
+        throttling: {
+          usages: 2,
+          duration: 5,
+        }
+      });
+    }
+    
+    async run (client, message) {
         new Client({messageCacheMaxSize: 50})
-
-        const nickname = client.guilds.cache.get(client.config.verification.guildID).member(message.author).displayName;
-
+ 
         if(!Started.has(message.author.id)) Started.add(message.author.id);
         else return message.channel.send(new MessageEmbed() 
          .setDescription(`**:x: | The game already started.. :flushed:**`)
@@ -36,7 +42,7 @@ module.exports = {
         await aki.start();
 
         const msg = await message.channel.send(new MessageEmbed()
-       .setTitle(`**${nickname}**, Question ${aki.currentStep + 1}`)
+       .setTitle(`**<@${message.author.id}>**, Question ${aki.currentStep + 1}`)
        .setColor("RANDOM")
        .setDescription(`**${aki.question}**\n${aki.answers.map((x, i) => `${x} | ${emojis[i]}`).join("\n")}`));
 
@@ -51,7 +57,7 @@ module.exports = {
                   await aki.win();
                   collector.stop();
                   await message.channel.send(new MessageEmbed()
-                  .setTitle(`**${nickname}, is this this your character? :thinking:**`)
+                  .setTitle(`**<@${message.author.id}>, is this this your character? :thinking:**`)
                   .setDescription(`**${aki.answers[0].name}**\n${aki.answers[0].description}\nRanking as **#${aki.answers[0].ranking}**\n\n[yes (**y**) / no (**n**)]`)
                   .setImage(aki.answers[0].absolute_picture_path)
                   .setColor("RANDOM"));
@@ -67,13 +73,13 @@ module.exports = {
                             else 
                                 return message.channel.send(new MessageEmbed()
                                   .setColor("RANDOM")
-                                  .setTitle(`**${nickname}, you're the winner! :relieved:**`)
+                                  .setTitle(`**<@${message.author.id}>, you're the winner! :relieved:**`)
                                   .setDescription(`<@${message.author.id}>, I love playing with you!`));
                           });
                         return;
                       }
-                 msg.edit(new MessageEmbed()
-                  .setTitle(`**${nickname}**, Question ${aki.currentStep + 1}`)
+                      msg.edit(new MessageEmbed()
+                  .setTitle(`**<@${message.author.id}>**, Question ${aki.currentStep + 1}`)
                   .setColor("RANDOM")
                   .setDescription(`**${aki.question}**\n${aki.answers.map((x, i) => `${x} | ${emojis[i]}`).join("\n")}`));
            });
@@ -83,4 +89,4 @@ module.exports = {
           msg.delete({ timeout: 1000 }).catch(()=>{});
         });
       }
-}
+    } 

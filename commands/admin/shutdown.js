@@ -14,7 +14,7 @@ module.exports = class shutdownCommand extends Command {
         });
     }
             
-        async run (message) { 
+        async run (client, message) { 
             try {
                 const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
 
@@ -22,7 +22,7 @@ module.exports = class shutdownCommand extends Command {
                 
                 for (const frame of frames) {
                     setTimeout(() => {}, 4000);
-                    await msg.edit({ embed: { description: frame, color: client.config.school_color}});
+                    await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
                 }
 
                 return message;
@@ -30,7 +30,7 @@ module.exports = class shutdownCommand extends Command {
             } catch (err) {
                 console.log(err.message);
             } finally {
-                client.destroy(err => {
+                this.client.destroy(err => {
                     console.log("====================");
                     console.log("Command: [!@shutdown] run by " + message.author.username);
                     console.log("====================");

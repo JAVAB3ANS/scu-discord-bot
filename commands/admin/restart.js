@@ -14,7 +14,7 @@ module.exports = class restartCommand extends Command {
         });
     }
 
-	async run (message) {   
+	async run (client, message) {   
             try {
                 const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
 
@@ -22,7 +22,7 @@ module.exports = class restartCommand extends Command {
                 
                 for (const frame of frames) {
                     setTimeout(() => {}, 4000);
-                    await msg.edit({ embed: { description: frame, color: client.config.school_color}});
+                    await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
 		        }
             } catch (err) {
                 console.log(err.message);

@@ -23,8 +23,8 @@ module.exports = class covid19Command extends Command {
         
         if(response.ok) {
           const scuEmbed = new MessageEmbed()
-          .setColor(client.config.school_color)
-          .setAuthor("SCU On-Campus Testing Dashboard", client.user.avatarURL()) 
+          .setColor(this.client.config.school_color)
+          .setAuthor("SCU On-Campus Testing Dashboard", this.client.user.displayAvatarURL()) 
           .setDescription(" Test Date | Number of Tests | *Number of Positive Tests | Positivity Rate")
           .setTitle(`The following information reflects results from tests conducted each week on SCU's campus. Find more details on the Testing Protocol website.`)
           .setURL(`https://www.scu.edu/preparedscu/health-and-safety/testing-protocol/`)

@@ -1,5 +1,5 @@
 const fetch = require(`node-fetch`); 
-const sendMessage = require(`./sendMessage.js`);
+const { sendMessage } = require(`./modules.js`);
 
 module.exports.run = async (client) => {
     const url = client.config.verification.verifyURL;

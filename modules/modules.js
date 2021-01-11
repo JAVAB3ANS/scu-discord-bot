@@ -11,7 +11,7 @@ module.exports.sendMessage = async (client, channel, content) => {
 }
  
 module.exports.getUserPermissionLevel = async (client) => {
-    if (client.owner) return 1;
+  if (client.config.serverRoles.modRoles.forEach(modRole => message.member.roles.cache.has(modRole))) return 1;
     else return 0;
 }
 

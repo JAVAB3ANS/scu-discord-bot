@@ -21,14 +21,14 @@ module.exports = class ZoomCommand extends Command {
             const response = await fetch("https://14qjgk812kgk.statuspage.io/api/v2/components.json");
             const data = await response.json();
             
-            for (i in data.components) {
+            for (const i = 0; i < data.components.length; i++) {
                 let connected = data.components[i].status == "operational";
                 chunk += `**${data.components[i].name}** ${connected ? ":white_check_mark:\n" : ":x:\n"}`;
             }
 
-            message.channel.send({ embed: { title: `Zoom Meetings Status`, description: chunk, color: client.config.school_color}});
+            message.channel.send({ embed: { title: `Zoom Meetings Status`, description: chunk, color: this.client.config.school_color}});
         } catch (e) {
-         console.log(e, "error", "zoom");
+            console.log(e, "error", "zoom");
         }
     }
   }; 

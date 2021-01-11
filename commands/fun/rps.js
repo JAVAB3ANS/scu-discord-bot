@@ -1,15 +1,30 @@
-module.exports =  {  
-    name: 'rps',
-    description: 'Play rock, paper, scissors!',
-    args: true,
-    usage: `[Choose rock, paper, or scissors]`, 
-    category: 'Fun',
-	async execute(client, message, args) {
-        
+const { Command } = require(`discord.js-commando`);
+
+module.exports = class rpsCommand extends Command {
+	constructor(client) {
+        super(client, {
+          name: "rps",
+          group: "fun",
+          memberName: "rps",
+          description: "Play rock, paper, scissors with the bot!",
+          throttling: {
+            usages: 2,
+            duration: 5,
+          }, args: [
+			{
+			  key: "user",
+			  prompt: "Enter an option: `rock`, `paper`, or `scissors`!",
+			  type: "string",
+			  oneOf: ["rock", "paper", "scissors"],
+			},
+		  ], 
+        });
+      }
+       
+    async run (client, message, { user }) {
         let choices = ["rock", "paper", "scissors"]; 
 		
-        let computer = choices[Math.floor(Math.random() * 3 + 1) - 1];
-        let user = args[0];
+        let computer = choices[Math.floor(Math.random() * 3 + 1) - 1]; 
 		
         function calculate(user, computer) {
             if (user == "rock" && computer == "scissors" || user == "paper" && computer == "rock" || user == "scissors" && computer == "paper") {
@@ -25,7 +40,7 @@ module.exports =  {
             description: calculate(user, computer),
             title: `__**Your Results**__`,
             fields: [ { name: "User Choice", value: user, }, { name: "Computer Choice", value: computer, }, ],
-            color: client.config.school_color
+            color: this.client.config.school_color
         };
         message.channel.send({ embed: rpsEmbed });
     }

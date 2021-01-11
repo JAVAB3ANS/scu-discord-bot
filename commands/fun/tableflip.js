@@ -1,3 +1,5 @@
+const { Command } = require(`discord.js-commando`);
+
 const frames = [
 	'(-°□°)-  ┬─┬',
 	'(╯°□°)╯    ]',
@@ -6,11 +8,21 @@ const frames = [
     '(╯°□°)╯           ┬─┬',
 ];
 
-module.exports = {
-	name: 'tableflip',
-    description: 'For flipping tables!',
-    category: 'Fun',
-    async execute(client, message, args) { 
+module.exports = class tableFlipCommand extends Command {
+    constructor(client) {
+        super(client, {
+          name: "tableflip",
+          group: "fun",
+          memberName: "tableflip",
+          description: "For flipping tables!",
+          throttling: {
+            usages: 2,
+            duration: 5,
+          }
+        });
+      } 
+
+    async run(client, message) { 
         
         const msg = await message.channel.send('(\\\\°□°)\\\\  ┬─┬');
         for (const frame of frames) {

@@ -1,13 +1,31 @@
 const {  MessageEmbed } = require(`discord.js`); //for embed functionality
 const fetch = require('node-fetch');
+const { Command } = require(`discord.js-commando`);
 
-module.exports = {
-	name: 'pokedex',
-    description: 'Get Pokemon statistics!',
-    args: true,
-    usage: `[Pokemon name]`,
-    category: 'Fun',
-	async execute(client, message, args) {
+module.exports = class pokedexCommand extends Command {
+	constructor(client) {
+        super(client, {
+          name: "pokedex",
+          group: "fun",
+          memberName: "pokedex",
+          description: "Search up your favorite pokemon!",
+          throttling: {
+            usages: 2,
+            duration: 5,
+          }, args: [
+			{
+			  key: "pokemon",
+			  prompt: "Enter a pokemon name!",
+			  type: "string",
+			  validate: pokemon => {
+				  if(pokemon.includes(`/^([^0-9]*)$/`)) return 'Enter an actual pokemon name!' 
+			  }
+			},
+		  ], 
+        });
+      }
+
+    async run(client, message, { pokemon }) {
 
         const BASE_URL = client.config.api.pokemon;
 
@@ -16,7 +34,7 @@ module.exports = {
 			return await response.json();
 		}
 	
-		const pokemon = message.content.toLowerCase().split(" ")[1];
+		pokemon = message.content.toLowerCase().split(" ")[1];
         try {
             const pokeData = await getPokemon(pokemon);
             const { 
@@ -38,12 +56,11 @@ module.exports = {
                 embed.addField('__**Height**__', `${height} ft`, true);
                 embed.addField('__**Base Experience**__', `${base_experience} XP`, true);
                 embed.setColor(client.config.school_color);
-            message.channel.send(embed).catch(err => `Error: ${err}`)
+                message.channel.send(embed);
         }
         catch(err) {
-			message.channel.send({embed: {description: `Pokemon __**${pokemon}**__ does not exist.`, color: client.config.school_color}})
-			.then(msg => msg.delete({timeout: 5000}))
-			.catch(err => `Error: ${err}`)
+			message.channel.send({embed: {description: `Pokemon __**${pokemon}**__ does not exist.`, color: this.client.config.school_color}})
+			.then(msg => msg.delete({timeout: 5000})) 
         }
     }
 }
