@@ -1,5 +1,5 @@
 
-![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png = 250x)
+![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
 # SCU DISCORD NETWORK 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020?style=plastic) 
