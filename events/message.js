@@ -1,7 +1,7 @@
 const { MessageEmbed, Collection } = require(`discord.js`);
 const db = require(`quick.db`);
 const fs = require(`fs`);
-const { sendMessage } = require(`../modules/modules.js`);
+const { sendMessage } = require(`../modules/sendMessage.js`);
 const jsdom = require(`jsdom`);
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
@@ -10,16 +10,6 @@ const document = dom.window.document;
 module.exports = async (client, message) => {
     // Checks if the Author is a Bot, or the message isn`t from the guild, ignore it.
   if (!message.content.startsWith(client.config.prefix) && message.channel.type != "dm" || message.author.bot) return; 
-
-  /*
-  ===============================================   
-   |  \/  |         | |               (_) | 
-   | \  / | ___   __| |_ __ ___   __ _ _| | 
-   | |\/| |/ _ \ / _` | `_ ` _ \ / _` | | | 
-   | |  | | (_) | (_| | | | | | | (_| | | | 
-   |_|  |_|\___/ \__,_|_| |_| |_|\__,_|_|_| 
-  =============================================== 
-  */
   
     const messageReception = new MessageEmbed().setColor(client.config.school_color)
     .setAuthor(message.author.tag, message.author.displayAvatarURL()) 

@@ -1,13 +1,3 @@
-/*
-=============================================================================================
-__      ________ _____  _____ ________     __   _______     _______ _______ ______ __  __ _ 
-\ \    / /  ____|  __ \|_   _|  ____\ \   / /  / ____\ \   / / ____|__   __|  ____|  \/  | |
- \ \  / /| |__  | |__) | | | | |__   \ \_/ /  | (___  \ \_/ / (___    | |  | |__  | \  / | |
-  \ \/ / |  __| |  _  /  | | |  __|   \   /    \___ \  \   / \___ \   | |  |  __| | |\/| | |
-   \  /  | |____| | \ \ _| |_| |       | |     ____) |  | |  ____) |  | |  | |____| |  | |_|
-    \/   |______|_|  \_\_____|_|       |_|    |_____/   |_| |_____/   |_|  |______|_|  |_(_)
-=============================================================================================
-*/
 const { MessageEmbed } = require(`discord.js`);
 
 module.exports.run = async (client) => {
@@ -15,25 +5,8 @@ module.exports.run = async (client) => {
   const cors = require("cors");
   const helmet = require("helmet");
   const app = express();
-  const { sendMessage } = require(`./modules.js`);
+  const { sendMessage } = require(`./sendMessage.js`);
 
-  /* ADD THIS OBJECT TO YOUR client.config FILE (or move the properties somewhere else)
-    {
-        verification: {
-            "guildID": "string of guild enabled in",
-            "key": "string for basically a password to authenticate requests", //basically a string of some sort?
-        }
-    }
-    INCOMING OBJECT FROM GOOGLE FORMS
-    {
-        "name": "First Name",
-        "major": "Current Major", //defaults to 'none' for SCU Faculty
-        "status": "Member Status",
-        "discord": "Discord Username with Tag"
-    }
-  */
-
-  //define guild from ID in client.config
   const guild = client.guilds.cache.get(client.config.verification.guildID);
   app.use(express.json());
   app.use(cors());

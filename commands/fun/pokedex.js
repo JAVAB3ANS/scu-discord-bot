@@ -18,7 +18,7 @@ module.exports = class pokedexCommand extends Command {
 			  prompt: "Enter a pokemon name!",
 			  type: "string",
 			  validate: pokemon => {
-				  if(pokemon.includes(`/^([^0-9]*)$/`)) return 'Enter an actual pokemon name!' 
+				  if(pokemon.match(/^([^0-9]*)$/)) return 'Enter an actual pokemon name!' 
 			  }
 			},
 		  ], 

@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { sendMessage } = require(`../../modules/modules.js`);
+const { messageEmbed } = require(`discord.js`);
 
 module.exports = class githubCommand extends Command {
   constructor(client) {
@@ -17,6 +17,9 @@ module.exports = class githubCommand extends Command {
           key: "username",
           prompt: "Enter a username to lookup",
           type: "string",
+          validate: username => {
+            if(username.match(/^([^0-9]*)$/)) return 'Enter a proper username!' 
+          }
         },
       ],
     });
