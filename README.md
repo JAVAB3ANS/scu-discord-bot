@@ -1,9 +1,8 @@
 
-![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
+![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png = 250x)
 
 # SCU DISCORD NETWORK 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020?style=plastic) 
-![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/jasonanhvu/scu-discord-bot)
