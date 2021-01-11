@@ -14,10 +14,10 @@ module.exports = class purgeCommand extends Command {
             args: [
                 {
                     key: "number",
-                    prompt: "Please mention a user!",
-                    type: "string",
+                    prompt: "Please specify a number below 101!",
+                    type: "integer",
                     validate: number => {
-                        if(!number.includes(`/^([^0-9]*)$/`) || number < 101) return 'Enter amount less than 101!' 
+                        if(number < 101) return 'Enter amount less than 101!' 
                     }
                 },
             ],
