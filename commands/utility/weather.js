@@ -20,7 +20,7 @@ module.exports = class weatherCommand extends Command {
 			  key: "zipCode",
 			  prompt: "Enter a zip code to lookup",
 			  type: "string",
-			  validate: zipCode => {
+			  validate: (zipCode) => {
 				  if((!zipCode.match(/^([^0-9]*)$/) || zipCode.length !== 5)) {
 					  return "Enter a five-digit zip code!";
 				  }
@@ -32,13 +32,13 @@ module.exports = class weatherCommand extends Command {
 
 
 	async run( message, { zipCode }) {  
-	    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${client.config.api.weather}`);
+	    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${this.client.config.api.weather}`);
     	const body = await response.json();
 
-		if (body.cod && body.cod === 404) return message.channel.send({embed: {description: "Zip code not found!", color: client.config.school_color}})
+		if (body.cod && body.cod === 404) { return message.channel.send({embed: {description: "Zip code not found!", color: this.client.config.school_color}}); }
 
         if (body.wind.deg) {
-			let angle = body.wind.deg
+			let angle = body.wind.deg;
 			if (body.wind.deg <= 22.5) { angle = "North"; }
 			else if (body.wind.deg <= 67.5) { angle = "Northeast"; }
 			else if (body.wind.deg <= 112.5) { angle = "East"; }

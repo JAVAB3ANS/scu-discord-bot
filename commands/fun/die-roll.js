@@ -18,15 +18,15 @@ module.exports = class dieRollCommand extends Command {
     async run( message) {  
 
         const dice = [1, 2, 3, 4, 5, 6];
-        const first_die = dice[Math.floor(Math.random()*dice.length)];
-        const second_die = dice[Math.floor(Math.random()*dice.length)];
+        const firstDie = dice[Math.floor(Math.random()*dice.length)];
+        const secondDie = dice[Math.floor(Math.random()*dice.length)];
 
         const embed = new MessageEmbed()  
         .setColor(this.client.config.school_color) 
         .setFooter("Created by the server lords!")
         .setTimestamp()
 
-        if (first_die === 1 && second_die === 1) {
+        if (firstDie === 1 && secondDie === 1) {
             embed
             .setTitle("__**SNAKE EYES**__") 
             .setDescription("YOU GOT SNAKE EYES!")
@@ -35,8 +35,8 @@ module.exports = class dieRollCommand extends Command {
         } else {
             embed
             .setTitle("Here's your roll!") 
-            .addField("__**First Die**__", first_die, true)
-            .addField("__**Second Die**__", second_die, true);  
+            .addField("__**First Die**__", firstDie, true)
+            .addField("__**Second Die**__", secondDie, true);  
         }
         message.channel.send(embed);
     }

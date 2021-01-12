@@ -17,7 +17,7 @@ module.exports = class asciiCommand extends Command {
 			  key: "text",
 			  prompt: "Enter string!",
 			  type: "string",
-			  validate: text => {
+			  validate: (text) => {
 				  if(text.length > 2000) {
 					  return "Enter string below 2000 characters!"; 
 				  }
@@ -31,13 +31,12 @@ module.exports = class asciiCommand extends Command {
 
         text = message.content.join(" ");
 
-        figlet.text(text, function (err, data){
-            if(err){
-                console.log("Something went wrong");
-                console.dir(err);
+        figlet.text(text, function (err, data) {
+            if(err) {
+                console.log(err); 
             }
             
             message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `, color: this.client.config.school_color}});
-        })
+        });
     }
 }

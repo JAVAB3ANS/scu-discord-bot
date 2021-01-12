@@ -42,8 +42,7 @@ module.exports = class announceCommand extends Command {
 
   async run(message, { option, id, body }) {
     switch (option) {
-      case "edit":
-        try {
+      case "edit": 
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
@@ -51,10 +50,7 @@ module.exports = class announceCommand extends Command {
                 color: this.client.config.school_color
               },
             });
-          });
-        } catch (e) {
-            console.log(e + "Channel not found, you must run in same channel as message!", message);
-        }
+          }); 
         break;
       case "append":
         try {
@@ -67,7 +63,7 @@ module.exports = class announceCommand extends Command {
             });
           });
         } catch (e) {
-          console.log("Channel not found, you must run in same channel as message!", message);
+          console.log(e);
         }
         break;
       case "embed":
@@ -77,7 +73,7 @@ module.exports = class announceCommand extends Command {
             embed: JSON.parse(body),
           });
         } catch (e) {
-            console.log(e, message);
+            console.log(e);
         }
         break;
       case "msg":
@@ -85,7 +81,7 @@ module.exports = class announceCommand extends Command {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
           announceChannel.send({ embed: { description: body, color: this.client.config.school_color } });
         } catch (e) {
-          console.log(e, message);
+          console.log(e);
         }
         break;
     }

@@ -17,7 +17,7 @@ module.exports = class bannerCommand extends Command {
                     key: "fileName",
                     prompt: "Please provide a proper file name!",
                     type: "string",
-                    validate: fileName => {
+                    validate: (fileName) => {
                         if(!fileName.match(/[a-zA-Z0-9\s_\\.\-\(\):])+(.jfif|.jpeg|.png|.gif|.jpg)$/)) {
                             return "Please enter a proper file type!";
                         }
@@ -27,16 +27,13 @@ module.exports = class bannerCommand extends Command {
         });
     }   
 
-    async run ( message, { fileName }) {
-            try {
-                const imageEmbed = new MessageEmbed()
-                .attachFiles([`./assets/${fileName}`])
-                .setImage(`attachment://${fileName}`)
-                .setColor(this.client.config.school_color);
+    async run ( message, { fileName }) { 
+        const imageEmbed = new MessageEmbed()
+        .attachFiles([`./assets/${fileName}`])
+        .setImage(`attachment://${fileName}`)
+        .setColor(this.client.config.school_color);
 
-                message.channel.send(imageEmbed);
-            } catch (err) {
-                if (err) throw err;
-            }
+        message.channel.send(imageEmbed);
+           
     }
 }

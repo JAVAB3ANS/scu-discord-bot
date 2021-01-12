@@ -26,14 +26,14 @@ module.exports.run = async (client) => {
   });
   app.post("/verify", (req, res) => {
     //some basic auth
-    if (req.headers["key"] != client.config.verification.key) {
+    if (req.headers["key"] !== client.config.verification.key) {
       //api key checker
       res.status(401).send({ error: "❌ Invalid API Key " });
       //data in body checker
     } else if (Object.keys(req.body).length > 0) { //if member enters something, then fire this else block
       res.status(200).send({ status: "Successful" });
       //find member in guild
-      let member = guild.members.cache.find((member) => member.user.tag == req.body.discord);
+      let member = guild.members.cache.find((member) => member.user.tag === req.body.discord);
       //if the member isn't in the guild return an error in console 
       if (member === null) { 
         sendMessage(client, client.config.channels.auditlogs, { embed: { title: `__**❌ ${guild.name} Verification**__`, description: `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](https://docs.google.com/forms/d/1O4iazeB8sDlTPYLLgTF9IhndV0ZJv-ulvFJyqFkTMO4/edit)!`, color: client.config.school_color, timestamp: new Date()}});
@@ -61,7 +61,7 @@ module.exports.run = async (client) => {
               member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)); //the Student role
 
               if (req.body.major != null) {
-                req.body.major.forEach(major => {
+                req.body.major.forEach((major) => {
                   //loops thru members' inputted major role(s) from the checklist 
                   // works for double and triple majors and also for one major [given that they're honest :) ]
                   let majorRole = guild.roles.cache.find((ch) => ch.name === major);
@@ -114,7 +114,7 @@ module.exports.run = async (client) => {
             
           guild.channels.cache.get(client.config.channels.welcome).send(member.user.id, { embed: verifyEmbed}).then((m) => m.react("👋"));
                   
-          let verifiedCount = guild.members.cache.filter((member) => member.roles.cache.find(role => role.id === client.config.serverRoles.verifiedStudent)).size
+          let verifiedCount = guild.members.cache.filter((member) => member.roles.cache.find(role => role.id === client.config.serverRoles.verifiedStudent)).size;
           let studentCount = guild.channels.cache.find((channel) => channel.id === client.config.channels.verifiedCount);
           studentCount.setName(`🐎 ${verifiedCount} Bucking Broncos`);
       }

@@ -14,26 +14,18 @@ module.exports = class shutdownCommand extends Command {
         });
     }
             
-        async run ( message) { 
-            try {
-                const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
+    async run ( message) {  
+        const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];
 
-                const msg = await message.channel.send(`Shutting down the bot...`);
-                
-                for (const frame of frames) {
-                    setTimeout(() => {}, 4000);
-                    await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
-                }
+        const msg = await message.channel.send("Shutting down the bot...");
+        
+        for (const frame of frames) {
+            setTimeout(() => {}, 4000);
+            await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
+        }
 
-                return message;
-
-            } catch (err) {
-                console.log(err);
-            } finally {
-                this.client.destroy(err => { 
-                    console.log("Command: [!@shutdown] run by " + message.author.username); 
-                    console.log(err);
-                });
-            } 
+        this.client.destroy(err => { ; 
+            console.log(err);
+        }); 
     }
 }

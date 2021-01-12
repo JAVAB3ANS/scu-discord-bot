@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 let { sendMessage } = require("../modules/sendMessage.js");
 
 module.exports = async (client, member) => {
-  if(member.user.bot) return; //ignore members who are bot users
+  if(member.user.bot) {return}; //ignore members who are bot users
 
   const guild = client.guilds.cache.get(`${client.config.verification.guildID}`);
 
@@ -23,7 +23,7 @@ module.exports = async (client, member) => {
   .attachFiles(["./assets/scu_banner.png"])
   .setImage("attachment://scu_banner.png")
   .setColor(client.config.school_color)
-  .setFooter("Brought to you by the creators of this Discord server.")
+  .setFooter("Brought to you by the creators of this Discord server.");
 
   guild.systemChannel.send(member.user.id, { embed: welcomeEmbed1 });
 

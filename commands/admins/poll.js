@@ -17,7 +17,7 @@ module.exports = class pollCommand extends Command {
                     key: "pollArgs",
                     prompt: "Please provide a proper file name!",
                     type: "string",
-                    validate: pollArgs => {
+                    validate: (pollArgs) => {
                         if(!pollArgs.match(/(?:("|')[^("|')]*("|')|^[^("|')]*$)/g)) {
 							return "Please enter a proper poll!" ;
 						}
@@ -44,11 +44,11 @@ module.exports = class pollCommand extends Command {
 		});
 
 		const embed = new MessageEmbed()
-		.setTitle(pollQuestion.replace(/['"]+/g, ''))
-		.setDescription(pollString.replace(/['"]+/g, ''))
+		.setTitle(pollQuestion.replace(/['"]+/g, ""))
+		.setDescription(pollString.replace(/['"]+/g, ""))
 		.setColor(this.client.config.school_color);
 		
-		message.channel.send(embed).then(r => {
+		message.channel.send(embed).then((r) => {
 			for (let i = 0; i < pollArgs.length; i++) {
 				r.react(options[i]);
 			}

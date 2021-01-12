@@ -44,16 +44,15 @@ client.dispatcher.addInhibitor( (client, msg) => {
   }
 });
 
-client.once(`ready`, () => {
+client.once("ready", () => {
 	try {
-		client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}) 
+		client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}); 
 
     fs.readdir("./modules", (err, files) => {
       sendMessage(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services`, color: "GREEN"}});
-      if (err) return console.log(err);
       files.forEach((file) => {
-        if (!file.includes("js") || file === "sendMessage.js") return;
-        let eventFunction = require(`./modules/${file}`);
+        if (!file.includes("js") || file === "sendMessage.js") { return };
+        let eventFunction = require("./modules/${file}");
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
           eventFunction.run(client);

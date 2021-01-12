@@ -50,7 +50,7 @@ module.exports = class banCommand extends Command {
             } else {
                await member.ban(reason);
    
-               const ban_card = new MessageEmbed()
+               const banCard = new MessageEmbed()
                    .setColor(this.client.config.school_color)
                    .setTitle(`Ban | ${member.user.tag}`)
                    .addField("User", member, true)
@@ -58,7 +58,7 @@ module.exports = class banCommand extends Command {
                    .addField("Reason", reason, true)
                    .setTimestamp();
    
-               sendMessage(this.client, this.client.config.channels.auditlogs, ban_card);
+               sendMessage(this.client, this.client.config.channels.auditlogs, banCard);
             }
     }
 }

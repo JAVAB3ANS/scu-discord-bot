@@ -17,7 +17,7 @@ module.exports = class githubCommand extends Command {
           key: "username",
           prompt: "Enter a username to lookup",
           type: "string",
-          validate: username => {
+          validate: (username) => {
             if(username.match(/^([^0-9]*)$/)) {
               return "Enter a proper username!";
             }
@@ -28,33 +28,29 @@ module.exports = class githubCommand extends Command {
   }
 
   async run( message, { username }) {
+  
+    let response = await fetch(`https://api.github.com/users/${username}`);
+    let data = await response.json();
 
-        try {
-            username = args[0].toLowerCase().split(" ");
-            let response = await fetch(`https://api.github.com/users/${username}`);
-            let data = await response.json();
+    if (data.name == null) return; //returns on invalid usernames
 
-            if (data.name == null) return; //returns on invalid usernames
+    const profileEmbed = new MessageEmbed()
+        .setTitle(`__**${data.name}'s GitHub Profile**__`)
+        .setDescription(`${data.bio || "none"}`)
+        .setThumbnail(`https://avatars3.githubusercontent.com/u/${data.id}?v=4`)
+        .addField("Username", data.login, true)
+        .addField("Company", data.company || "none", true)
+        .addField("Blog", `[${data.name}](${data.blog})` || "none", true)
+        .addField("Location", data.location || "none", true)
+        .addField("Public Repos", data.public_repos || "none", true)
+        .addField("Public Gists", data.public_gists || "none", true)
+        .addField("Followers", data.followers || "none", true)
+        .addField("Following", data.following || "none", true)
+        .addField("\u200B", "\u200B", true)
+        .setColor(this.client.config.school_color)
+        .setURL(data.html_url);
 
-            const profileEmbed = new MessageEmbed()
-                .setTitle(`__**${data.name}'s GitHub Profile**__`)
-                .setDescription(`${data.bio || "none"}`)
-                .setThumbnail(`https://avatars3.githubusercontent.com/u/${data.id}?v=4`)
-                .addField("Username", data.login, true)
-                .addField("Company", data.company || "none", true)
-                .addField("Blog", `[${data.name}](${data.blog})` || "none", true)
-                .addField("Location", data.location || "none", true)
-                .addField("Public Repos", data.public_repos || "none", true)
-                .addField("Public Gists", data.public_gists || "none", true)
-                .addField("Followers", data.followers || "none", true)
-                .addField("Following", data.following || "none", true)
-                .addField("\u200B", "\u200B", true)
-                .setColor(this.client.config.school_color)
-                .setURL(data.html_url);
+        message.channel.send(profileEmbed);
 
-                message.channel.send(profileEmbed);
-        } catch(err) {
-            console.log(err);
-        }
     }
 }

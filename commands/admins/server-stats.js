@@ -18,7 +18,7 @@ module.exports = class serverStatsCommand extends Command {
     async run ( message) {
 			function checkBots(guild) {
 				let botCount = 0;
-				guild.members.cache.forEach(member => {
+				guild.members.cache.forEach((member) => {
 				if(member.user.bot) botCount++;
 				});
 				return botCount;
@@ -26,7 +26,7 @@ module.exports = class serverStatsCommand extends Command {
 
 			function checkMembers(guild) {
 				let memberCount = 0;
-				guild.members.cache.forEach(member => {
+				guild.members.cache.forEach((member) => {
 					if(!member.user.bot) memberCount++;
 				});
 				return memberCount;

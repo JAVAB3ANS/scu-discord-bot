@@ -27,7 +27,7 @@ module.exports = class ZoomCommand extends Command {
 
             message.channel.send({ embed: { title: "Zoom Meetings Status", description: chunk, color: this.client.config.school_color}});
         } catch (e) {
-            console.log(e, "error", "zoom");
+            console.log(e);
         }
     }
   }; 

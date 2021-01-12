@@ -34,7 +34,7 @@ module.exports = class covid19Command extends Command {
 
           $("table[class=\"fixed_header\"] > tbody > tr").each(function() {
               let stats = $(this).text(); 
-              scuEmbed.addField(`\u200B`, stats, true);
+              scuEmbed.addField("\u200B", stats, true);
           });  
 
           message.channel.send(scuEmbed);

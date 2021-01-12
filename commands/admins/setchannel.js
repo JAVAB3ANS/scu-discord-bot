@@ -27,9 +27,9 @@ module.exports = class setChannelCommand extends Command {
   async run(message, { type, channel }) {
     if (this.client.config.channels.hasOwnProperty(type)) {
       let localConf = this.client.config;
-      localConf.channels[type] = channels.id;
+      localConf.channels[type] = channel.id;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
-        if (err) throw err;
+        if (err) { throw err; }
         message.say("Successfully updated channel value!");
       });
       sendMessage(this.client, this.client.config.channels.auditlogs, { embed: { title: `Channel Updated`, description: `${type} => #${channel.name}`, color: this.client.config.school_color }});

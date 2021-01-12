@@ -16,7 +16,7 @@ module.exports = class purgeCommand extends Command {
                     key: "number",
                     prompt: "Please specify a number below 101!",
                     type: "integer",
-                    validate: number => {
+                    validate: (number) => {
                         if(number > 101 || number < 0) {
                             return "Enter amount less than 101!";
                         }
@@ -26,13 +26,10 @@ module.exports = class purgeCommand extends Command {
         });
     }   
 
-    async run( message, { numberMessages }) { 
-        try {
-            const deleteCount = parseInt(numberMessages, 10);
-   
-            await message.channel.bulkDelete(deleteCount + 2) //includes bot message afterwards as well
-        } catch(e) {
-            console.log(e);
-        } 
+    async run( message, { numberMessages }) {  
+        const deleteCount = parseInt(numberMessages, 10);
+
+        await message.channel.bulkDelete(deleteCount + 2); //includes bot message afterwards as well
+        
     }
 } 

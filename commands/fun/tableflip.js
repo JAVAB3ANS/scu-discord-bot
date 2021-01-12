@@ -24,7 +24,7 @@ module.exports = class tableFlipCommand extends Command {
 
     async run( message) { 
         
-        const msg = await message.channel.send('(\\\\°□°)\\\\  ┬─┬');
+        const msg = await message.channel.send("(\\\\°□°)\\\\  ┬─┬");
         for (const frame of frames) {
             setTimeout(() => {}, 5000);
             await msg.edit(frame);

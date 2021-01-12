@@ -25,7 +25,7 @@ module.exports = class setPrefixCommand extends Command {
       let localConf = this.client.config;
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
-        if (err) throw err;
+        if (err) { throw err; }
         sendMessage(this.client, this.client.config.channels.auditlogs, { embed: {  description: `Successfully updated prefix to \`${newPrefix}\``, color: this.client.config.school_color}});      
       });
        

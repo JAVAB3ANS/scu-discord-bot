@@ -268,7 +268,7 @@ module.exports = async (client, message) => {
           let msg = modmailArgs.join(" "); 
           if (!msg) return message.channel.send({ embed: { description: `Please enter a message for the support ticket user!`, color: client.config.school_color}});
           
-          messageReception.setTitle(`<@${message.author.id}>`<@${message.author.id}>`**💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
+          messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
