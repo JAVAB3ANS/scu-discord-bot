@@ -10,8 +10,11 @@ module.exports.run = async (client) => {
         }
     }
   
-    setInterval(function() {
-        fetch(client.config.verification.verifyURL).then(checkVerifyServerStatus);
+    setInterval(async function() {
+        await fetch(client.config.verification.verifyURL).then(checkVerifyServerStatus);
+        
+        const response = await fetch(client.config.api.discord);
+		const body = await response.json();
         if (body.status.description === "All Systems Operational") {
             sendMessage(client, client.config.channels.auditlogs, { embed: { title: `${body.status.description}`, description: "Check the status [here](https://discordstatus.com/)! :white_check_mark:", color: "GREEN", timestamp: new Date()}});
         } else {

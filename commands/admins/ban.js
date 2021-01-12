@@ -29,21 +29,14 @@ module.exports = class banCommand extends Command {
     }
 
     async run ( message, { member, reason}) {
-            member = message.mentions.members.first();
+            member = message.mentions.members.first(); 
 
-            if(!member.bannable) 
+            if(member.user.id === this.client.config.serverRoles.owner || !this.client.config.serverRoles.modRoles.forEach(modRole => message.member.cache.has(modRole))) {
                 return message.channel.send({embed: {
-                    description: "I can't ban this user!",
+                    description: "I can't ban my owner or mods!",
                     color: this.client.config.school_color
-                }
-            });
-
-            if(member.user.id === this.client.config.serverRoles.owner) 
-                return message.channel.send({embed: {
-                    description: "I can't ban my owner!",
-                    color: this.client.config.school_color
-                }
-            }); 
+                }});
+            } 
 
             if(member.user.id === message.author.id) 
 		        return message.channel.send({embed: {

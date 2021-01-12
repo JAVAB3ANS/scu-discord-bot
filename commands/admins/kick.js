@@ -29,20 +29,14 @@ module.exports = class kickCommand extends Command {
     }
 
     async run ( message, { member, reason}) {
-           member = message.mentions.members.first();
-
-            if(!member.kickable) return message.channel.send({embed: {
-                description: "I can't kick this user!",
-                color: this.client.config.school_color
-                }
-            })
+           member = message.mentions.members.first(); 
             
-            if(member.user.id === this.client.config.serverRoles.owner) 
-                return message.channel.send({embed: {
-                    description: "I can't kick my owner!",
-                    color: this.client.config.school_color
-                }
-            })
+           if(member.user.id === this.client.config.serverRoles.owner || !this.client.config.serverRoles.modRoles.forEach(modRole => message.member.cache.has(modRole))) {
+            return message.channel.send({embed: {
+                description: "I can't kick my owner or mods!",
+                color: this.client.config.school_color
+            }});
+        } 
 
             if(member.user.id === message.author.id) return message.channel.send({embed: {
                 description: `You can't kick yourself!`,

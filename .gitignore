@@ -6,3 +6,5 @@ config.json
 eslintjrc.json
 json.sqlite
 events/modmailLogs/ 
+.snyk
+.gitignore
