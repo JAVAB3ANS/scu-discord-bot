@@ -1,5 +1,5 @@
-const fetch = require(`node-fetch`); 
-const { sendMessage } = require(`./sendMessage.js`);
+const fetch = require("node-fetch"); 
+const { sendMessage } = require("./sendMessage.js");
 
 module.exports.run = async (client) => { 
     function checkVerifyServerStatus(res) {
