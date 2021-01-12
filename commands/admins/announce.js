@@ -41,6 +41,7 @@ module.exports = class announceCommand extends Command {
   }
 
   async run(message, { option, id, body }) {
+    const announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
     switch (option) {
       case "edit": 
           message.channel.messages.fetch(id).then((m) => {
@@ -62,14 +63,10 @@ module.exports = class announceCommand extends Command {
             });
           }); 
         break;
-      case "embed": 
-          let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({
-            embed: JSON.parse(body),
-          }); 
+      case "embed":  
+          announceChannel.send({ embed: JSON.parse(body), }); 
         break;
       case "msg": 
-          let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
           announceChannel.send({ embed: { description: body, color: this.client.config.school_color } });
  
           break;
