@@ -34,7 +34,7 @@ module.exports = class akiCommand extends Command {
  
         if(!Started.has(message.author.id)) Started.add(message.author.id);
         else return message.channel.send(new MessageEmbed() 
-         .setDescription(`**:x: | The game already started.. :flushed:**`)
+         .setDescription("**:x: | The game already started.. :flushed:**")
          .setColor("RANDOM")
         );
 
@@ -46,11 +46,11 @@ module.exports = class akiCommand extends Command {
        .setColor("RANDOM")
        .setDescription(`**${aki.question}**\n${aki.answers.map((x, i) => `${x} | ${emojis[i]}`).join("\n")}`));
 
-        for (let emoji of emojis) await msg.react(emoji).catch(console.error);
+        for (let emoji of emojis) await msg.react(emoji);
         const collector = msg.createReactionCollector((reaction, user) => emojis.includes(reaction.emoji.name) && user.id === message.author.id,{ time: 60000 * 6 });
               collector.on("collect", async (reaction, user) => {
-                reaction.users.remove(user).catch(console.error);
-                if(reaction.emoji.name == "❌") return collector.stop();
+                reaction.users.remove(user);
+                if(reaction.emoji.name == "❌") { return collector.stop(); }
 
                 await aki.step(emojis.indexOf(reaction.emoji.name));
                 if (aki.progress >= 70 || aki.currentStep >= 78) {

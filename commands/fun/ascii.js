@@ -1,4 +1,4 @@
-const figlet = require('figlet');
+const figlet = require("figlet");
 const { Command } = require("discord.js-commando");
 
 module.exports = class asciiCommand extends Command {
@@ -18,7 +18,9 @@ module.exports = class asciiCommand extends Command {
 			  prompt: "Enter string!",
 			  type: "string",
 			  validate: text => {
-				  if(text.length > 2000) return 'Enter string below 2000 characters!' 
+				  if(text.length > 2000) {
+					  return "Enter string below 2000 characters!"; 
+				  }
 			  }
 			},
 		  ],
@@ -27,11 +29,11 @@ module.exports = class asciiCommand extends Command {
 
     async run ( message, { text }){
 
-        text = args.join(" ");
+        text = message.content.join(" ");
 
         figlet.text(text, function (err, data){
             if(err){
-                console.log('Something went wrong');
+                console.log("Something went wrong");
                 console.dir(err);
             }
             

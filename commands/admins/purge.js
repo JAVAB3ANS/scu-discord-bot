@@ -1,4 +1,4 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 
 module.exports = class purgeCommand extends Command {
     constructor(client) {
@@ -17,7 +17,9 @@ module.exports = class purgeCommand extends Command {
                     prompt: "Please specify a number below 101!",
                     type: "integer",
                     validate: number => {
-                        if(number < 101) return 'Enter amount less than 101!' 
+                        if(number > 101 || number < 0) {
+                            return "Enter amount less than 101!";
+                        }
                     }
                 },
             ],

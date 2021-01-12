@@ -16,7 +16,7 @@ module.exports = class announceCommand extends Command {
       args: [
         {
           key: "option",
-          prompt: `Please choose a valid option \`msg, embed, append, edit\``,
+          prompt: "Please choose a valid option \`msg, embed, append, edit\`",
           type: "string",
           oneOf: ["edit", "append", "embed", "msg"],
           // validate: (option) => option == "edit" || option == "append" || option == "embed" || option.test(/<((#\d+)|(:.+?:\d+))>/g)
@@ -26,7 +26,9 @@ module.exports = class announceCommand extends Command {
           prompt: "Please provide a message id to edit or mention a channel to send this message to",
           type: "string",
           validate: (id) => {
-            if(!id.startsWith("#") || !id.match(/^([^0-9]*)$/)) return "Please enter a proper snowflake!";
+            if(!id.startsWith("#") || !id.match(/^([^0-9]*)$/)) {
+              return "Please enter a proper snowflake!";
+            }
           }
         },
         {

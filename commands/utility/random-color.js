@@ -1,13 +1,13 @@
-const { MessageEmbed } = require(`discord.js`); //for embed functionality 
-const { Command } = require(`discord.js-commando`);
+const { MessageEmbed } = require("discord.js"); //for embed functionality 
+const { Command } = require("discord.js-commando");
 
 module.exports = class randomColorCommand extends Command {
   constructor(client) {
     super(client, {
-        name: 'random-color',  
-        description: 'Generate a random color!',  
-        group: 'utility',
-        memberName: 'random-color',
+        name: "random-color",  
+        description: "Generate a random color!",  
+        group: "utility",
+        memberName: "random-color",
         throttling: {
             usages: 2,
             duration: 5,
@@ -24,10 +24,10 @@ module.exports = class randomColorCommand extends Command {
 
         const randomNumberEmbed = new MessageEmbed()
         .setColor(randomNumber)
-        .setTitle(`Here's your random color!`)
+        .setTitle("Here's your random color!")
         .setDescription(`- Hexadecimal Value: #${randomNumber}\n` + "- Decimal Value: " + hexToDec(randomNumber))
-        .setFooter(`Brought to you by the server lords!`)
-        .setTimestamp()
+        .setFooter("Brought to you by the server lords!")
+        .setTimestamp();
 
         message.channel.send(randomNumberEmbed);
         }

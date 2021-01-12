@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const fs = require("fs");
-let { sendMessage } = require(`../../modules/sendMessage.js`); 
+let { sendMessage } = require("../../modules/sendMessage.js"); 
 
 module.exports = class setPrefixCommand extends Command {
   constructor(client) {
@@ -26,7 +26,7 @@ module.exports = class setPrefixCommand extends Command {
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) throw err;
-        sendMessage(this.client, this.client.config.channels.auditlogs, { embed: { description: `Successfully updated prefix to \`${newPrefix}\``, color: this.client.config.school_color}});
+        sendMessage(this.client, this.client.config.channels.auditlogs, { embed: {  description: `Successfully updated prefix to \`${newPrefix}\``, color: this.client.config.school_color}});      
       });
        
     } else {

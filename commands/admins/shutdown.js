@@ -1,12 +1,12 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 
 module.exports = class shutdownCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'shutdown',
-            description: 'Shut down the bot!',
-            group: 'admins',  
-            memberName: 'shutdown',
+            name: "shutdown",
+            description: "Shut down the bot!",
+            group: "admins",  
+            memberName: "shutdown",
             throttling: {
                 usages: 2,
                 duration: 5,
@@ -28,12 +28,10 @@ module.exports = class shutdownCommand extends Command {
                 return message;
 
             } catch (err) {
-                console.log(err.message);
+                console.log(err);
             } finally {
-                this.client.destroy(err => {
-                    console.log("====================");
-                    console.log("Command: [!@shutdown] run by " + message.author.username);
-                    console.log("====================");
+                this.client.destroy(err => { 
+                    console.log("Command: [!@shutdown] run by " + message.author.username); 
                     console.log(err);
                 });
             } 

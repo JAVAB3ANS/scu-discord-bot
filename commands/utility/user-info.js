@@ -35,7 +35,7 @@ module.exports = class userInfoCommand extends Command {
         },
         fields: [
           { name: "Nickname", value: `${user.nickname || "N/A"}`, inline: true },
-          { name: "Bot Account", value: `${user.user.bot || 'No'}`, inline: true },
+          { name: "Bot Account", value: `${user.user.bot || "No"}`, inline: true },
           { name: "Highest Role", value: `${user.roles.highest.name}`, inline: true },
           { name: `Joined ${user.guild.name.split(0, 15)}`, value: `${user.joinedAt}`, inline: false },
           { name: "Account Created", value: `${user.user.createdAt}`, inline: false },

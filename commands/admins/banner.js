@@ -1,5 +1,5 @@
-const { MessageEmbed } = require(`discord.js`); //for embed functionality 
-const { Command } = require(`discord.js-commando`);
+const { MessageEmbed } = require("discord.js"); //for embed functionality 
+const { Command } = require("discord.js-commando");
 
 module.exports = class bannerCommand extends Command {
     constructor(client) {
@@ -18,7 +18,9 @@ module.exports = class bannerCommand extends Command {
                     prompt: "Please provide a proper file name!",
                     type: "string",
                     validate: fileName => {
-                        if(!fileName.match(/[a-zA-Z0-9\s_\\.\-\(\):])+(.jfif|.jpeg|.png|.gif|.jpg)$/)) return 'Please enter a proper file type!' 
+                        if(!fileName.match(/[a-zA-Z0-9\s_\\.\-\(\):])+(.jfif|.jpeg|.png|.gif|.jpg)$/)) {
+                            return "Please enter a proper file type!";
+                        }
                     }
                 },
             ],
@@ -30,7 +32,7 @@ module.exports = class bannerCommand extends Command {
                 const imageEmbed = new MessageEmbed()
                 .attachFiles([`./assets/${fileName}`])
                 .setImage(`attachment://${fileName}`)
-                .setColor(this.client.config.school_color)
+                .setColor(this.client.config.school_color);
 
                 message.channel.send(imageEmbed);
             } catch (err) {

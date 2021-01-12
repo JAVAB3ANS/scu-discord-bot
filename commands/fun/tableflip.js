@@ -1,11 +1,11 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 
 const frames = [
-	'(-°□°)-  ┬─┬',
-	'(╯°□°)╯    ]',
-	'(╯°□°)╯  ︵  ┻━┻',
-	'(╯°□°)╯       [',
-    '(╯°□°)╯           ┬─┬',
+	"(-°□°)-  ┬─┬",
+	"(╯°□°)╯    ]",
+	"(╯°□°)╯  ︵  ┻━┻",
+	"(╯°□°)╯       [",
+  "(╯°□°)╯           ┬─┬",
 ];
 
 module.exports = class tableFlipCommand extends Command {

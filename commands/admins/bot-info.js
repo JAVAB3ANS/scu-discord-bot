@@ -1,13 +1,13 @@
-const { Command } = require(`discord.js-commando`);
-const info = require(`../../package.json`);
+const { Command } = require("discord.js-commando");
+const info = require("../../package.json");
 
 module.exports = class botInfoCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'bot-info',
-            memberName: 'bot-info',
-            description: 'Get bot info!',
-            group: 'admins',  
+            name: "bot-info",
+            memberName: "bot-info",
+            description: "Get bot info!",
+            group: "admins",  
             throttling: {
                 usages: 2,
                 duration: 5,
@@ -23,7 +23,7 @@ module.exports = class botInfoCommand extends Command {
                   icon_url: this.client.user.displayAvatarURL()
                 },
                 url: `${info.homepage}`,
-                title: `Bot Information`,
+                title: "Bot Information",
                 description: `${info.description}`,
                 fields: [
                   {

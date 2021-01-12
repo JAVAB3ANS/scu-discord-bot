@@ -1,12 +1,12 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 
 module.exports = class restartCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'restart',
-            memberName: 'restart',
-            description: 'Restart the bot!',
-            group: 'admins',  
+            name: "restart",
+            memberName: "restart",
+            description: "Restart the bot!",
+            group: "admins",  
             throttling: {
                 usages: 2,
                 duration: 5,
@@ -16,9 +16,9 @@ module.exports = class restartCommand extends Command {
 
 	async run ( message) {   
             try {
-                const frames = ['□', '□□□□ 25%', '□□□□□□□□ 50', '□□□□□□□□□□□□ 75%', '□□□□□□□□□□□□□□□□ 100%'];
+                const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];
 
-                const msg = await message.channel.send(`Restarting the bot...`);
+                const msg = await message.channel.send("Restarting the bot...");
                 
                 for (const frame of frames) {
                     setTimeout(() => {}, 4000);

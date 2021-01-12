@@ -1,4 +1,4 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 
 module.exports = class rpsCommand extends Command {
 	constructor(client) {
@@ -30,15 +30,15 @@ module.exports = class rpsCommand extends Command {
             if (user == "rock" && computer == "scissors" || user == "paper" && computer == "rock" || user == "scissors" && computer == "paper") {
                 return `**${message.author}** wins this round!`;
             } else if (computer == "rock" && user == "scissors" || computer == "paper" && user == "rock" || computer == "scissors" && user == "paper") {
-                return `**<@${client.user.id}>** wins this round!`;
+                return `**<@${this.client.user.id}>** wins this round!`;
             } else {
-                return `It's a tie!`;
+                return "It's a tie!";
             }
         }
 		
         const rpsEmbed = {
             description: calculate(user, computer),
-            title: `__**Your Results**__`,
+            title: "__**Your Results**__",
             fields: [ { name: "User Choice", value: user, }, { name: "Computer Choice", value: computer, }, ],
             color: this.client.config.school_color
         };

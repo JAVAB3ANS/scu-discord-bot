@@ -1,4 +1,4 @@
-const { Command } = require(`discord.js-commando`);
+const { Command } = require("discord.js-commando");
 const fetch = require("node-fetch");
 
 module.exports = class ZoomCommand extends Command {
@@ -21,12 +21,11 @@ module.exports = class ZoomCommand extends Command {
             const response = await fetch("https://14qjgk812kgk.statuspage.io/api/v2/components.json");
             const data = await response.json();
             
-            for (const i of data.components) {
-                let connected = data.components[i].status == "operational";
-                chunk += `**${data.components[i].name}** ${connected ? ":white_check_mark:\n" : ":x:\n"}`;
+            for (const i of data.components) { 
+                chunk += `**${data.components[i].name}** ${data.components[i].status == "operational" ? ":white_check_mark:\n" : ":x:\n"}`;
             }
 
-            message.channel.send({ embed: { title: `Zoom Meetings Status`, description: chunk, color: this.client.config.school_color}});
+            message.channel.send({ embed: { title: "Zoom Meetings Status", description: chunk, color: this.client.config.school_color}});
         } catch (e) {
             console.log(e, "error", "zoom");
         }

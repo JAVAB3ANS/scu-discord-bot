@@ -1,13 +1,13 @@
-const { Command } = require(`discord.js-commando`);
-const fetch = require(`node-fetch`);
+const { Command } = require("discord.js-commando");
+const fetch = require("node-fetch");
 
 module.exports = class discordCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'discord',
-            description: 'Checks Discord status!',
-            group: 'utility',  
-            memberName: 'discord',
+            name: "discord",
+            description: "Checks Discord status!",
+            group: "utility",  
+            memberName: "discord",
             throttling: {
                 usages: 2,
                 duration: 5,

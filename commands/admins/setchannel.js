@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const fs = require("fs");
-let { sendMessage } = require(`../../modules/sendMessage.js`); 
+let { sendMessage } = require("../../modules/sendMessage.js"); 
 
 module.exports = class setChannelCommand extends Command {
   constructor(client) {
