@@ -21,4 +21,4 @@ module.exports.run = async (client) => {
             sendMessage(client, client.config.channels.auditlogs, { embed: { title: `:x: ${body.status.description}`, description: "There seems to be an error with some of the Discord servers. Double check [here](https://status.discordapp.com/)! :x:", color: "RED", timestamp: new Date()}});
         }
     }, 300000); //check server status every 5 minutes!
-}
+};

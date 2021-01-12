@@ -90,4 +90,4 @@ module.exports = class akiCommand extends Command {
           msg.delete({ timeout: 1000 }).catch(()=>{});
         });
       }
-    } 
+    }; 

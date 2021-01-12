@@ -61,4 +61,4 @@ module.exports = class banCommand extends Command {
                sendMessage(this.client, this.client.config.channels.auditlogs, banCard);
             }
     }
-}
+};

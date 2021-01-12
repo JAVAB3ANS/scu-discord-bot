@@ -52,7 +52,7 @@ client.once("ready", () => {
       sendMessage(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services`, color: "GREEN"}});
       files.forEach((file) => {
         if (!file.includes("js") || file === "sendMessage.js") { return };
-        let eventFunction = require("./modules/${file}");
+        let eventFunction = require(`./modules/${file}`);
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
           eventFunction.run(client);
@@ -63,7 +63,7 @@ client.once("ready", () => {
 
 		sendMessage(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN", timestamp: new Date()}});
 	} catch (err) {
-		console.log(err);
+		  console.log(err);
 	}
 });
 

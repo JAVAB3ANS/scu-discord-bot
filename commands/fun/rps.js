@@ -44,4 +44,4 @@ module.exports = class rpsCommand extends Command {
         };
         message.channel.send({ embed: rpsEmbed });
     }
-}
+};

@@ -50,4 +50,4 @@ module.exports = class botInfoCommand extends Command {
         };
         message.channel.send({embed: botInfo});
       }
-  }
+  };

@@ -40,4 +40,4 @@ module.exports = class covid19Command extends Command {
           message.channel.send(scuEmbed);
         } 
     }
-}
+};

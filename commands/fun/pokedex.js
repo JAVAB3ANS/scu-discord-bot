@@ -59,4 +59,4 @@ module.exports = class pokedexCommand extends Command {
           
           message.channel.send(embed);
         } 
-}
+};

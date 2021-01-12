@@ -26,4 +26,4 @@ module.exports = class gitPullCommand extends Command {
             await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
         }   
     }
-} 
+}; 

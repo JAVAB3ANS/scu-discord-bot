@@ -31,4 +31,4 @@ module.exports = class randomColorCommand extends Command {
 
         message.channel.send(randomNumberEmbed);
         }
-}
+};

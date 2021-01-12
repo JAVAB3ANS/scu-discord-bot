@@ -31,12 +31,8 @@ module.exports = class asciiCommand extends Command {
 
         text = message.content.join(" ");
 
-        figlet.text(text, function (err, data) {
-            if(err) {
-                console.log(err); 
-            }
-            
+        figlet.text(text, function (err, data) {  
             message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `, color: this.client.config.school_color}});
         });
     }
-}
+};

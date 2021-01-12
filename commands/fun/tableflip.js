@@ -30,4 +30,4 @@ module.exports = class tableFlipCommand extends Command {
             await msg.edit(frame);
         }
     }
-}
+};

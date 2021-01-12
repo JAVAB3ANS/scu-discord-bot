@@ -48,4 +48,4 @@ module.exports = class serverStatsCommand extends Command {
 
 			message.channel.send(serverembed); 
 	} 
-} 
+}; 

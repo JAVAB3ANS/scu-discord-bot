@@ -36,4 +36,4 @@ module.exports = class bannerCommand extends Command {
         message.channel.send(imageEmbed);
            
     }
-}
+};

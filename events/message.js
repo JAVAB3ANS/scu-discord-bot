@@ -282,4 +282,4 @@ module.exports = async (client, message) => {
           break;
         }
       }
-} 
+}; 

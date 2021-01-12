@@ -32,4 +32,4 @@ module.exports = class discordCommand extends Command {
             message.channel.send({ embed: { title: `:x: ${body.status.description}`, description: `There seems to be an error with some of the servers. Double check [here](https://status.discord.com/api/v2/status.json)! :x:`, color: "RED", timestamp: new Date()}});
         } 
     }
-}
+};

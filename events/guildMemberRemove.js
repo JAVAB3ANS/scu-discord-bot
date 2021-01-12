@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 let { sendMessage } = require("../modules/sendMessage.js");
 
 module.exports = async (client, member) => {
-	if(member.user.bot) {return}; //ignore members who are bot users
+	if(member.user.bot) {return; } //ignore members who are bot users
 	
 	const guild = client.guilds.cache.get(`${client.config.verification.guildID}`);
 	let memberCount = guild.members.cache.filter((member) => !member.user.bot).size;	
@@ -15,4 +15,4 @@ module.exports = async (client, member) => {
 	.setColor(client.config.school_color);
 
 	sendMessage(client, client.config.channels.auditlogs, leaveEmbed);
-}
+};

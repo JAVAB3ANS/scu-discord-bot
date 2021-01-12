@@ -26,4 +26,4 @@ module.exports = class restartCommand extends Command {
     
         process.exit(); 
     }
-} 
+}; 

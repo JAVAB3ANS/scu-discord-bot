@@ -53,4 +53,4 @@ module.exports = class githubCommand extends Command {
         message.channel.send(profileEmbed);
 
     }
-}
+};

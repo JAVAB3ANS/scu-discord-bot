@@ -50,7 +50,7 @@ module.exports = class kickCommand extends Command {
             } else {
                 await member.kick(reason);
 		
-                const kick_card = new MessageEmbed()
+                const kickCard = new MessageEmbed()
                 .setColor(this.client.config.school_color)
                 .setTitle(`Kick | ${member.user.tag}`)
                 .addField("User", member, true)
@@ -58,7 +58,7 @@ module.exports = class kickCommand extends Command {
                 .addField("Reason", reason, true)
                 .setTimestamp();
 
-                sendMessage(this.client, this.client.config.channels.auditlogs, kick_card);
+                sendMessage(this.client, this.client.config.channels.auditlogs, kickCard);
 	        }
     }
-}
+};

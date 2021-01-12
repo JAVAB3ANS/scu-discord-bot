@@ -35,7 +35,9 @@ module.exports = class weatherCommand extends Command {
 	    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${this.client.config.api.weather}`);
     	const body = await response.json();
 
-		if (body.cod && body.cod === 404) { return message.channel.send({embed: {description: "Zip code not found!", color: this.client.config.school_color}}); }
+		if (body.cod && body.cod === 404) { 
+			return message.channel.send({embed: {description: "Zip code not found!", color: this.client.config.school_color}}); 
+		}
 
         if (body.wind.deg) {
 			let angle = body.wind.deg;
@@ -75,4 +77,4 @@ module.exports = class weatherCommand extends Command {
 
 	    message.channel.send(weatherEmbed);
     }
-}
+};

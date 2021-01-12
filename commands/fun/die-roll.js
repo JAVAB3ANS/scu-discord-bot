@@ -40,4 +40,4 @@ module.exports = class dieRollCommand extends Command {
         }
         message.channel.send(embed);
     }
-}
+};
