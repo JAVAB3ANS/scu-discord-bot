@@ -52,8 +52,7 @@ module.exports = class announceCommand extends Command {
             });
           }); 
         break;
-      case "append":
-        try {
+      case "append": 
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
@@ -61,29 +60,19 @@ module.exports = class announceCommand extends Command {
                 color: this.client.config.school_color
               },
             });
-          });
-        } catch (e) {
-          console.log(e);
-        }
+          }); 
         break;
-      case "embed":
-        try {
+      case "embed": 
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
           announceChannel.send({
             embed: JSON.parse(body),
-          });
-        } catch (e) {
-            console.log(e);
-        }
+          }); 
         break;
-      case "msg":
-        try {
+      case "msg": 
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
           announceChannel.send({ embed: { description: body, color: this.client.config.school_color } });
-        } catch (e) {
-          console.log(e);
-        }
-        break;
+ 
+          break;
     }
     message.delete({ timeout: 0 });
   }

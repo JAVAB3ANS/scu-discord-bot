@@ -24,8 +24,6 @@ module.exports = class shutdownCommand extends Command {
             await msg.edit({ embed: { description: frame, color: this.client.config.school_color}});
         }
 
-        this.client.destroy((err) => {   
-            console.log(err);
-        }); 
+        this.client.destroy;
     }
 }; 

@@ -26,7 +26,7 @@ module.exports = async (client, message) => {
           let channel, found = true; 
     
           try { 
-            if (active) client.channels.cache.get(active.channelID).guild;
+            if (active) { client.channels.cache.get(active.channelID).guild; }
           } catch (e) {
             found = false;
           }
@@ -39,7 +39,7 @@ module.exports = async (client, message) => {
               channel.setTopic(`Use **${client.config.prefix}cmds** to utilize the Ticket | ModMail commands on behalf of <@${message.author.id}>`);
   
               let perms = [{ id: client.config.verification.guildID, deny: ["VIEW_CHANNEL"]}];
-              let permissionFlags = ["VIEW_CHANNEL", "SEND_MESSAGES", "ADD_REACTIONS", "READ_MESSAGE_HISTORY", "MANAGE_CHANNELS", "MANAGE_MESSAGES", "ADD_REACTIONS", "USE_EXTERNAL_EMOJIS"]
+              let permissionFlags = ["VIEW_CHANNEL", "SEND_MESSAGES", "ADD_REACTIONS", "READ_MESSAGE_HISTORY", "MANAGE_CHANNELS", "MANAGE_MESSAGES", "ADD_REACTIONS", "USE_EXTERNAL_EMOJIS"];
   
               client.config.serverRoles.modRoles.forEach((role) => {
                 perms.push({id: role, allow: permissionFlags });
@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
   
               channel.overwritePermissions(perms);
             } catch (err) {
-                if (err == "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") return;
+                if (err === "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") return;
             }
             
             messageReception.setTitle("ModMail Ticket Created").setThumbnail("attachment://verified.gif") 
@@ -110,7 +110,7 @@ module.exports = async (client, message) => {
           break; 
   
         case "complete": //close the user`s ticket after they`re done and log it!
-          if(isPause === true || isPause === "true") return await message.channel.send({ embed: { description: "Continue the support user's thread before completing the ticket!", color: client.config.school_color}})
+          if(isPause === true || isPause === "true"){ return await message.channel.send({ embed: { description: "Continue the support user's thread before completing the ticket!", color: client.config.school_color}}); }
   
           messageReception.setTitle("ModMail Ticket Resolved").setFooter(`ModMail Ticket Closed -- ${supportUser.tag}`)
           .setDescription("✅ *Your ModMail has been marked as **complete** and has been logged by the admins/mods. If you wish to create a new one, please send a message to the bot.*"); 
@@ -137,8 +137,7 @@ module.exports = async (client, message) => {
           fs.readFile("./assets/modmailTemplate/template.html", "utf8", function (err, data) {  //goes into my directory for create the log's HTML/CSS template
             const filePath = `./events/modmailLogs/index_${supportUser.tag}.html`; 
             //names file after user's Discord tag and saves to my modmail file logs on my Raspberry Pi
-            fs.writeFile(filePath, data, function (err, data) {
-              if (err) console.log("error", err);
+            fs.writeFile(filePath, data, function (err, data) { 
   
               let guildElement = document.createElement("div");
               guildElement.className = "img-container";
@@ -161,8 +160,9 @@ module.exports = async (client, message) => {
               guildElement.appendChild(guildTicketImg);
   
               fs.appendFile(filePath, guildElement.outerHTML, function (err) {
-                if (err)
-                  console.log("error", err);
+                if (err) {
+                  console.log(err);
+                }
               });
   
               //for each normal user message sent in the ticketing channel, put them in a div and nest elements in their respective places
@@ -206,7 +206,7 @@ module.exports = async (client, message) => {
                         messageContainer.appendChild(embedSpan);
                     }      
                   } catch (err) { 
-                        if (err == "TypeError: Cannot read property 'text' of null") { return };
+                        if (err === "TypeError: Cannot read property 'text' of null") { return };
                   }            
                 } 
   
@@ -236,7 +236,7 @@ module.exports = async (client, message) => {
           break; 
         
         case "continue": // continue a thread
-          if(isPause === false || isPause === "false") return await message.channel.send({ embed: { description: "This ticket was not paused.", color: client.config.school_color}});
+          if(isPause === false || isPause === "false") { return await message.channel.send({ embed: { description: "This ticket was not paused.", color: client.config.school_color}}); }
           
           await db.delete(`suspended${support.targetID}`);
           
@@ -248,7 +248,7 @@ module.exports = async (client, message) => {
           break;
           
         case "pause":  // pause a thread 
-          if(isPause === true || isPause === "true") return await message.channel.send({ embed: { description: "This ticket already paused. Unpause it to continue.", color: client.config.school_color}});
+          if(isPause === true || isPause === "true") { return await message.channel.send({ embed: { description: "This ticket already paused. Unpause it to continue.", color: client.config.school_color}}); }
           
           await db.set(`suspended${support.targetID}`, true);
           
@@ -263,10 +263,10 @@ module.exports = async (client, message) => {
   
         case "reply": // reply to user 
           await message.delete();
-          if(isPause === true || isPause === "true") return await message.channel.send({ embed: { description: "This ticket is already paused. Unpause it to continue.", color: client.config.school_color}})
+          if(isPause === true || isPause === "true") { return await message.channel.send({ embed: { description: "This ticket is already paused. Unpause it to continue.", color: client.config.school_color}}); }
   
           let msg = modmailArgs.join(" "); 
-          if (!msg) return message.channel.send({ embed: { description: `Please enter a message for the support ticket user!`, color: client.config.school_color}});
+          if (!msg) { return message.channel.send({ embed: { description: "Please enter a message for the support ticket user!", color: client.config.school_color}}); }
           
           messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")

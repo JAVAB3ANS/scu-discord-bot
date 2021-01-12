@@ -12,7 +12,7 @@ module.exports = class discordCommand extends Command {
                 usages: 2,
                 duration: 5,
             },
-        })
+        });
     }
 
     async run  (message) {
