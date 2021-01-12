@@ -11,13 +11,13 @@ module.exports = class gitPullCommand extends Command {
             throttling: {
                 usages: 2,
                 duration: 5,
-			},
+	    },
         });
     }
 
     async run ( message) {
         try {
-            const frames = [`□`, `□□□□ 25%`, `□□□□□□□□ 50%`, `□□□□□□□□□□□□ 75%`, `□□□□□□□□□□□□□□□□ 100%`, `Finished pulling from [scu-discord-bot](${client.config.verification.githubLink})!`];
+            const frames = [`□`, `□□□□ 25%`, `□□□□□□□□ 50%`, `□□□□□□□□□□□□ 75%`, `□□□□□□□□□□□□□□□□ 100%`, `Finished pulling from [scu-discord-bot](https://github.com/jasonanhvu/scu-discord-bot)!`];
             const msg = await message.channel.send("Pulling...");
         
             child_proc.exec("git pull origin master");
