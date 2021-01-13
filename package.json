@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "figlet": "^1.5.0",
     "fluent-ffmpeg": "^2.1.2",
-    "got": "^11.4.0",
+    "got": "^11.8.1",
     "helmet": "^4.2.0",
     "inspirational-quotes": "^1.0.8",
     "install": "^0.13.0",
