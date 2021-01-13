@@ -16,8 +16,8 @@ module.exports = class purgeCommand extends Command {
                     key: "number",
                     prompt: "Please specify a number below 101!",
                     type: "integer",
-                    validate: (number) => {
-                        if(number > 101 || number < 0) {
+                    validate: (numberMessages) => {
+                        if(numberMessages > 101 || numberMessages < 0) {
                             return "Enter amount less than 101!";
                         }
                     }

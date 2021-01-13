@@ -21,7 +21,7 @@ module.exports = class weatherCommand extends Command {
 			  prompt: "Enter a zip code to lookup",
 			  type: "string",
 			  validate: (zipCode) => {
-				  if((!zipCode.match(/^([^0-9]*)$/) || zipCode.length !== 5)) {
+				  if(!zipCode.match(/^([^0-9]*)$/) || zipCode.length !== 5) {
 					  return "Enter a five-digit zip code!";
 				  }
 			  }

@@ -114,7 +114,7 @@ module.exports.run = async (client) => {
             
           guild.channels.cache.get(client.config.channels.welcome).send(member.user.id, { embed: verifyEmbed}).then((m) => m.react("👋"));
                   
-          let verifiedCount = guild.members.cache.filter((member) => member.roles.cache.find(role => role.id === client.config.serverRoles.verifiedStudent)).size;
+          let verifiedCount = guild.members.cache.filter((member) => member.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)).size;
           let studentCount = guild.channels.cache.find((channel) => channel.id === client.config.channels.verifiedCount);
           studentCount.setName(`🐎 ${verifiedCount} Bucking Broncos`);
       }

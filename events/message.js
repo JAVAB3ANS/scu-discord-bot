@@ -9,17 +9,17 @@ const document = dom.window.document;
 
 module.exports = async (client, message) => {
     // Checks if the Author is a Bot, or the message isn`t from the guild, ignore it.
-  if (!message.content.startsWith(client.config.prefix) && message.channel.type != "dm" || message.author.bot) return; 
+  if (!message.content.startsWith(client.config.prefix) && message.channel.type !== "dm" || message.author.bot) return; 
   
     const messageReception = new MessageEmbed().setColor(client.config.school_color)
     .setAuthor(message.author.tag, message.author.displayAvatarURL()); 
   
       //Check if message is in a direct message and mentions bot
       if (message.channel.type === "dm" && message.mentions.has(client.user)) {   
-        const userTicketContent = message.content.split(` `).slice(1).join(` `); 
+        const userTicketContent = message.content.split(" ").slice(1).join(" "); 
         if (userTicketContent.length > 1) {
           let user = await db.get(`suspended${message.author.id}`);
-          if (user === true || user === "true") return await message.channel.send({ embed: { description: `Your ticket has been paused!`, color: client.config.school_color}});
+          if (user === true || user === "true") { return await message.channel.send({ embed: { description: `Your ticket has been paused!`, color: client.config.school_color}}); }
   
           let active = await db.fetch(`support_${message.author.id}`);
           let guild = client.guilds.cache.get(client.config.verification.guildID);
@@ -82,7 +82,7 @@ module.exports = async (client, message) => {
     if (support) {
       support = await db.fetch(`support_${support}`);
       const supportUser = client.users.cache.get(support.targetID);
-      if (!supportUser) return message.channel.delete(); 
+      if (!supportUser) { return message.channel.delete(); }
   
       function modmailCommands() {
         const commands = [  
@@ -220,8 +220,7 @@ module.exports = async (client, message) => {
                 parentContainer.appendChild(messageContainer); 
   
                 fs.appendFile(filePath, parentContainer.outerHTML, function (err) {
-                  if (err)
-                    console.log("error", err);
+                  if (err) { console.log(err); }
                 });
               });
               messageReception.attachFiles(filePath);
