@@ -24,7 +24,7 @@
     "helmet": "^4.2.0",
     "inspirational-quotes": "^1.0.8",
     "install": "^0.13.0",
-    "jimp": "^0.14.0",
+    "jimp": "^0.16.1",
     "jsdom": "^16.4.0",
     "jshint": "^2.12.0",
     "moment": "^2.29.1",
