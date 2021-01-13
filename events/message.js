@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
   
               channel.overwritePermissions(perms);
             } catch (err) {
-                if (err === "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") return;
+                if (err === "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") { return; }
             }
             
             messageReception.setTitle("ModMail Ticket Created").setThumbnail("attachment://verified.gif") 
@@ -160,9 +160,7 @@ module.exports = async (client, message) => {
               guildElement.appendChild(guildTicketImg);
   
               fs.appendFile(filePath, guildElement.outerHTML, function (err) {
-                if (err) {
-                  console.log(err);
-                }
+                if (err) { return; }
               });
   
               //for each normal user message sent in the ticketing channel, put them in a div and nest elements in their respective places
@@ -206,7 +204,7 @@ module.exports = async (client, message) => {
                         messageContainer.appendChild(embedSpan);
                     }      
                   } catch (err) { 
-                        if (err === "TypeError: Cannot read property 'text' of null") { return };
+                        if (err === "TypeError: Cannot read property 'text' of null") { return; }
                   }            
                 } 
   

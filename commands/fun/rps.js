@@ -27,7 +27,7 @@ module.exports = class rpsCommand extends Command {
         let computer = choices[Math.floor(Math.random() * 3 + 1) - 1]; 
 		
         function calculate(user, computer) {
-            if (user == "rock" && computer === "scissors" || user === "paper" && computer === "rock" || user === "scissors" && computer === "paper") {
+            if (user === "rock" && computer === "scissors" || user === "paper" && computer === "rock" || user === "scissors" && computer === "paper") {
                 return `**${message.author}** wins this round!`;
             } else if (computer === "rock" && user === "scissors" || computer === "paper" && user === "rock" || computer === "scissors" && user === "paper") {
                 return `**<@${this.client.user.id}>** wins this round!`;

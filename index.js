@@ -44,14 +44,13 @@ client.dispatcher.addInhibitor( (client, msg) => {
   }
 });
 
-client.once("ready", () => {
-	try {
+client.once("ready", () => { 
 		client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}); 
 
     fs.readdir("./modules", (err, files) => {
       sendMessage(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services`, color: "GREEN"}});
       files.forEach((file) => {
-        if (!file.includes("js") || file === "sendMessage.js") { return };
+        if (!file.includes("js") || file === "sendMessage.js") { return; }
         let eventFunction = require(`./modules/${file}`);
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
@@ -62,9 +61,6 @@ client.once("ready", () => {
     });
 
 		sendMessage(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN", timestamp: new Date()}});
-	} catch (err) {
-		  console.log(err);
-	}
 });
 
 client

@@ -46,11 +46,11 @@ module.exports = class akiCommand extends Command {
        .setColor("RANDOM")
        .setDescription(`**${aki.question}**\n${aki.answers.map((x, i) => `${x} | ${emojis[i]}`).join("\n")}`));
 
-        for (let emoji of emojis) { await msg.react(emoji) };
+        for (let emoji of emojis) { await msg.react(emoji) }
         const collector = msg.createReactionCollector((reaction, user) => emojis.includes(reaction.emoji.name) && user.id === message.author.id,{ time: 60000 * 6 });
               collector.on("collect", async (reaction, user) => {
                 reaction.users.remove(user);
-                if(reaction.emoji.name == "❌") { return collector.stop(); }
+                if(reaction.emoji.name === "❌") { return collector.stop(); }
 
                 await aki.step(emojis.indexOf(reaction.emoji.name));
                 if (aki.progress >= 70 || aki.currentStep >= 78) {
@@ -62,7 +62,7 @@ module.exports = class akiCommand extends Command {
                   .setImage(aki.answers[0].absolute_picture_path)
                   .setColor("RANDOM"));
                   await message.channel.awaitMessages((response) => ["yes","y","no","n"].includes(response.content.trim().toLowerCase()) &&
-                    response.author.id == message.author.id, { max: 1, time: 30000, errors: ["time"] })
+                    response.author.id === message.author.id, { max: 1, time: 30000, errors: ["time"] })
                       .then((collected) => {
                          const content = collected.first().content.trim().toLowerCase();
                             if (content === "y" || content === "yes") {
@@ -87,7 +87,7 @@ module.exports = class akiCommand extends Command {
 
         collector.on("end",() => { 
           Started.delete(message.author.id);
-          msg.delete({ timeout: 1000 }).catch(()=>{});
+          msg.delete({ timeout: 1000 }).catch(() => {});
         });
       }
     }; 
