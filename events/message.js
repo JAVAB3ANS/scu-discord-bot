@@ -1,15 +1,14 @@
 const { MessageEmbed, Collection } = require("discord.js");
 const db = require("quick.db");
-const fs = require("fs");
-const { sendMessage } = require("../modules/sendMessage.js");
+const fs = require("fs"); 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
-const document = dom.window.document; 
+const document = dom.window.document;  
 
 module.exports = async (client, message) => {
     // Checks if the Author is a Bot, or the message isn`t from the guild, ignore it.
-  if (!message.content.startsWith(client.config.prefix) && message.channel.type !== "dm" || message.author.bot) return; 
+  if (!message.content.startsWith(client.config.prefix) && message.channel.type !== "dm" || message.author.bot) { return; } 
   
     const messageReception = new MessageEmbed().setColor(client.config.school_color)
     .setAuthor(message.author.tag, message.author.displayAvatarURL()); 
@@ -65,7 +64,7 @@ module.exports = async (client, message) => {
     
           channel = client.channels.cache.get(active.channelID); 
     
-          messageReception .setTitle(`Modmail Ticket Sent!`).setDescription(`Your new content was sent!`).setFooter(`ModMail Ticket Received -- ${message.author.tag}`)
+          messageReception.setTitle(`Modmail Ticket Sent!`).setDescription(`Your new content was sent!`).setFooter(`ModMail Ticket Received -- ${message.author.tag}`)
           await message.author.send({ embed: messageReception }); 
     
           db.set(`support_${message.author.id}`, active);
@@ -75,7 +74,7 @@ module.exports = async (client, message) => {
        
         } 
       } else if (message.channel.type === "dm" && (!message.mentions.has(client.user) || message.attachments.size > 0)) { 
-          return await message.reply({ embed: { description: `To open a ticket, mention <@${client.user.id}> and type your message and/or send an attachment!`, color: client.config.school_color}});
+          return await client.error(`To open a ticket, mention <@${client.user.id}> and type your message and/or send an attachment!`, message);
       }  
   
     let support = await db.fetch(`supportChannel_${message.channel.id}`);
@@ -110,10 +109,10 @@ module.exports = async (client, message) => {
           break; 
   
         case "complete": //close the user`s ticket after they`re done and log it!
-          if(isPause === true || isPause === "true"){ return await message.channel.send({ embed: { description: "Continue the support user's thread before completing the ticket!", color: client.config.school_color}}); }
+          if(isPause === true || isPause === "true"){ return client.error("Continue the support user's thread before completing the ticket!", message); }
   
           messageReception.setTitle("ModMail Ticket Resolved").setFooter(`ModMail Ticket Closed -- ${supportUser.tag}`)
-          .setDescription("✅ *Your ModMail has been marked as **complete** and has been logged by the admins/mods. If you wish to create a new one, please send a message to the bot.*"); 
+          .setDescription(); 
           
           await supportUser.send(`<@${supportUser.id}>`, { embed: messageReception });
   
@@ -223,8 +222,8 @@ module.exports = async (client, message) => {
                   if (err) { console.log(err); }
                 });
               });
-              messageReception.attachFiles(filePath);
-              sendMessage(client, client.config.channels.auditlogs, messageReception);
+              messageReception.attachFiles(filePath); 
+              client.log(client, messageReception.title, messageReception.description, "GREEN", message);
             });
           });
   
@@ -233,7 +232,7 @@ module.exports = async (client, message) => {
           break; 
         
         case "continue": // continue a thread
-          if(isPause === false || isPause === "false") { return await message.channel.send({ embed: { description: "This ticket was not paused.", color: client.config.school_color}}); }
+          if(isPause === false || isPause === "false") { return client.error("This ticket was not paused.", message); }
           
           await db.delete(`suspended${support.targetID}`);
           
@@ -241,11 +240,11 @@ module.exports = async (client, message) => {
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
           await supportUser.send(messageReception);
-          await message.channel.send(messageReception);
+          client.log(client, messageReception.title, messageReception.description, "GREEN", message);
           break;
           
         case "pause":  // pause a thread 
-          if(isPause === true || isPause === "true") { return await message.channel.send({ embed: { description: "This ticket already paused. Unpause it to continue.", color: client.config.school_color}}); }
+          if(isPause === true || isPause === "true") { return client.error("This ticket already paused. Unpause it to continue!", message); }
           
           await db.set(`suspended${support.targetID}`, true);
           
@@ -255,22 +254,22 @@ module.exports = async (client, message) => {
           await supportUser.send(messageReception);
           
           messageReception.setDescription(`Admin/mod, please use \`${client.config.prefix}continue\` to cancel.`);
-          await message.channel.send(messageReception);
+          await client.log(client, messageReception.title, messageReception.description, "RED", message);
           break;
   
         case "reply": // reply to user 
           await message.delete();
-          if(isPause === true || isPause === "true") { return await message.channel.send({ embed: { description: "This ticket is already paused. Unpause it to continue.", color: client.config.school_color}}); }
+          if(isPause === true || isPause === "true") { return client.error("This ticket is already paused. Unpause it to continue.", message); }
   
           let msg = modmailArgs.join(" "); 
-          if (!msg) { return message.channel.send({ embed: { description: "Please enter a message for the support ticket user!", color: client.config.school_color}}); }
+          if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
           
           messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
           await supportUser.send(messageReception);
-          await message.channel.send(messageReception);
+          await client.log(client, messageReception.title, messageReception.description, "GREEN", message);
           break; 
   
         default:

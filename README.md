@@ -1,4 +1,3 @@
-
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
 # SCU DISCORD NETWORK 
@@ -12,8 +11,7 @@
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/pm2)
 ![Discord Support](https://img.shields.io/discord/754545426958385213?label=Discord%20Support&labelColor=FFFFF&style=plastic&logo=Discord&link=https://discord.gg/hEVJZsSWcX&link=https://discord.gg/hEVJZsSWcX)
 
-# Discord.JS BOT
-- This is a 24/7 bot that I made for my [**SCU Discord Network**](https://invite.gg/gobroncos) to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
+  - This is a 24/7 bot that I made for my [**SCU Discord Network**](https://invite.gg/gobroncos) to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
 
   - Utilized the Node.js environment and Node module Discord.js to deploy a bot that greets/sends direct messages, interacts with over 500 students, and performs an assortment of automated tasks to better the server experience.
 
@@ -23,16 +21,16 @@
 
   - Very open to promoting this student-run online network and applying for [Discord's Partner Program](https://discord.com/partners) soon.
 
-# Server Logo
+1) Server Logo
 ![SCU Discord Network Logo](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/logo-pic.png?raw=true)
 
-# Commands
+2) Commands
 - Here are all of the bot's commands:
   - [Admins category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/admins)
   - [Utility category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/utility)
   - [Fun category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/fun)
 
-# Creator(s), Contributor(s), and Special Thanks!
+3) Creator(s), Contributor(s), and Special Thanks: 
 - Made by [jasonanhvu](https://github.com/jasonanhvu) with guidance from other cool developers:
   - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaqua](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
   - From GitHub: [NightZan999](https://github.com/NightZan999), [TheMaestro0](https://github.com/TheMaestro0), [thesportstacker](https://github.com/thesportstacker), [Cyanic76](https://github.com/Cyanic76), and [Cramenorn](https://github.com/Cramenorn)

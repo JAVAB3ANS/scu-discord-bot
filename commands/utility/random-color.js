@@ -25,9 +25,8 @@ module.exports = class randomColorCommand extends Command {
         const randomNumberEmbed = new MessageEmbed()
         .setColor(randomNumber)
         .setTitle("Here's your random color!")
-        .setDescription(`- Hexadecimal Value: #${randomNumber}\n` + "- Decimal Value: " + hexToDec(randomNumber))
-        .setFooter("Brought to you by the server lords!")
-        .setTimestamp();
+        .setDescription(`- Hexadecimal Value: #${randomNumber}\n` + "- Decimal Value: " + hexToDec(randomNumber));
+
 
         message.channel.send(randomNumberEmbed);
         }

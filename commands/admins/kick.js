@@ -1,5 +1,3 @@
-const { MessageEmbed } = require("discord.js"); //for embed functionality
-let { sendMessage } = require("../../modules/sendMessage.js"); 
 const { Command } = require("discord.js-commando");
 
 module.exports = class kickCommand extends Command {
@@ -46,19 +44,11 @@ module.exports = class kickCommand extends Command {
             }
  
             if(!reason) {
-                message.channel.send({ embed: { description: "You must provide a reason to kick the user!", color: this.client.config.school_color}});
+                client.error("You must provide a reason to kick the user!", message);
             } else {
                 await member.kick(reason);
-		
-                const kickCard = new MessageEmbed()
-                .setColor(this.client.config.school_color)
-                .setTitle(`Kick | ${member.user.tag}`)
-                .addField("User", member, true)
-                .addField("Moderator", `<@${message.author.id}>`, true)
-                .addField("Reason", reason, true)
-                .setTimestamp();
 
-                sendMessage(this.client, this.client.config.channels.auditlogs, kickCard);
+                client.log(client, `User [${member.user.tag}] Kicked!`, `Reason: ${reason}`, "RED", message);
 	        }
     }
 };

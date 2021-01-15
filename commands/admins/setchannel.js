@@ -1,6 +1,5 @@
 const { Command } = require("discord.js-commando");
 const fs = require("fs");
-let { sendMessage } = require("../../modules/sendMessage.js"); 
 
 module.exports = class setChannelCommand extends Command {
   constructor(client) {
@@ -14,11 +13,22 @@ module.exports = class setChannelCommand extends Command {
           key: "type",
           prompt: "What channel key would you like to modify?",
           type: "string",
+          validate: (type) => {
+            if(!type.match(/^[a-zA-Z]+$/)) {
+              return "Please enter a proper channel key name!";
+            }
+          }
         },
         {
           key: "channel",
           prompt: "What channel would you like to set this key to?",
           type: "channel",
+          validate: (channel) => {
+            if(channel.match(/^[a-zA-Z]+$/)) {
+              return "Please enter a proper channel snowflake!";
+            }
+          }
+
         },
       ],
     });
@@ -30,11 +40,10 @@ module.exports = class setChannelCommand extends Command {
       localConf.channels[type] = channel.id;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
-        message.say("Successfully updated channel value!");
       });
-      sendMessage(this.client, this.client.config.channels.auditlogs, { embed: { title: `Channel Updated`, description: `${type} => #${channel.name}`, color: this.client.config.school_color }});
+        client.log(client, "Channel Updated", `${type} => #${channel.name}`, "GREEN", message);
     } else {
-        sendMessage(this.client, this.client.config.channels.auditlogs, { embed: { title: "Could not find that channel key", description: message, color: "RED"}});
+        client.error("Could not find that channel key", message);
     }
   }
 };

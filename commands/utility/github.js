@@ -1,5 +1,6 @@
 const { Command } = require("discord.js-commando");
 const { MessageEmbed } = require("discord.js");
+const fetch = require(`node-fetch`);
 
 module.exports = class githubCommand extends Command {
   constructor(client) {
@@ -17,11 +18,6 @@ module.exports = class githubCommand extends Command {
           key: "username",
           prompt: "Enter a username to lookup",
           type: "string",
-          validate: (username) => {
-            if(username.match(/^([^0-9]*)$/)) {
-              return "Enter a proper username!";
-            }
-          }
         },
       ],
     });
@@ -32,7 +28,9 @@ module.exports = class githubCommand extends Command {
     let response = await fetch(`https://api.github.com/users/${username}`);
     let data = await response.json();
 
-    if (data.name == null) return; //returns on invalid usernames
+    if (data.name == null) {
+      client.error("Couldn't find that user! :x:", message);
+    }
 
     const profileEmbed = new MessageEmbed()
         .setTitle(`__**${data.name}'s GitHub Profile**__`)

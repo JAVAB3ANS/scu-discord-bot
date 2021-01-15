@@ -17,24 +17,17 @@ module.exports = class pokedexCommand extends Command {
             key: "pokemon",
             prompt: "Enter a pokemon name!",
             type: "string",
-            validate: (pokemon) => {
-              if(pokemon.match(/^([^0-9]*)$/)) {
-                return "Enter an actual pokemon name!";
-              }
-            }
           },
         ], 
     });
   }
 
     async run( message, { pokemon }) {
-
-        const BASE_URL = this.client.config.api.pokemon;
-
-		async function getPokemon(pokemon) {
-			let response = await fetch(`${BASE_URL}/${pokemon}`);
-			return await response.json();
-		}
+ 
+      async function getPokemon(pokemon) {
+        let response = await fetch(`${this.client.config.api.pokemon}/${pokemon}`);
+        return await response.json();
+      }
 	  
       const pokeData = await getPokemon(pokemon);
       const { 

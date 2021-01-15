@@ -6,7 +6,6 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "aki-api": "^5.2.0",
-    "axios": "^0.21.1",
     "better-sqlite3": "^7.1.0",
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",

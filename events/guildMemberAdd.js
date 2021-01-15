@@ -1,23 +1,18 @@
-const { MessageEmbed } = require("discord.js");
-let { sendMessage } = require("../modules/sendMessage.js");
+const { MessageEmbed } = require("discord.js"); 
 
-module.exports = async (client, member) => {
+module.exports = async (client, member, message) => {
   if(member.user.bot) {return; } //ignore members who are bot users
 
-  const guild = client.guilds.cache.get(`${client.config.verification.guildID}`);
-
-  let memberCount = guild.members.cache.filter((member) => !member.user.bot).size;	
-  let liveCount = guild.channels.cache.find((channel) => channel.id === client.config.channels.memberCount);
-  liveCount.setName(`👥 ${memberCount} Members`);
-	
+  const guild = client.guilds.cache.get(client.config.verification.guildID);
+ 
   let role = member.guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent);
   await member.roles.add(role);
 
-  sendMessage(client, client.config.channels.auditlogs, { embed: { description: `The **Unverified** role has been given to **<@${member.user.id}>** by **<@${client.user.id}>**!` } });
+  client.log(client, "NEW JOIN ROLE ADDED!", `The **Unverified** role has been given to **<@${member.user.id}>** by **<@${client.user.id}>**!`, "GREEN", message);
   
   const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
   .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
-  .setDescription(`You're the server's ${memberCount}th member, and we're glad to have you here! Follow instructions in your DM's and Go Broncos!`) //Setting embed description
+  .setDescription(`We're glad to have you here! Follow instructions in your DM's and Go Broncos!`) //Setting embed description
   .setThumbnail("https://jasonanhvu.github.io/scu-discord-bot/assets/logo-pic.png")
   .setTimestamp() // Sets a timestamp at the end of the embed
   .attachFiles(["./assets/scu_banner.png"])
@@ -25,7 +20,7 @@ module.exports = async (client, member) => {
   .setColor(client.config.school_color)
   .setFooter("Brought to you by the creators of this Discord server.");
 
-  guild.systemChannel.send(member.user.id, { embed: welcomeEmbed1 });
+  await guild.systemChannel.send(`<@${member.user.id}>`, { embed: welcomeEmbed1 });
 
   const welcomeEmbed2 = new MessageEmbed() //personal message to new user
     .setTitle("Invent the life you want to lead at Santa Clara University.")
@@ -43,7 +38,7 @@ module.exports = async (client, member) => {
     .setColor(client.config.school_color)
     .setFooter("Brought to you by the creators of this Discord server.");
 
-  member.send(welcomeEmbed2);
+  await member.send(welcomeEmbed2);
   
-  sendMessage(client, client.config.channels.auditlogs, { embed: { description: `:white_check_mark: Private DM has been sent to new user: <@${member.user.id}>`}}); //send private DM to new user
+  client.log(client, "NEW JOIN DM SENT!", `:white_check_mark: Private DM has been sent to new user: <@${member.user.id}>`, "GREEN", message); //send private DM to new user
 };

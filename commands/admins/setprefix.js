@@ -1,6 +1,5 @@
 const { Command } = require("discord.js-commando");
-const fs = require("fs");
-let { sendMessage } = require("../../modules/sendMessage.js"); 
+const fs = require("fs"); 
 
 module.exports = class setPrefixCommand extends Command {
   constructor(client) {
@@ -15,6 +14,11 @@ module.exports = class setPrefixCommand extends Command {
           key: "newPrefix",
           prompt: "Please choose the new prefix you want to set.",
           type: "string",
+          validate: (newPrefix) => {
+            if(newPrefix.match(/^[a-zA-Z]+$/)) {
+              return "Please enter a prefix without alphabet letters!";
+            }
+          }
         },
       ],
     });
@@ -26,11 +30,11 @@ module.exports = class setPrefixCommand extends Command {
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
-        sendMessage(this.client, this.client.config.channels.auditlogs, { embed: {  description: `Successfully updated prefix to \`${newPrefix}\``, color: this.client.config.school_color}});      
+        client.log(client, "CHANGED PREFIX!", `Successfully updated prefix to \`${newPrefix}\``, "GREEN", message);      
       });
        
     } else {
-        sendMessage(this.client, this.client.config.channels.auditlogs, { embed: { title: "That already is the current prefix!", description: message, color: "RED"}});
+        client.error("That already is the current prefix!", message);
     }
   }
 };

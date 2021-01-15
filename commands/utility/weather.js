@@ -20,11 +20,6 @@ module.exports = class weatherCommand extends Command {
 			  key: "zipCode",
 			  prompt: "Enter a zip code to lookup",
 			  type: "string",
-			  validate: (zipCode) => {
-				  if(!zipCode.match(/^([^0-9]*)$/) || zipCode.length !== 5) {
-					  return "Enter a five-digit zip code!";
-				  }
-			  }
 			},
 		  ],
 		});
@@ -36,7 +31,7 @@ module.exports = class weatherCommand extends Command {
     	const body = await response.json();
 
 		if (body.cod && body.cod === 404) { 
-			return message.channel.send({embed: {description: "Zip code not found!", color: this.client.config.school_color}}); 
+			client.error("Zip code not found!", message); 
 		}
 
         if (body.wind.deg) {

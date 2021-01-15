@@ -22,8 +22,7 @@ module.exports = class rpsCommand extends Command {
       }
        
     async run ( message, { user }) {
-        let choices = ["rock", "paper", "scissors"]; 
-		
+        let choices = ["rock", "paper", "scissors"];  
         let computer = choices[Math.floor(Math.random() * 3 + 1) - 1]; 
 		
         function calculate(user, computer) {

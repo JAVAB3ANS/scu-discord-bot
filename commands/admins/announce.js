@@ -26,7 +26,7 @@ module.exports = class announceCommand extends Command {
           prompt: "Please provide a message id to edit or mention a channel to send this message to",
           type: "string",
           validate: (id) => {
-            if(!id.startsWith("#") || !id.match(/^([^0-9]*)$/)) {
+            if(!id.match(/^([^0-9]*)$/ || !id.length === 18)) {
               return "Please enter a proper snowflake!";
             }
           }
@@ -35,6 +35,7 @@ module.exports = class announceCommand extends Command {
           key: "body",
           prompt: "Please provide some body text (embed format)",
           type: "string",
+          examples: ["{ embed: { description: \"Hello!\", color: \"BLUE\", timestamp: new Date() } }", "A COOL MESSAGE"]
         },
       ],
     });
@@ -47,8 +48,7 @@ module.exports = class announceCommand extends Command {
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
-                description: body,
-                color: this.client.config.school_color
+                description: body, 
               },
             });
           }); 
@@ -57,8 +57,7 @@ module.exports = class announceCommand extends Command {
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
-                description: m.embeds[0].description + " " + body,
-                color: this.client.config.school_color
+                description: m.embeds[0].description + " " + body, 
               },
             });
           }); 
@@ -67,10 +66,9 @@ module.exports = class announceCommand extends Command {
           announceChannel.send({ embed: JSON.parse(body), }); 
         break;
       case "msg": 
-          announceChannel.send({ embed: { description: body, color: this.client.config.school_color } });
+          announceChannel.send({ embed: { description: body}});
  
           break;
-    }
-    message.delete({ timeout: 0 });
+    } 
   }
 };

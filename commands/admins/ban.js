@@ -1,5 +1,3 @@
-const { MessageEmbed } = require("discord.js"); //for embed functionality
-let { sendMessage } = require("../../modules/sendMessage.js"); 
 const { Command } = require("discord.js-commando");
 
 module.exports = class banCommand extends Command {
@@ -46,19 +44,11 @@ module.exports = class banCommand extends Command {
             }
 
             if(!reason) {
-                message.channel.send({ embed: { description: "You must provide a reason to ban the user!", color: this.client.config.school_color}});
+                client.error("You must provide a reason to ban the user!", message);
             } else {
-               await member.ban(reason);
-   
-               const banCard = new MessageEmbed()
-                   .setColor(this.client.config.school_color)
-                   .setTitle(`Ban | ${member.user.tag}`)
-                   .addField("User", member, true)
-                   .addField("Moderator", `<@${message.author.id}>`, true)
-                   .addField("Reason", reason, true)
-                   .setTimestamp();
-   
-               sendMessage(this.client, this.client.config.channels.auditlogs, banCard);
-            }
+                await member.ban(reason);
+
+                client.log(client, `User [${member.user.tag}] Banned!`, `Reason: ${reason}`, "RED", message);
+	        }
     }
 };

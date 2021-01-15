@@ -17,10 +17,10 @@ module.exports = class ZoomCommand extends Command {
 
     async run ( message) {
         let chunk = "";
-         const response = await fetch("https://14qjgk812kgk.statuspage.io/api/v2/components.json");
+         const response = await fetch(this.client.config.api.zoom);
         const data = await response.json();
         
-        for (const i of data.components) { 
+        for (const i in data.components) { 
             chunk += `**${data.components[i].name}** ${data.components[i].status === "operational" ? ":white_check_mark:\n" : ":x:\n"}`;
         }
 

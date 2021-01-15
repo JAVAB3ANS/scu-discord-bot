@@ -16,12 +16,12 @@ module.exports = class asciiCommand extends Command {
 			{
 			  key: "text",
 			  prompt: "Enter string!",
-			  type: "string",
-			  validate: (text) => {
-				  if(text.length > 2000) {
-					  return "Enter string below 2000 characters!"; 
+			  type: "string", 
+			  validate: ((text) => {
+				  if(text.length > 9) {
+					  return "Please do at least 9 words at a time! It'll look better!";
 				  }
-			  }
+			  })
 			},
 		  ],
 		});
@@ -29,10 +29,10 @@ module.exports = class asciiCommand extends Command {
 
     async run ( message, { text }){
 
-        text = message.content.join(" ");
+        text = message.content.slice(6).split(" ").join(" ");
 
         figlet.text(text, function (err, data) {  
-            message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `, color: this.client.config.school_color}});
+            message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `}});
         });
     }
 };
