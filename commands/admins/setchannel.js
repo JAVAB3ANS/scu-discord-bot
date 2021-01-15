@@ -41,9 +41,9 @@ module.exports = class setChannelCommand extends Command {
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
       });
-        client.log(client, "Channel Updated", `${type} => #${channel.name}`, "GREEN", message);
+        this.client.log(this.client, "Channel Updated", `${type} => #${channel.name}`, "GREEN", message);
     } else {
-        client.error("Could not find that channel key", message);
+        this.client.error("Could not find that channel key", message);
     }
   }
 };

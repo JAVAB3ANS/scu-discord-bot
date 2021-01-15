@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const { MessageEmbed } = require("discord.js");
-const fetch = require(`node-fetch`);
+const fetch = require("node-fetch");
 
 module.exports = class githubCommand extends Command {
   constructor(client) {
@@ -29,7 +29,7 @@ module.exports = class githubCommand extends Command {
     let data = await response.json();
 
     if (data.name == null) {
-      client.error("Couldn't find that user! :x:", message);
+      this.client.error("Couldn't find that user! :x:", message);
     }
 
     const profileEmbed = new MessageEmbed()

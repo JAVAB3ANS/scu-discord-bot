@@ -31,7 +31,7 @@ module.exports = class weatherCommand extends Command {
     	const body = await response.json();
 
 		if (body.cod && body.cod === 404) { 
-			client.error("Zip code not found!", message); 
+			this.client.error("Zip code not found!", message); 
 		}
 
         if (body.wind.deg) {

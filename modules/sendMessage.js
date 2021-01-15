@@ -6,4 +6,4 @@ module.exports.sendMessage = async (client, channel, content) => {
         return;
     }
   });
-}
+};

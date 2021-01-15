@@ -32,4 +32,4 @@ module.exports = class purgeCommand extends Command {
         await message.channel.bulkDelete(deleteCount + 1); //includes bot message afterwards as well
         
     }
-}; 
+}

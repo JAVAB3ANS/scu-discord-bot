@@ -12,7 +12,7 @@ module.exports = async (client, member, message) => {
   
   const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
   .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
-  .setDescription(`We're glad to have you here! Follow instructions in your DM's and Go Broncos!`) //Setting embed description
+  .setDescription("We're glad to have you here! Follow instructions in your DM's and Go Broncos!") //Setting embed description
   .setThumbnail("https://jasonanhvu.github.io/scu-discord-bot/assets/logo-pic.png")
   .setTimestamp() // Sets a timestamp at the end of the embed
   .attachFiles(["./assets/scu_banner.png"])
