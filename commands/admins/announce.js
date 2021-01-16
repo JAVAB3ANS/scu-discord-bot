@@ -70,9 +70,5 @@ module.exports = class announceCommand extends Command {
  
           break;
     } 
-  }
-<<<<<<< HEAD
-};
-=======
-};
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
+  } 
+}; 
