@@ -6,18 +6,9 @@ module.exports = class pollCommand extends Command {
         super(client, {
             name: "poll",
             memberName: "poll",
-            description: "Create a poll with reactions!!", 
-<<<<<<< HEAD
+            description: "Create a poll with reactions!!",  
 			group: "admins",
-			guildOnly: true,
-=======
-<<<<<<< HEAD
-			group: "admins",
-			guildOnly: true,
-=======
-            group: "admins",
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
+			guildOnly: true, 
             throttling: {
                 usages: 2,
                 duration: 5,
