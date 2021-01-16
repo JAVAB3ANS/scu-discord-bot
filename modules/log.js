@@ -1,4 +1,4 @@
-module.exports = async function log(client, title, content, color, message) { 
+module.exports = async function log(client, title, content, color) { 
     client.guilds.cache.map((g) => { 
         try {
             g.channels.cache
@@ -10,9 +10,6 @@ module.exports = async function log(client, title, content, color, message) {
                     timestamp: Date.now(),
                     footer: {  text: `${client.user.username} - Logs`, },
                     author: { name: title, icon_url: client.user.displayAvatarURL(), },
-                    fields: [
-                        { name: "Ran By", value: `${message.author || client.user}`, },
-                    ],
                 },
             });
         } catch (err) {

@@ -57,7 +57,7 @@ client.once("ready", () => {
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
           eventFunction.run(client);
-          client.log(client, "Service started!", `Started ${eventName} service :white_check_mark:`, "GREEN", message);
+          client.log(client, "Service started!", `Started ${eventName} service :white_check_mark:`, "GREEN");
         } 
       });
     });
@@ -67,6 +67,6 @@ client.once("ready", () => {
 
 client 
     .on("message", (message) => require("./events/message")(client, message))
-    .on("guildMemberAdd", (member, message) => require("./events/guildMemberAdd")(client, member, message))
+    .on("guildMemberAdd", (member) => require("./events/guildMemberAdd")(client, member))
 
 client.login(client.config.token);

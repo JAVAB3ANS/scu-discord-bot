@@ -44,11 +44,11 @@ module.exports = class banCommand extends Command {
             }
 
             if(!reason) {
-                client.error("You must provide a reason to ban the user!", message);
+                this.client.error("You must provide a reason to ban the user!", message);
             } else {
                 await member.ban(reason);
 
-                client.log(client, `User [${member.user.tag}] Banned!`, `Reason: ${reason}`, "RED", message);
+                this.client.log(this.client, `User [${member.user.tag}] Banned!`, `Reason: ${reason}`, "RED");
 	        }
     }
 };

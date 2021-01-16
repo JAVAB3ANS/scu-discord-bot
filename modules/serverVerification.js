@@ -1,5 +1,4 @@
-const { MessageEmbed } = require("discord.js");
-const { sendMessage } = require(`./sendMessage.js`);
+const { MessageEmbed } = require("discord.js"); 
 
 module.exports.run = async (client) => {
   const express = require("express");
@@ -36,13 +35,13 @@ module.exports.run = async (client) => {
       let member = guild.members.cache.find((member) => member.user.tag === req.body.discord);
       //if the member isn't in the guild return an error in console 
       if (member === null) { 
-        sendMessage(client, client.config.channels.auditlogs, { embed: { title: `__**❌ ${guild.name} Verification**__`, description: `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](https://docs.google.com/forms/d/1O4iazeB8sDlTPYLLgTF9IhndV0ZJv-ulvFJyqFkTMO4/edit)!`, color: "red"}});
+        (client, `__**❌ ${guild.name} Verification**__`, `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](https://docs.google.com/forms/d/1O4iazeB8sDlTPYLLgTF9IhndV0ZJv-ulvFJyqFkTMO4/edit)!`, "red");
       } else if (member.roles.cache.has(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent))) {
           //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
-          member.send(member.user.id, {embed: dangerEmbed});
-          sendMessage(client, client.config.channels.auditlogs, { embed: { title: "__**DANGER ALERT!**__", description: "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", color: "red"}});
+          member.send(`<@${member.user.id}>`, {embed: dangerEmbed});
+          client.log(client, "__**DANGER ALERT!**__", "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", "red");
       } else {
-          sendMessage(client, client.config.channels.auditlogs, { embed: { title: "__**✅ Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
+          client.log(client, "__**✅ Verification Alert!**__", `New data from **${req.body.discord}** (**${req.body.name}**)`, client.config.school_color); //will display new verification message if member tag matches input in Google form
           if (req.body.status === "SCU Faculty/Staff") {
             //changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
             member.setNickname(req.body.name);
@@ -69,7 +68,7 @@ module.exports.run = async (client) => {
               const nickname = `${req.body.name} || ${req.body.major}`; 
               
               if (nickname.length > 32) {
-                sendMessage(client, { embed: { description: `__**❌ ${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}**\n>`, color: "red"}});
+                client.log(client, `__**❌ ${req.body.name}'s nickname is over 32 characters!**__`, `> <@${member.user.id}> returned **${nickname}**\n>`, "red");
               }
               
               member.setNickname(nickname);
@@ -93,12 +92,12 @@ module.exports.run = async (client) => {
               { name: "Member Status", value: req.body.status, },
               { name: "Discord Tag <-- (DiscordName#0000)", value: req.body.discord, },
             );
-          member.send(member.user.id, { embed: verifyConfirmation});
+          member.send(`<@${member.user.id}>`, { embed: verifyConfirmation});
           const verifyEmbed = { title: "__**✅ NEW VERIFIED MEMBER!**__", description: `You are now verified! Everyone please welcome **${req.body.name}** to the server!`, color: client.config.school_color, timestamp: new Date()};
           
-          guild.channels.cache.get(client.config.channels.verifylogs).send(member.user.id, { embed: verifyConfirmation}).then((m) => m.react("👍"));
+          guild.channels.cache.get(client.config.channels.verifylogs).send(`<@${member.user.id}>`, { embed: verifyConfirmation}).then((m) => m.react("👍"));
             
-          guild.channels.cache.get(client.config.channels.welcome).send(member.user.id, { embed: verifyEmbed}).then((m) => m.react("👋"));
+          guild.channels.cache.get(client.config.channels.welcome).send(`<@${member.user.id}>`, { embed: verifyEmbed}).then((m) => m.react("👋"));
       }
     } else {
         //if no body.. return this

@@ -30,8 +30,8 @@ module.exports = class setPrefixCommand extends Command {
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
-        this.client.log(this.client, "CHANGED PREFIX!", `Successfully updated prefix to \`${newPrefix}\``, "GREEN", message);      
-      });
+        this.client.log(this.client, "CHANGED PREFIX!", `Successfully updated prefix to \`${newPrefix}\``, "GREEN",);      
+      })
        
     } else {
       this.client.error("That already is the current prefix!", message);
