@@ -223,7 +223,11 @@ module.exports = async (client, message) => {
                 });
               });
               messageReception.attachFiles(filePath); 
+<<<<<<< HEAD
               client.log(client, client.config.channels.auditlogs, messageReception);
+=======
+              client.log(client, messageReception.title, messageReception.description, "GREEN", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
             });
           });
   
@@ -240,7 +244,11 @@ module.exports = async (client, message) => {
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
           await supportUser.send(messageReception);
+<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
+=======
+          client.log(client, messageReception.title, messageReception.description, "GREEN", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
           break;
           
         case "pause":  // pause a thread 
@@ -254,7 +262,11 @@ module.exports = async (client, message) => {
           await supportUser.send(messageReception);
           
           messageReception.setDescription(`Admin/mod, please use \`${client.config.prefix}continue\` to cancel.`);
+<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
+=======
+          await client.log(client, messageReception.title, messageReception.description, "RED", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
           break;
   
         case "reply": // reply to user 
@@ -262,14 +274,22 @@ module.exports = async (client, message) => {
           if(isPause === true || isPause === "true") { return client.error("This ticket is already paused. Unpause it to continue.", message); }
   
           let msg = modmailArgs.join(" "); 
+<<<<<<< HEAD
           if (!msg) { return client.error("Please enter a message for the support ticket user!", message); }
+=======
+          if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
           
           messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
           await supportUser.send(messageReception);
+<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
+=======
+          await client.log(client, messageReception.title, messageReception.description, "GREEN", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
           break; 
   
         default:

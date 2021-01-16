@@ -7,8 +7,12 @@ module.exports = class pollCommand extends Command {
             name: "poll",
             memberName: "poll",
             description: "Create a poll with reactions!!", 
+<<<<<<< HEAD
 			group: "admins",
 			guildOnly: true,
+=======
+            group: "admins",
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
             throttling: {
                 usages: 2,
                 duration: 5,

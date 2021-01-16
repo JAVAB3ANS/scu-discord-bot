@@ -39,9 +39,15 @@ module.exports.run = async (client) => {
       } else if (member.roles.cache.has(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent))) {
           //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
           member.send(`<@${member.user.id}>`, {embed: dangerEmbed});
+<<<<<<< HEAD
           client.log(client, client.config.channels.auditlogs, { embed: { title: "__**DANGER ALERT!**__", description: "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", color: "red"}});
       } else {
           client.log(client, client.config.channels.auditlogs, { embed: { title: "__**✅ Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
+=======
+          client.log(client, "__**DANGER ALERT!**__", "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", "red");
+      } else {
+          client.log(client, "__**✅ Verification Alert!**__", `New data from **${req.body.discord}** (**${req.body.name}**)`, client.config.school_color); //will display new verification message if member tag matches input in Google form
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
           if (req.body.status === "SCU Faculty/Staff") {
             //changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
             member.setNickname(req.body.name);
@@ -68,7 +74,11 @@ module.exports.run = async (client) => {
               const nickname = `${req.body.name} || ${req.body.major}`; 
               
               if (nickname.length > 32) {
+<<<<<<< HEAD
                 client.log(client, client.config.channels.auditlogs, { embed: { title: `__**❌ ${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}**\n>`, color:  "red"}});
+=======
+                client.log(client, `__**❌ ${req.body.name}'s nickname is over 32 characters!**__`, `> <@${member.user.id}> returned **${nickname}**\n>`, "red");
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
               }
               
               member.setNickname(nickname);

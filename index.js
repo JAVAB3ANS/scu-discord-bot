@@ -1,6 +1,11 @@
 const { CommandoClient } = require("discord.js-commando");  
 const path = require("path");   
+<<<<<<< HEAD
 const fs = require("fs");   
+=======
+const fs = require("fs");  
+const message = require("./events/message");
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 
 const client = new CommandoClient({
   commandPrefix: `${require("./config.json").prefix}`,
@@ -8,8 +13,13 @@ const client = new CommandoClient({
 });
 
 client.config = require("./config.json"); 
+<<<<<<< HEAD
 client.error = require("./functions/error.js");
 client.log = require("./functions/log.js");
+=======
+client.error = require("./modules/error.js");
+client.log = require("./modules/log.js");
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 
 client.registry
   .registerDefaultTypes()
@@ -49,19 +59,31 @@ client.once("ready", () => {
   client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}); 
 
     fs.readdir("./modules", (err, files) => {
+<<<<<<< HEAD
       client.log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, color: "GREEN"}});
+=======
+      client.log(client, "Services", `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, "GREEN", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
       files.forEach((file) => {
         if (!file.includes("js") || !file.startsWith("server")) { return; }
         let eventFunction = require(`./modules/${file}`);
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
           eventFunction.run(client);
+<<<<<<< HEAD
           client.log(client, client.config.channels.auditlogs, { embed: { title: "Service started!", description: `Started ${eventName} service :white_check_mark:`, color: "GREEN"}});
+=======
+          client.log(client, "Service started!", `Started ${eventName} service :white_check_mark:`, "GREEN");
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
         } 
       });
     });
 
+<<<<<<< HEAD
     client.log(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN"}});
+=======
+    client.log(client, "Hooray!", "All commands and events work! :white_check_mark:", "GREEN", message);
+>>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 });
 
 client 
