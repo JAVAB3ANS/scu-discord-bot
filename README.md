@@ -1,12 +1,6 @@
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
 # SCU DISCORD NETWORK 
-<<<<<<< HEAD
-=======
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/29d042e9f2af40d1bf53590dd3a36be3)](https://app.codacy.com/gh/jasonanhvu/scu-discord-bot?utm_source=github.com&utm_medium=referral&utm_content=jasonanhvu/scu-discord-bot&utm_campaign=Badge_Grade)
-
->>>>>>> cb5a846941c40e81baeb34a7cc3dd43105fc2ce5
 ![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
@@ -96,6 +90,6 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 5) Creator(s), Contributor(s), and Special Thanks: 
 - Made by [jasonanhvu](https://github.com/jasonanhvu) with guidance from other cool developers:
-  - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaquazi](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
+  - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaqua](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
   - From GitHub: [NightZan999](https://github.com/NightZan999), [TheMaestro0](https://github.com/TheMaestro0), [thesportstacker](https://github.com/thesportstacker), [Cyanic76](https://github.com/Cyanic76), and [Cramenorn](https://github.com/Cramenorn)
   - Discord Servers: [Code Ring](https://discord.gg/9XC9v7nfuB), [Plexi Development](https://discord.gg/plexidev), [The Coding Den](https://discord.gg/code), [JS Programming Language Community](https://disboard.org/server/join/779474636780863488), [Discord API](https://discord.gg/discord-api), [The Programmer's Hangout](https://discord.gg/programming), [Discord.js Official](https://discord.com/invite/bRCvFy9), [Discord Bots]( https://discord.gg/0cDvIgU2voWn4BaD), [JavaScript Universe](https://discord.gg/cf25CQKc4v), [/r/Discord_Bots](https://discord.gg/xRFmHYQ), [Programming Discussions](http://invite.progdisc.club/)
