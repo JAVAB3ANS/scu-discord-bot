@@ -1,13 +1,6 @@
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
- 
-# SCU DISCORD NETWORK  
 
-<<<<<<< HEAD
 # SCU DISCORD NETWORK 
-=======
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/29d042e9f2af40d1bf53590dd3a36be3)](https://app.codacy.com/gh/jasonanhvu/scu-discord-bot?utm_source=github.com&utm_medium=referral&utm_content=jasonanhvu/scu-discord-bot&utm_campaign=Badge_Grade)
- 
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 ![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
@@ -17,21 +10,13 @@
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/pm2)
 ![Discord Support](https://img.shields.io/discord/754545426958385213?label=Discord%20Support&labelColor=FFFFF&style=plastic&logo=Discord&link=https://discord.gg/hEVJZsSWcX&link=https://discord.gg/hEVJZsSWcX)
 
-<<<<<<< HEAD
   - This is a 24/7 bot that I made for my [**SCU Discord Network**](https://invite.gg/gobroncos) to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
 
   - Utilized the Node.js environment and Node module Discord.js to deploy a bot that greets/sends direct messages, interacts with over 600 students, and performs an assortment of automated tasks to better the server experience. 
-=======
-## Problem:
-- Over the course of  the coronavirus pandemic, shutting down many social and advancement opportunities for many adults and students alike, college students are known to experience heavy feelings of disappointment, loneliness, and decline in mental health throughout the world. With students pursuing what we know as "Zoom University," a lot of fear and fatigue gets manifested as they often might sleep in too late and face the drag of Zoom fatigue and even social anxiety and withdrawal by feeling like they can't rest and be themselves outside.
 
-## Solution: 
-- Here is my solution to the online situation that is in the midst of many students, not just SCU students' lives. This bot serves as a framework that many academic  communities could utilize to their advantage in these times online. Bots play a key role in the overall Discord experience as they allow users to pursue moderation efforts along with a plethora of features
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
+  - Very open to promoting this student-run online network and applying for [Discord's Partner Program](https://discord.com/partners) soon.
 
-- I'm planning to add more features in the feature such as Google integration for my school's calendar events and possibly machine learning for auto moderation that  allows for randomized responses to replace the blacklisted word/phrase , encouraging a healthy environment that reflects real life. 
-
-## Server Logo:
+## Server Logo
 ![SCU Discord Network Logo](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/logo-pic.png?raw=true)
 
 ## Main Commands:
@@ -40,7 +25,6 @@
   - [Utility category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/utility)
   - [Fun category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/fun)
 
-<<<<<<< HEAD
 ## Implementation
 The Discord bot is implemented using Node.js and the discord.js library. The library provides a very accessible method of interacting with the Discord API. Node.js was chosen as various npm libraries became very useful.
 
@@ -48,15 +32,6 @@ The next section will discuss each feature, their implementation choices, and an
 
 ## Bot Interaction
 The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use ```&ping`.
-=======
-## Implementation:
-- The Discord bot is implemented using Node.js and the discord.js library and hosted on my Raspberry Pi 4 Model B 24/7. The Discord.js library module provides a very accessible method of interacting with the Discord API. Node.js was chosen as various npm libraries became very useful.
-
-- The next section will discuss each feature, their implementation choices, and any mistakes/learning points that could be improved on.
-
-## Bot Interaction:
-- The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use `&ping`.
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 
 ![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png)
 
@@ -67,11 +42,7 @@ The bot is designed to respond to chat messages. To distinguish when the bot sho
 
 - Assigning roles to each user is done though a text pattern: `<first name> <current college major>`. The server consists of 3 main types of roles, one that distinguishes which major they are in and their graduating year. On the Google form, this also accommodates for students who are double and triple majors, which is permitted through the Discord API as long as the user's nickname is below 32 characters.
 
-<<<<<<< HEAD
 - A challenge was detecting whether the user's response in the Google form was invalid. I used regex (regular expressions) to validate whether the number put their names properly with the first uppercase letter and such. On top of that, when users didn't put in their correct Discord tag in the specific form input section, the bot would send an error message so I would have to manually delete the user's response so they could redo the form and automatically get Discord roles through the Express.js server receiving a request from Google forms/scripts api.
-=======
-- A challenge was detecting whether the user's response in the Google form was invalid. I used regex (regular expressions) to validate whether the number put their names properly with the first uppercase letter and such. On top of that, when users didn't put in their correct Discord tag in the specific form input section, the bot would send an error message. Then, I would have to manually delete the user's response so they could redo the form and automatically get Discord roles through the Express.js server receiving a request from my Google Scripts API code on form submit.
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 
 ![serverVerification](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_verification_process.gif)
 
@@ -91,22 +62,14 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 ![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_zoom.png)
 
-<<<<<<< HEAD
 ## School COVID-19 Dashboard Scraper
-=======
-## School COVID-19 Dashboard Scraper:
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 - The command `covid19.js` is used to access the school's COVID-19 testing dashboard and print out its contents: `date, tests, positive tests, and positivity rate`. Since these health and wellness tests are usually conducted at my school weekly, a node-schedule job was scheduled to output the COVID-19 data weekly on Friday mornings. Since the website does not have an API to access its information, retrieving the information is performed through data scraping. Cheerio library was used to access and scrape data through HTML. 
 
 - The challenging areas of scraping the data was dealing with the formatting. Normally, the data would be presented in the same exact format. At a period of time, a different format was used temporarily, which broke the bot as no data was retrieved due to differing HTML tags. As a temporary fix, the function was adjusted to work with the temporary format. Another challenging portion was message length limits. Discord has a 2000 character limit on each message, so particularly long menus would not fit within a single message. As a design choice, if any message was too long, a link to the website would be in the body of the message instead. Ideally, multiple messages would be sent to break up the menu into sendable parts, but due to time constraints and readability issues, this was never implemented. To further improve this functionality, the bot should be able to detect where and when to break up a message into digestable parts.
 
 ![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_covid.png)
 
-<<<<<<< HEAD
 ## Server-Wide Announcements
-=======
-## Server-Wide Announcements:
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 - The idea of the Discord server was to take advantage of the various text channels and dedicate each one to a specific topic. As of time of writing, communications throughout the community exist through various Facebook, Instagram, Reddit groups dedicated to community events/announcements. 
 
 - To take advantage of the Discord channels without losing the functionality of making big public posts like Facebook, the bot is designed to make an announcment to all users, which is generated from an admin/mod using the `&announce` command in a hidden channel to properly format the embed for quality view.
@@ -115,11 +78,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 ![announcement](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_announcement.png)
 
-<<<<<<< HEAD
 4) Final Thoughts:
-=======
-## Final Thoughts:
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
 - This was an impromptu project for fun that eventually turned into a pretty big deal well at least for me. The Discord community’s ability to listen to its audience base is profound, both technically and socially. Whether it is listening to user-experience suggestions or bug fixes for the app’s online client, the developers are always responsive and willing to help. By also allowing users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, something that very few applications can encourage for an audience with a primarily end-user base. That being stated, the platform is as meaningful to the average user as it is to individuals who want to dabble behind the scenes.
 
 - Recently, I made my code more efficient by utilizing Discord.js Commando framework which employs a much more object-oriented programming approach within the scope of this college server bot. Looking back, this was a huge upgrade compared to me simply using `if, else if, and else` statements to have the bot scan for certain strings and prefixes to output any desired result the users want.
