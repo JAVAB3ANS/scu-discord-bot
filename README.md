@@ -34,7 +34,7 @@ The Discord bot is implemented using Node.js and the discord.js library. The lib
 The next section will discuss each feature, their implementation choices, and any mistakes/learning points that could be improved on.
 
 ## Bot Interaction
-The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use ```&ping`.
+The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use `&ping`.
 
 ![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png)
 
