@@ -1,71 +1,71 @@
-// ASSIGN VARIABLES
-const Discord = require('discord.js');
-const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"], autoConnect: true } );
-const Enmap = require("enmap");
-const fs = require("fs");  
+const { CommandoClient } = require("discord.js-commando");  
+const path = require("path");   
+const fs = require("fs");   
 
-// Need to make sure the config is attached to the CLIENT so it's accessible everywhere!
-client.config = require(`./config.json`);
+const client = new CommandoClient({
+  commandPrefix: `${require("./config.json").prefix}`,
+  owner: `${require("./config.json").serverRoles.owner}`,
+});
 
-client.on("warn", (e) => console.warn(e));
-client.on("debug", (e) => console.info(e));
-client.on("error", console.error);       
+client.config = require("./config.json"); 
+client.error = require("./functions/error.js");
+client.log = require("./functions/log.js");
 
-client.login(client.config.token)
+client.registry
+  .registerDefaultTypes()
+  .registerGroups([  
+    ["admins", "Admin"],
+    ["utility", "Utility"],
+    ["fun", "Fun"],
+  ])
+  .registerDefaultGroups()
+  .registerDefaultCommands({
+    unknownCommand: false,
+    prefix: false, 
+  })
+  .registerCommandsIn(path.join(__dirname, "commands")); 
 
-try { 
-  /*
-  ====================================================================
-  ______               _     _    _                 _ _           
-  |  ____|             | |   | |  | |               | | |          
-  | |____   _____ _ __ | |_  | |__| | __ _ _ __   __| | | ___ _ __ 
-  |  __\ \ / / _ \ '_ \| __| |  __  |/ _` | '_ \ / _` | |/ _ \ '__|
-  | |___\ V /  __/ | | | |_  | |  | | (_| | | | | (_| | |  __/ |   
-  |______\_/ \___|_| |_|\__| |_|  |_|\__,_|_| |_|\__,_|_|\___|_|   
-  ====================================================================
-  */    
-  
-  fs.readdir("./events/", (err, files) => {
-    if (err) return console.error(err);
-    files.forEach(file => {
-      if (!file.endsWith(".js")) return;
-      const event = require(`./events/${file}`);
-      let eventName = file.split(".")[0];
-      client.on(eventName, event.bind(null, client));
-      delete require.cache[require.resolve(`./events/${file}`)];
-    }) 
-  });
-  
-  /*
-  ==============================================================================================
-     _____                                          _   _    _                 _ _           
-    / ____|                                        | | | |  | |               | | |          
-   | |     ___  _ __ ___  _ __ ___   __ _ _ __   __| | | |__| | __ _ _ __   __| | | ___ _ __ 
-   | |    / _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` | |  __  |/ _` | '_ \ / _` | |/ _ \ '__|
-   | |___| (_) | | | | | | | | | | | (_| | | | | (_| | | |  | | (_| | | | | (_| | |  __/ |   
-    \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_| |_|  |_|\__,_|_| |_|\__,_|_|\___|_|   
-  ==============================================================================================
-  */
+client.dispatcher.addInhibitor( (client, msg) => {
+  try { 
+    switch (msg.command.group.name) {
+      case "Admin":
+        if (!client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole)) || !msg.author.id === client.config.serverRoles.owner) {
+          client.error(`***<@${msg.author.id}>, You don't have permission to use this command***`, msg);
+          msg.delete();
+          return false
+        }
+        break;
+      default:
+        return true; 
+    } 
+  } catch(err) {
+      if (err === "TypeError: Inhibitor \"\" had an invalid result; must be a string or an Inhibition object.") {
+        return;
+      }
+  }
+}); 
 
-  /*loops and reads through my subdirectories - admin, fun, and utility - 
-  and iterates thru individual command files in them*/
+client.once("ready", () => {
+  client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}); 
 
-  client.commands = new Enmap();
-
-  fs.readdir("./commands/", (err, subdirs) => { 
-    subdirs.forEach(subdir => {
-      fs.readdir(`./commands/${subdir}/`, (err, files) => { 
-        files.forEach(file => { 
-          if (!file.endsWith('.js')) return;
-          let props = require(`./commands/${subdir}/${file}`);
-          let commandName = file.split(".")[0];
-          client.commands.set(commandName, props);
-        });
+    fs.readdir("./modules", (err, files) => {
+      client.log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, color: "GREEN"}});
+      files.forEach((file) => {
+        if (!file.includes("js") || !file.startsWith("server")) { return; }
+        let eventFunction = require(`./modules/${file}`);
+        let eventName = file.split(".")[0];
+        if (client.config.services[eventName]) {
+          eventFunction.run(client);
+          client.log(client, client.config.channels.auditlogs, { embed: { title: "Service started!", description: `Started ${eventName} service :white_check_mark:`, color: "GREEN"}});
+        } 
       });
     });
-  }); 
-} catch (err) {
-    console.log(err);
-} finally { 
-    console.log("All commands and events work! :white_check_mark:");
-}
+
+    client.log(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN"}});
+});
+
+client 
+    .on("message", (message) => require("./events/message")(client, message))
+    .on("guildMemberAdd", (member) => require("./events/guildMemberAdd")(client, member))
+
+client.login(client.config.token);

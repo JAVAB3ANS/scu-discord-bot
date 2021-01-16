@@ -1,24 +1,38 @@
-const figlet = require('figlet');
+const figlet = require("figlet");
+const { Command } = require("discord.js-commando");
 
-module.exports = {
-    name: "ascii",
-    description: "Converts text to ascii",
-    category: "Fun",
-    args: true,
-    usage: "<insert text>",
-    async execute (client, message, args){
+module.exports = class asciiCommand extends Command {
+    constructor(client) {
+		super(client, {
+		  name: "ascii",
+		  group: "fun",
+		  memberName: "ascii",
+		  description: "Converts text to ascii!",
+		  throttling: {
+			usages: 2,
+			duration: 5,
+		  },
+		  args: [
+			{
+			  key: "text",
+			  prompt: "Enter string!",
+			  type: "string", 
+			  validate: ((text) => {
+				  if(text.length > 9) {
+					  return "Please do at least 9 words at a time! It'll look better!";
+				  }
+			  })
+			},
+		  ],
+		});
+	  }
 
-        const msg = args.join(" ");
+    async run ( message, { text }){
 
-        figlet.text(msg, function (err, data){
-            if(err){
-                console.log('Something went wrong');
-                console.dir(err);
-            }
-            
-            if(data.length > 2000) return message.channel.send({ embed: { description: `Please provide text shorter than 2000 characters`, color: client.config.school_color}});
-         
-            message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `, color: client.config.school_color}});
-        })
+        text = message.content.slice(6).split(" ").join(" ");
+
+        figlet.text(text, function (err, data) {  
+            message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `}});
+        });
     }
-}
+};

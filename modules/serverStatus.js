@@ -1,20 +1,23 @@
-const fetch = require(`node-fetch`); 
-const sendMessage = require(`./sendMessage.js`);
+const fetch = require("node-fetch");   
 
-module.exports.run = async (client) => {
-    const url = client.config.verification.verifyURL;
-
-    function checkStatus(res) {
+module.exports.run = async (client) => { 
+    function checkVerifyServerStatus(res) {
         if (res.ok) { // res.status >= 200 && res.status < 300
-            sendMessage(client, client.config.channels.auditlogs, { embed: { title: `Verification Working :white_check_mark:`, description: `[${res.statusText}](${url})`, color: `GREEN`}});
+            client.log(client, `Verification Working`, `:white_check_mark: [${res.statusText}](${client.config.verification.verifyURL})`, "GREEN");
         } else {
-            sendMessage(client, client.config.channels.auditlogs, { embed: { title: `Verification Error :x:`, description: `Go to [PiTunnel](https://pitunnel.com) and reset using the following commands: \`\`\`${client.config.verification.mappingRule}\`\`\``, color: client.config.school_color}});
+            client.log(client, `Verification Error`, `:x: Go to [PiTunnel](https://pitunnel.com) and reset using the following commands: \`\`\`${client.config.verification.mappingRule}\`\`\``, "red");
         }
     }
-     
-    fetch(url).then(checkStatus);
-    
-    setInterval(function() {
-        fetch(url).then(checkStatus);
-    }, 600000); //check server status every 5 minutes!
+  
+    setInterval(async function() {
+        await fetch(client.config.verification.verifyURL).then(checkVerifyServerStatus);
+        
+        const response = await fetch(client.config.api.discord);
+		const body = await response.json();
+        if (body.status.description === "All Systems Operational") {
+            client.log(client, `${body.status.description}`, "Check the status [here](https://discordstatus.com/)! :white_check_mark:", "GREEN");
+        } else {
+            client.log(client, `${body.status.description}`, "There seems to be an error with some of the Discord servers. Double check [here](https://status.discordapp.com/)! :x:", "RED");
+        }
+    }, 300000); //check server status every 5 minutes!
 }
