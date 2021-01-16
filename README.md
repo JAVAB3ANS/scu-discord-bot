@@ -1,13 +1,9 @@
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
-
-<<<<<<< HEAD
-# SCU DISCORD NETWORK 
-=======
+ 
 # SCU DISCORD NETWORK  
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/29d042e9f2af40d1bf53590dd3a36be3)](https://app.codacy.com/gh/jasonanhvu/scu-discord-bot?utm_source=github.com&utm_medium=referral&utm_content=jasonanhvu/scu-discord-bot&utm_campaign=Badge_Grade)
-
->>>>>>> 0e02870184b520170024d9fa6982c989ffbdee52
+ 
 ![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
