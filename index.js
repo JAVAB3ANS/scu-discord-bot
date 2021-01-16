@@ -68,4 +68,8 @@ client
     .on("message", (message) => require("./events/message")(client, message))
     .on("guildMemberAdd", (member) => require("./events/guildMemberAdd")(client, member))
 
+<<<<<<< HEAD
 client.login(client.config.token);
+=======
+client.login(client.config.token);
+>>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
