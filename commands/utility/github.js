@@ -1,42 +1,54 @@
-const fetch = require(`node-fetch`);
-const { MessageEmbed } = require(`discord.js`);
-let sendMessage = require(`../../modules/sendMessage.js`);
+const { Command } = require("discord.js-commando");
+const { MessageEmbed } = require("discord.js");
+const fetch = require("node-fetch");
 
-module.exports = {
-    name: "github",
-    description: "Get someone's GitHub profile information!",
-    args: true,
-    usage: `[username]`,
-    category: 'Utility',
-    async execute (client, message, args) {
+module.exports = class githubCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: "github",
+      group: "utility",
+      memberName: "github",
+      description: "Get a user's GitHub profile!",
+      throttling: {
+        usages: 2,
+        duration: 5,
+      },
+      args: [
+        {
+          key: "username",
+          prompt: "Enter a username to lookup",
+          type: "string",
+        },
+      ],
+    });
+  }
 
-        try {
-            const username = args[0].toLowerCase().split(" ");
-            let response = await fetch(`https://api.github.com/users/${username}`);
-            let data = await response.json();
+  async run( message, { username }) {
+  
+    let response = await fetch(`https://api.github.com/users/${username}`);
+    let data = await response.json();
 
-            if (data.name == null) return; //returns on invalid usernames
-
-            const profileEmbed = new MessageEmbed()
-                profileEmbed.setTitle(`__**${data.name}'s GitHub Profile**__`)
-                profileEmbed.setDescription(`${data.bio || 'none'}`)
-                profileEmbed.setThumbnail(`https://avatars3.githubusercontent.com/u/${data.id}?v=4`)
-                profileEmbed.addField(`Username`, data.login, true)
-                profileEmbed.addField(`Company`, data.company || 'none', true)
-                profileEmbed.addField(`Blog`, `[${data.name}](${data.blog})` || 'none', true)
-                profileEmbed.addField(`Location`, data.location|| 'none', true)
-                profileEmbed.addField(`Public Repos`, data.public_repos || 'none', true)
-                profileEmbed.addField(`Public Gists`, data.public_gists || 'none', true)
-                profileEmbed.addField(`Followers`, data.followers || 'none', true)
-                profileEmbed.addField(`Following`, data.following || 'none', true)
-                profileEmbed.addField(`\u200B`, `\u200B`, true)
-                profileEmbed.setColor(client.config.school_color)
-                profileEmbed.setURL(data.html_url)
-
-            message.channel.send(profileEmbed);
-        } catch(err) {
-            sendMessage(client, client.config.channels.auditlogs, {embed: {description: `The following user - ${username} - does not exist.`, color: client.config.school_color}})
-            console.log(err => `Error: ${err}`)
-        }
+    if (data.name == null) {
+      this.client.error("Couldn't find that user! :x:", message);
     }
-}
+
+    const profileEmbed = new MessageEmbed()
+        .setTitle(`__**${data.name}'s GitHub Profile**__`)
+        .setDescription(`${data.bio || "none"}`)
+        .setThumbnail(`https://avatars3.githubusercontent.com/u/${data.id}?v=4`)
+        .addField("Username", data.login, true)
+        .addField("Company", data.company || "none", true)
+        .addField("Blog", `[${data.name}](${data.blog})` || "none", true)
+        .addField("Location", data.location || "none", true)
+        .addField("Public Repos", data.public_repos || "none", true)
+        .addField("Public Gists", data.public_gists || "none", true)
+        .addField("Followers", data.followers || "none", true)
+        .addField("Following", data.following || "none", true)
+        .addField("\u200B", "\u200B", true)
+        .setColor(this.client.config.school_color)
+        .setURL(data.html_url);
+
+        message.channel.send(profileEmbed);
+
+    }
+};

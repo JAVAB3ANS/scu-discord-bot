@@ -1,23 +1,30 @@
-module.exports = {
-    name: `zoom`,
-    description: `Get Zoom Meetings statsu!`,
-    category: `Utility`,
-    cooldown: `5`,
-    async execute (client, message, args) {
-        const fetch = require("node-fetch");
-        let chunk = "";
-        try {
-            const response = await fetch(client.config.api.zoom);
-            const data = await response.json();
-            
-            for (i in data.components) {
-                let connected = data.components[i].status == "operational";
-                chunk += `**${data.components[i].name}** ${connected ? ":white_check_mark:\n" : ":x:\n"}`;
-            }
+const { Command } = require("discord.js-commando");
+const fetch = require("node-fetch");
 
-            message.channel.send({ embed: { title: `Zoom Meetings Status`, description: chunk, color: client.config.school_color}});
-        } catch (e) {
-         console.log(e, "error", "zoom");
-        }
+module.exports = class ZoomCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "zoom",
+            description: "Get Zoom Meetings status!",
+            group: "utility",
+            memberName: "zoom",
+            throttling: {
+                usages: 2,
+                duration: 5,
+            },
+        });
     }
-  };
+
+    async run ( message) {
+        let chunk = "";
+         const response = await fetch(this.client.config.api.zoom);
+        const data = await response.json();
+        
+        for (const i in data.components) { 
+            chunk += `**${data.components[i].name}** ${data.components[i].status === "operational" ? ":white_check_mark:\n" : ":x:\n"}`;
+        }
+
+        message.channel.send({ embed: { title: "Zoom Meetings Status", description: chunk, color: this.client.config.school_color}});
+        
+    }
+  }; 

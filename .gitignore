@@ -2,7 +2,8 @@ node_modules/
 .git
 .vscode
 .github
-config.json
-eslintjrc.json
+config.json 
 json.sqlite
 events/modmailLogs/ 
+.snyk
+.gitignore 

@@ -1,56 +1,46 @@
-const { MessageEmbed } = require(`discord.js`);
-const moment = require("moment");
+const { Command } = require("discord.js-commando");
 
-module.exports = {
-    name: 'user-info',
-    description: 'Get a user\'s Discord information here!',
-    args: true,
-    usage: `[@user-mention]`,
-    inline: true, 
-    category: 'Utility',
-    async execute (client, message, args) {
-        let user = message.mentions.users.first() || message.author;
-      
-        if (user.presence.status === "dnd") user.presence.status = "Do Not Disturb";
-        if (user.presence.status === "idle") user.presence.status = "Idle";
-        if (user.presence.status === "offline") user.presence.status = "Offline";
-        if (user.presence.status === "online") user.presence.status = "Online";
-        
-        function game() {
-          let game;
-          if (user.presence.activities.length >= 1) game = `${user.presence.activities[0].type} ${user.presence.activities[0].name}`;
-          else if (user.presence.activities.length < 1) game = "None"; 
-          return game; 
-        }
-        
-        const member = message.guild.member(user);
-        let nickname = member.nickname !== undefined && member.nickname !== null ? member.nickname : "None"; 
-        let createdate = moment.utc(user.createdAt).format("dddd, MMMM Do YYYY, HH:mm:ss"); 
-        let joindate = moment.utc(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm:ss"); 
-        let status = user.presence.status; 
-        let avatar = user.avatarURL({size: 2048}); 
-        
+module.exports = class userInfoCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: "user-info",
+      group: "utility",
+      memberName: "user-info",
+      description: "Get general user info",
+      throttling: {
+        usages: 2,
+        duration: 5,
+      },
+      args: [
+        {
+          key: "user",
+          prompt: "Enter a user to lookup",
+          type: "member",
+        },
+      ],
+    });
+  }
 
-        const embed = new MessageEmbed()
-        .setTitle("User Infomation")
-        .setColor(client.config.school_color)
-        .setThumbnail(avatar)
-        .addField("**User Info**", [
-          `**• Username:** ${user.tag}`,
-          `**• ID:** ${user.id}`,
-          `**• Created at:** ${createdate}`,
-          `**• Status:** ${status}`,
-        ])
-
-        .addField("**Member Info**", [
-          `**• Nickname:** ${nickname}`,
-          `**• Joined at:** ${joindate}`,
-          `**• Role(s):** <@&${member._roles.join('> <@&')}>`,
-        ])
-
-        .addField("**Currently Playing**", game())
-        
-        return message.channel.send(embed); 
-
-    }
-}
+  async run( message, { user }) {
+    message.channel.send({
+      embed: {
+        title: `${user.user.tag}`,
+        thumbnail: {
+          url: `${user.user.displayAvatarURL()}`,
+        },
+        timestamp: Date.now(),
+        color: this.client.config.school_color,
+        footer: {
+          text: `${this.client.config.prefix}user command`,
+        },
+        fields: [
+          { name: "Nickname", value: `${user.nickname || "N/A"}`, inline: true },
+          { name: "Bot Account", value: `${user.user.bot || "No"}`, inline: true },
+          { name: "Highest Role", value: `${user.roles.highest.name}`, inline: true },
+          { name: `Joined ${user.guild.name.split(0, 15)}`, value: `${user.joinedAt}`, inline: false },
+          { name: "Account Created", value: `${user.user.createdAt}`, inline: false },
+        ],
+      },
+    });
+  }
+};
