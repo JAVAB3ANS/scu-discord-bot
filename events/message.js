@@ -144,11 +144,7 @@ module.exports = async (client, message) => {
               //creates first image which is the SCU banner :)
   
               let guildBannerImg = document.createElement("img");
-<<<<<<< HEAD
               guildBannerImg.setAttribute("src", "https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true");
-=======
-              guildBannerImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true");
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
               guildBannerImg.setAttribute("width", "500");
               guildElement.appendChild(guildBannerImg);
   
@@ -158,11 +154,7 @@ module.exports = async (client, message) => {
               // creates second image which says "Modmail Ticket!"
   
               let guildTicketImg = document.createElement("img");
-<<<<<<< HEAD
               guildTicketImg.setAttribute("src", "https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_modmail_ticket.png?raw=true");
-=======
-              guildTicketImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_modmail_ticket.png?raw=true");
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
               guildTicketImg.setAttribute("width", "500");
               guildElement.appendChild(guildTicketImg);
   
@@ -231,15 +223,7 @@ module.exports = async (client, message) => {
                 });
               });
               messageReception.attachFiles(filePath); 
-<<<<<<< HEAD
               client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-<<<<<<< HEAD
-              client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-              client.log(client, messageReception.title, messageReception.description, "GREEN", message);
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
             });
           });
   
@@ -256,15 +240,7 @@ module.exports = async (client, message) => {
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
           await supportUser.send(messageReception);
-<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-<<<<<<< HEAD
-          await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-          client.log(client, messageReception.title, messageReception.description, "GREEN", message);
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
           break;
           
         case "pause":  // pause a thread 
@@ -278,15 +254,7 @@ module.exports = async (client, message) => {
           await supportUser.send(messageReception);
           
           messageReception.setDescription(`Admin/mod, please use \`${client.config.prefix}continue\` to cancel.`);
-<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-<<<<<<< HEAD
-          await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-          await client.log(client, messageReception.title, messageReception.description, "RED", message);
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
           break;
   
         case "reply": // reply to user 
@@ -294,30 +262,14 @@ module.exports = async (client, message) => {
           if(isPause === true || isPause === "true") { return client.error("This ticket is already paused. Unpause it to continue.", message); }
   
           let msg = modmailArgs.join(" "); 
-<<<<<<< HEAD
           if (!msg) { return client.error("Please enter a message for the support ticket user!", message); }
-=======
-<<<<<<< HEAD
-          if (!msg) { return client.error("Please enter a message for the support ticket user!", message); }
-=======
-          if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
           
           messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
           await supportUser.send(messageReception);
-<<<<<<< HEAD
           await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-<<<<<<< HEAD
-          await client.log(client, client.config.channels.auditlogs, messageReception);
-=======
-          await client.log(client, messageReception.title, messageReception.description, "GREEN", message);
->>>>>>> 3ff16413f885c11c854b4426c69563c0618903ef
->>>>>>> 0b429b4b9a186ce6ace0add125eb9c8c1149cb3a
           break; 
   
         default:
