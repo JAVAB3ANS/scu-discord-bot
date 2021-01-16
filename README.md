@@ -1,12 +1,9 @@
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
-# SCU DISCORD NETWORK 
-<<<<<<< HEAD
-=======
+# SCU DISCORD NETWORK  
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/29d042e9f2af40d1bf53590dd3a36be3)](https://app.codacy.com/gh/jasonanhvu/scu-discord-bot?utm_source=github.com&utm_medium=referral&utm_content=jasonanhvu/scu-discord-bot&utm_campaign=Badge_Grade)
 
->>>>>>> cb5a846941c40e81baeb34a7cc3dd43105fc2ce5
 ![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
@@ -94,7 +91,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 - By understanding Discord’s contemporary impact on modern communities, many people will find its features aligning to mirror aspects of the corporeal world where people want to talk. Its anti-superficial appeal, lack of predetermined content, and super responsive community all add to one thing: a place where people can genuinely be themselves in a secure, constructive space. On top of that, the versatility of the sum of its parts — text, voice, reaction emojis, and a plethora of other ways of expression — indeed promotes a definitive online experience in the midst of this time. Not only have I engaged in simply using the app, but my  Discord server-building experience has truly overcome the burden of proof for allowing people from all social areas to converse in a tight-knitted space. Given the longevity of the server and my current status as an undergraduate freshman studying CS, my work with this bot is obviously work-in-progress and is always keeping an eye out for the better things to come my way!
 
 
-5) Creator(s), Contributor(s), and Special Thanks: 
+## Creator(s), Contributor(s), and Special Thanks: 
 - Made by [jasonanhvu](https://github.com/jasonanhvu) with guidance from other cool developers:
   - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaquazi](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
   - From GitHub: [NightZan999](https://github.com/NightZan999), [TheMaestro0](https://github.com/TheMaestro0), [thesportstacker](https://github.com/thesportstacker), [Cyanic76](https://github.com/Cyanic76), and [Cramenorn](https://github.com/Cramenorn)
