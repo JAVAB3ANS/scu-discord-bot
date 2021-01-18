@@ -1,4 +1,5 @@
 const { Command } = require("discord.js-commando"); 
+const { log } = require("../../functions/log.js");
 
 module.exports = class inviteCommand extends Command {
   constructor(client) {
@@ -34,7 +35,7 @@ module.exports = class inviteCommand extends Command {
       )
       .then((inv) => {
         message.channel.send(`> Your new invite bound to channel **#${channel.name}** has been created! https://discord.gg/${inv.code}`);
-        this.client.log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Invite created!", description: `Made invite code \`${inv.code}\` for ${channel}`, color: 1231238}});
+        log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Invite created!", description: `Made invite code \`${inv.code}\` for ${channel}`, color: 1231238}});
       });
   }
 };

@@ -5,6 +5,7 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 const document = dom.window.document;  
+const { log } = require("../functions/log.js");
 
 module.exports = async (client, message) => {
     // Checks if the Author is a Bot, or the message isn`t from the guild, ignore it.
@@ -104,23 +105,23 @@ module.exports = async (client, message) => {
   
       switch (message.content.split(" ")[0].slice(1).toLowerCase()) { //if message content in the support user channel is a modmail command, execute the results...
         case "cmds": //on default, give list of modmail sub-commands :)
-          messageReception.setTitle("**📩  MODMAIL COMMANDS!**").setColor(client.config.school_color).setDescription(modmailCommands());
+          messageReception.setTitle("**📩  MODMAIL COMMANDS!**").setColor(client.config.default_color).setDescription(modmailCommands());
           await message.channel.send(messageReception);
           break; 
-  
+    
         case "complete": //close the user`s ticket after they`re done and log it!
-          if(isPause === true || isPause === "true"){ return client.error("Continue the support user's thread before completing the ticket!", message); }
-  
+          if(isPause === true || isPause === "true") return client.error("Continue the support user's thread before completing the ticket!", message); 
+    
           messageReception.setTitle("ModMail Ticket Resolved").setFooter(`ModMail Ticket Closed -- ${supportUser.tag}`)
-          .setDescription(); 
+          .setDescription(`✅ *Your ModMail has been marked as **complete** and has been logged by the admins/mods. If you wish to create a new one, please send a message to the bot.*`)     
           
           await supportUser.send(`<@${supportUser.id}>`, { embed: messageReception });
-  
+    
           let messageCollection = new Collection();
           let channelMessages = await message.channel.messages.fetch({ limit: 100 });
-  
+    
           messageCollection = messageCollection.concat(channelMessages);
-  
+    
           while(channelMessages.size === 100) {
             let lastMessageId = channelMessages.lastKey();
             channelMessages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
@@ -128,69 +129,69 @@ module.exports = async (client, message) => {
               messageCollection = messageCollection.concat(channelMessages);
             }
           }
-  
+    
           /*this section of the code is for creating a transcript for a channel created by my bot's ticketing 
           implementation, which normally wouldn't have much messages anyways unless someone were to spam haha */         
-  
+    
           let msgs = messageCollection.array().reverse();
           fs.readFile("./assets/modmailTemplate/template.html", "utf8", function (err, data) {  //goes into my directory for create the log's HTML/CSS template
-            const filePath = `./events/modmailLogs/index_${supportUser.tag}.html`; 
+            const filePath = `./logs/index_${supportUser.tag}.html`; 
             //names file after user's Discord tag and saves to my modmail file logs on my Raspberry Pi
             fs.writeFile(filePath, data, function (err, data) { 
-  
+    
               let guildElement = document.createElement("div");
               guildElement.className = "img-container";
-  
+    
               //creates first image which is the SCU banner :)
-  
+    
               let guildBannerImg = document.createElement("img");
-              guildBannerImg.setAttribute("src", "https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true");
+              guildBannerImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true");
               guildBannerImg.setAttribute("width", "500");
               guildElement.appendChild(guildBannerImg);
-  
+    
               let guildBreak = document.createElement("br"); //creates break element between these two images
               guildElement.appendChild(guildBreak);
-  
+    
               // creates second image which says "Modmail Ticket!"
-  
+    
               let guildTicketImg = document.createElement("img");
-              guildTicketImg.setAttribute("src", "https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_modmail_ticket.png?raw=true");
+              guildTicketImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_modmail_ticket.png?raw=true");
               guildTicketImg.setAttribute("width", "500");
               guildElement.appendChild(guildTicketImg);
-  
+    
               fs.appendFile(filePath, guildElement.outerHTML, function (err) {
                 if (err) { return; }
               });
-  
+    
               //for each normal user message sent in the ticketing channel, put them in a div and nest elements in their respective places
               msgs.forEach(async (msg) => {
                 let parentContainer = document.createElement("div");
                 parentContainer.className = "parent-container";
-  
+    
                 let avatarDiv = document.createElement("div");
                 avatarDiv.className = "avatar-container";
-  
+    
                 let img = document.createElement("img");
                 img.setAttribute("src", msg.author.displayAvatarURL());
                 img.className = "avatar";
                 avatarDiv.appendChild(img);
                 parentContainer.appendChild(avatarDiv);
-  
+    
                 const messageContainer = document.createElement("div");
                 messageContainer.className = "message-container";
-  
+    
                 const spanElement = document.createElement("span");
                 const codeNode = document.createElement("code");
-  
+    
                 let nameElement = document.createElement("span");
                 let name = document.createTextNode(`[${msg.author.tag}] [${msg.createdAt.toDateString()}] [${msg.createdAt.toLocaleTimeString()} PST]`); 
                 //gets time of message, the message author's tag, and the date it was sent and puts it in a span element in HTML
                 nameElement.appendChild(name);
                 messageContainer.append(nameElement);
-  
+    
                 //for each embed message sent from the bot, iterate through all of them and create paragraph element for each one
                 //then apply span element to each to divide up the title, description, and footer into viewable sections
-  
+    
                 for (const embed of msg.embeds) {
                   try {
                       const embedElements = [`Title: ${embed.title}`, `Description: ${embed.description}`, `Footer: ${embed.footer.text}`];
@@ -206,7 +207,7 @@ module.exports = async (client, message) => {
                         if (err === "TypeError: Cannot read property 'text' of null") { return; }
                   }            
                 } 
-  
+    
                 // messages with code backticks will be rendered as code element in HTML
                 if (msg.content.startsWith("```")) {
                   codeNode.appendChild(document.createTextNode(msg.content.replace(/```/g, "")));
@@ -215,24 +216,24 @@ module.exports = async (client, message) => {
                   spanElement.append(document.createTextNode(msg.content));
                   messageContainer.appendChild(spanElement);
                 }
-  
+    
                 parentContainer.appendChild(messageContainer); 
-  
+    
                 fs.appendFile(filePath, parentContainer.outerHTML, function (err) {
                   if (err) { console.log(err); }
                 });
               });
               messageReception.attachFiles(filePath); 
-              client.log(client, client.config.channels.auditlogs, messageReception);
+              sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
             });
           });
-  
+    
           await message.channel.delete();
           db.delete(`support_${support.targetID}`);
           break; 
         
         case "continue": // continue a thread
-          if(isPause === false || isPause === "false") { return client.error("This ticket was not paused.", message); }
+          if(isPause === false || isPause === "false") return client.error("This ticket was not paused.", message); 
           
           await db.delete(`suspended${support.targetID}`);
           
@@ -240,11 +241,11 @@ module.exports = async (client, message) => {
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
           await supportUser.send(messageReception);
-          await client.log(client, client.config.channels.auditlogs, messageReception);
+          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
           break;
           
         case "pause":  // pause a thread 
-          if(isPause === true || isPause === "true") { return client.error("This ticket already paused. Unpause it to continue!", message); }
+          if(isPause === true || isPause === "true") return client.error("This ticket already paused. Unpause it to continue!", message); 
           
           await db.set(`suspended${support.targetID}`, true);
           
@@ -254,24 +255,24 @@ module.exports = async (client, message) => {
           await supportUser.send(messageReception);
           
           messageReception.setDescription(`Admin/mod, please use \`${client.config.prefix}continue\` to cancel.`);
-          await client.log(client, client.config.channels.auditlogs, messageReception);
+          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
           break;
-  
+    
         case "reply": // reply to user 
           await message.delete();
-          if(isPause === true || isPause === "true") { return client.error("This ticket is already paused. Unpause it to continue.", message); }
-  
+          if(isPause === true || isPause === "true") return client.error("This ticket is already paused. Unpause it to continue.", message); 
+    
           let msg = modmailArgs.join(" "); 
-          if (!msg) { return client.error("Please enter a message for the support ticket user!", message); }
+          if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
           
-          messageReception.setTitle(`**<@${message.author.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
+          messageReception.setTitle(`**<@${supportUser.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
           await supportUser.send(messageReception);
-          await client.log(client, client.config.channels.auditlogs, messageReception);
+          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
           break; 
-  
+    
         default:
           await message.react("❌");
           await message.delete({ timeout: 3000 });

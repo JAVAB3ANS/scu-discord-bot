@@ -1,4 +1,5 @@
 const { Command } = require("discord.js-commando"); 
+const { log } = require("../../functions/log.js");
 
 module.exports = class sayCommand extends Command {
   constructor(client) {
@@ -14,7 +15,7 @@ module.exports = class sayCommand extends Command {
 
   async run(message) {
     message.delete();
-    this.client.log(this.client,this. client.config.channel.auditlogs, { embed: { title: "Say Command", description: `Channel: <#${message.channel.id}>\nContent: \`\`\`\n${message.content.substring(this.client.options.commandPrefix.length + 3, message.content.length)}\`\`\``, color: 6233209}});
+    log(this.client,this. client.config.channel.auditlogs, { embed: { title: "Say Command", description: `Channel: <#${message.channel.id}>\nContent: \`\`\`\n${message.content.substring(this.client.options.commandPrefix.length + 3, message.content.length)}\`\`\``, color: 6233209}});
     return message.say(message.content.substring(this.client.options.commandPrefix.length + 3, message.content.length));
   }
 };

@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js"); 
+const { log } = require("../functions/log.js");
 
 module.exports = async (client, member) => {
   if(member.user.bot) {return; } //ignore members who are bot users
@@ -8,7 +9,7 @@ module.exports = async (client, member) => {
   let role = member.guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent);
   await member.roles.add(role);
 
-  client.log(client, "NEW JOIN ROLE ADDED!", `The **Unverified** role has been given to **<@${member.user.id}>** by **<@${client.user.id}>**!`, "GREEN");
+  log(client, client.config.channels.auditlogs, { embed: { title: "NEW JOIN ROLE ADDED!", description: `The **Unverified** role has been given to **<@${member.user.id}>** by **<@${client.user.id}>**!`, color: "GREEN"}});
   
   const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
   .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
@@ -40,5 +41,5 @@ module.exports = async (client, member) => {
 
   await member.send(welcomeEmbed2);
   
-  client.log(client, "NEW JOIN DM SENT!", `:white_check_mark: Private DM has been sent to new user: <@${member.user.id}>`, "GREEN"); //send private DM to new user
+  log(client, client.config.channels.auditlogs, { embed: { title: "NEW JOIN DM SENT!", description: `:white_check_mark: Private DM has been sent to new user: <@${member.user.id}>`, color: "GREEN"}}); //send private DM to new user
 };

@@ -26,7 +26,7 @@ module.exports = class announceCommand extends Command {
           prompt: "Please provide a message id to edit or mention a channel to send this message to",
           type: "string",
           validate: (id) => {
-            if(!id.match(/^([^0-9]*)$/)) {
+            if(!id.match(/^[0-9]{1,18}$/)) {
               return "Please enter a proper snowflake!";
             }
           }

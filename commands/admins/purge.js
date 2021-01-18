@@ -27,9 +27,8 @@ module.exports = class purgeCommand extends Command {
     }   
 
     async run( message, { numberMessages }) {  
-        const deleteCount = parseInt(numberMessages, 10);
-
-        await message.channel.bulkDelete(deleteCount + 1); //includes bot message afterwards as well
-        
+        let number = Number(numberMessages);
+        number = parseInt(number);
+        await message.channel.bulkDelete(number, true);
     }
 }

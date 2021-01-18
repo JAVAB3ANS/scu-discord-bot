@@ -1,4 +1,5 @@
 const { Command } = require("discord.js-commando");
+const { log } = require("../../functions/log.js");
 
 module.exports = class banCommand extends Command {
     constructor(client) {
@@ -48,7 +49,7 @@ module.exports = class banCommand extends Command {
             } else {
                 await member.ban(reason);
 
-                this.client.log(this.client, `User [${member.user.tag}] Banned!`, `Reason: ${reason}`, "RED");
+                log(this.client, { embed: { title: `User [${member.user.tag}] Banned!`, description: `Reason: ${reason}`, color: "RED"}});
 	        }
     }
 };

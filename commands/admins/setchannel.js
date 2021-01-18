@@ -1,5 +1,6 @@
 const { Command } = require("discord.js-commando");
 const fs = require("fs");
+const { log } = require("../../functions/log.js");
 
 module.exports = class setChannelCommand extends Command {
   constructor(client) {
@@ -23,12 +24,7 @@ module.exports = class setChannelCommand extends Command {
           key: "channel",
           prompt: "What channel would you like to set this key to?",
           type: "channel",
-          validate: (channel) => {
-            if(channel.match(/^[a-zA-Z]+$/)) {
-              return "Please enter a proper channel snowflake!";
-            }
-          }
-
+          examples: ["@welcome", "@server-info"]
         },
       ],
     });
@@ -41,7 +37,7 @@ module.exports = class setChannelCommand extends Command {
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
       });
-        this.client.log(this.client, "Channel Updated", `${type} => #${channel.name}`, "GREEN");
+        log(this.client, { embed: { title: "Channel Updated", description: `${type} => #${channel.name}`, color: "GREEN"}});
     } else {
         this.client.error("Could not find that channel key", message);
     }

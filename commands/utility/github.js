@@ -28,7 +28,7 @@ module.exports = class githubCommand extends Command {
     let response = await fetch(`https://api.github.com/users/${username}`);
     let data = await response.json();
 
-    if (data.name == null) {
+    if (data.name === null) {
       this.client.error("Couldn't find that user! :x:", message);
     }
 

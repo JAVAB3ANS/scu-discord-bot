@@ -9,7 +9,7 @@ const client = new CommandoClient({
 
 client.config = require("./config.json"); 
 client.error = require("./functions/error.js");
-client.log = require("./functions/log.js");
+const { log } = require("./functions/log.js");
 
 client.registry
   .registerDefaultTypes()
@@ -49,19 +49,19 @@ client.once("ready", () => {
   client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"}); 
 
     fs.readdir("./modules", (err, files) => {
-      client.log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, color: "GREEN"}});
+      log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, color: "GREEN"}});
       files.forEach((file) => {
-        if (!file.includes("js") || !file.startsWith("server")) { return; }
+        if (!file.includes("js")) { return; }
         let eventFunction = require(`./modules/${file}`);
         let eventName = file.split(".")[0];
         if (client.config.services[eventName]) {
           eventFunction.run(client);
-          client.log(client, client.config.channels.auditlogs, { embed: { title: "Service started!", description: `Started ${eventName} service :white_check_mark:`, color: "GREEN"}});
+          log(client, client.config.channels.auditlogs, { embed: { title: "Service started!", description: `Started ${eventName} service :white_check_mark:`, color: "GREEN"}});
         } 
       });
     });
 
-    client.log(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN"}});
+    log(client, client.config.channels.auditlogs, { embed: { title: "Hooray!", description: "All commands and events work! :white_check_mark:", color: "GREEN"}});
 });
 
 client 

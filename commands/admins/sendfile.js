@@ -1,4 +1,5 @@
 const { Command } = require("discord.js-commando"); 
+const { log } = require("../../functions/log.js"); 
 
 module.exports = class sendFileCommand extends Command {
   constructor(client) {
@@ -24,6 +25,6 @@ module.exports = class sendFileCommand extends Command {
     message.channel.send("", {
       files: file.split(","),
     });
-    this.client.log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Sent file!", description: `Sent filestring ${file} in ${message.channel}`, color: 1231238}});
+    log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Sent file!", description: `Sent filestring ${file} in ${message.channel}`, color: 1231238}});
   }
 };

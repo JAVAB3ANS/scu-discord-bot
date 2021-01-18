@@ -1,5 +1,6 @@
 const { Command } = require("discord.js-commando");
 const fs = require("fs"); 
+const { log } = require("../../functions/log.js");
 
 module.exports = class setPrefixCommand extends Command {
   constructor(client) {
@@ -30,7 +31,7 @@ module.exports = class setPrefixCommand extends Command {
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
-        this.client.log(this.client, "CHANGED PREFIX!", `Successfully updated prefix to \`${newPrefix}\``, "GREEN",);      
+        log(this.client, { embed: { title: "CHANGED PREFIX!", description: `Successfully updated prefix to \`${newPrefix}\``, color: "GREEN"}});      
       })
        
     } else {
