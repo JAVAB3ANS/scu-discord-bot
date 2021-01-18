@@ -143,19 +143,19 @@ module.exports = async (client, message) => {
               guildElement.className = "img-container";
     
               //creates first image which is the SCU banner :)
-    
+
               let guildBannerImg = document.createElement("img");
-              guildBannerImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true");
+              guildBannerImg.setAttribute("src", "https://raw.githubusercontent.com/jasonanhvu/scu-discord-bot/master/assets/scu_banner.png?raw=true");
               guildBannerImg.setAttribute("width", "500");
               guildElement.appendChild(guildBannerImg);
-    
+
               let guildBreak = document.createElement("br"); //creates break element between these two images
               guildElement.appendChild(guildBreak);
-    
+
               // creates second image which says "Modmail Ticket!"
-    
+
               let guildTicketImg = document.createElement("img");
-              guildTicketImg.setAttribute("src", "https://jasonanhvu.github.io/scu-discord-bot/blob/master/assets/scu_modmail_ticket.png?raw=true");
+              guildTicketImg.setAttribute("src", "https://raw.githubusercontent.com/jasonanhvu/scu-discord-bot/master/assets/scu_modmail_ticket.png?raw=true");
               guildTicketImg.setAttribute("width", "500");
               guildElement.appendChild(guildTicketImg);
     

@@ -71,9 +71,8 @@ module.exports = class covid19Command extends Command {
         
             const pages = [newStuff, tierDashboard, privacyReminder];
             const emojiList = ["⏪", "⏩"];
-            const timeout = "3600000";
  
-          paginationEmbed(msg, pages, emojiList, timeout);
+          paginationEmbed(msg, pages, emojiList);
         } 
     }
 };

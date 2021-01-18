@@ -31,9 +31,9 @@ The Discord bot is implemented using Node.js and the discord.js library. The lib
 The next section will discuss each feature, their implementation choices, and any mistakes/learning points that could be improved on.
 
 ## Bot Interaction
-The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use ```&ping`.
+The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use ```&ping```.
 
-![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png)
+![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png?raw=true)
 
 ## Server Verification System:
 - An Express.js server was programmed for a guild verification system which automatically gives graduating year, college major, and verified roles to SCU students on submitting their unique Google Form responses. Setting permissions through roles is the standard way of managing a Discord server without manual content filtering. 
@@ -44,30 +44,30 @@ The bot is designed to respond to chat messages. To distinguish when the bot sho
 
 - A challenge was detecting whether the user's response in the Google form was invalid. I used regex (regular expressions) to validate whether the number put their names properly with the first uppercase letter and such. On top of that, when users didn't put in their correct Discord tag in the specific form input section, the bot would send an error message so I would have to manually delete the user's response so they could redo the form and automatically get Discord roles through the Express.js server receiving a request from Google forms/scripts api.
 
-![serverVerification](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_verification_process.gif)
+![serverVerification](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_verification_process.gif?raw=true)
 
 ## Server Modmail Ticketing System:
 
-![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-help.png)
+![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-help.png?raw=true)
 
 - The modmail ticketing system is basically an open forum with the admin/mods of the college server. When users direct message the bot with or without an message attachment/URL, they wil be able to communicate with the moderators on demand. Whether it be suggesting new ideas or asking about how the 
 server operates, this ensures 100% trust and transparency between the server leaders and its members.
 
 - Not to mention that this also works for prospective students who want to ask for roles in the server just so they could get a feel of the school's relative student body (around 11-12% here) and how the university life was like in general before lockdown.
 
-![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-modmail-process.gif)
+![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-modmail-process.gif?raw=true)
 
 ## Zoom REST API Status Scraper
 - The command `zoom.js` uses Zoom's REST API endpoint to compile all of Zoom's technical services onto one embed and see if they are fully operational as indicated by a ✅. Given that we as students use Zoom as the lifeline of our virtual education, knowing that the digital platform is in good IT hands is relieving and therapeutic in itself.
 
-![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_zoom.png)
+![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_zoom.png?raw=true)
 
 ## School COVID-19 Dashboard Scraper
 - The command `covid19.js` is used to access the school's COVID-19 testing dashboard and print out its contents: `date, tests, positive tests, and positivity rate`. Since these health and wellness tests are usually conducted at my school weekly, a node-schedule job was scheduled to output the COVID-19 data weekly on Friday mornings. Since the website does not have an API to access its information, retrieving the information is performed through data scraping. Cheerio library was used to access and scrape data through HTML. 
 
 - The challenging areas of scraping the data was dealing with the formatting. Normally, the data would be presented in the same exact format. At a period of time, a different format was used temporarily, which broke the bot as no data was retrieved due to differing HTML tags. As a temporary fix, the function was adjusted to work with the temporary format. Another challenging portion was message length limits. Discord has a 2000 character limit on each message, so particularly long menus would not fit within a single message. As a design choice, if any message was too long, a link to the website would be in the body of the message instead. Ideally, multiple messages would be sent to break up the menu into sendable parts, but due to time constraints and readability issues, this was never implemented. To further improve this functionality, the bot should be able to detect where and when to break up a message into digestable parts.
 
-![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_covid.png)
+![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_covid.png?raw=true)
 
 ## Server-Wide Announcements
 - The idea of the Discord server was to take advantage of the various text channels and dedicate each one to a specific topic. As of time of writing, communications throughout the community exist through various Facebook, Instagram, Reddit groups dedicated to community events/announcements. 
@@ -76,7 +76,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 - I learned here to exercise internet etiquette and to not mention everyone in the server. Instead, the channel will only light up to indicate an unread message opposed to mentioning 600+ students which may come off as unsolicited and unsettling.
 
-![announcement](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_announcement.png)
+![announcement](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_announcement.png?raw=true)
 
 4) Final Thoughts:
 - This was an impromptu project for fun that eventually turned into a pretty big deal well at least for me. The Discord community’s ability to listen to its audience base is profound, both technically and socially. Whether it is listening to user-experience suggestions or bug fixes for the app’s online client, the developers are always responsive and willing to help. By also allowing users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, something that very few applications can encourage for an audience with a primarily end-user base. That being stated, the platform is as meaningful to the average user as it is to individuals who want to dabble behind the scenes.
