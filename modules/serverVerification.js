@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js"); 
-const log = require("../functions/log.js");
+const { log } = require("../functions/log.js");
 
 module.exports.run = async (client) => {
   const express = require("express");
@@ -38,17 +38,21 @@ module.exports.run = async (client) => {
       if (member === null) { 
         (client, `__**❌ ${guild.name} Verification**__`, `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](https://docs.google.com/forms/d/1O4iazeB8sDlTPYLLgTF9IhndV0ZJv-ulvFJyqFkTMO4/edit)!`, "red");
       } else if (member.roles.cache.has(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent))) {
-          //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
-          const dangerEmbed = {
-            title: `__**DANGER ALERT!**__`,
-            description: `❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!`,
-            color: client.config.school_color,
-            footer: { text: `${guild.name} Verification`, },
-            author: { name: "Verification Notice", icon_url: client.user.avatarURL(), },
-            timestamp: new Date()
-          };
-          member.send(`<@${member.user.id}>`, {embed: dangerEmbed});
-          log(client, client.config.channels.auditlogs, { embed: { title: "__**DANGER ALERT!**__", description: "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", color: "red"}});
+          try {
+            //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
+            const dangerEmbed = {
+              title: `__**DANGER ALERT!**__`,
+              description: `❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!`,
+              color: client.config.school_color,
+              footer: { text: `${guild.name} Verification`, },
+              author: { name: "Verification Notice", icon_url: client.user.avatarURL(), },
+              timestamp: new Date()
+            };
+            member.send(`<@${member.user.id}>`, {embed: dangerEmbed});
+            log(client, client.config.channels.auditlogs, { embed: { title: "__**DANGER ALERT!**__", description: "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", color: "red"}});
+          } catch (err) {
+              if(err === "TypeError: Cannot read property 'roles' of undefined") return;
+          } 
       } else {
           log(client, client.config.channels.auditlogs, { embed: { title: "__**✅ Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
           if (req.body.status === "SCU Faculty/Staff") {

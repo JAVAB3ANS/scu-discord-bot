@@ -134,8 +134,8 @@ module.exports = async (client, message) => {
           implementation, which normally wouldn't have much messages anyways unless someone were to spam haha */         
     
           let msgs = messageCollection.array().reverse();
-          fs.readFile("./assets/modmailTemplate/template.html", "utf8", function (err, data) {  //goes into my directory for create the log's HTML/CSS template
-            const filePath = `./logs/index_${supportUser.tag}.html`; 
+          fs.readFile("./assets/templateFiles/template.html", "utf8", function (err, data) {  //goes into my directory for create the log's HTML/CSS template
+            const filePath = `./events/modmailLogs/index_${supportUser.tag}.html`; 
             //names file after user's Discord tag and saves to my modmail file logs on my Raspberry Pi
             fs.writeFile(filePath, data, function (err, data) { 
     
@@ -223,8 +223,8 @@ module.exports = async (client, message) => {
                   if (err) { console.log(err); }
                 });
               });
-              messageReception.attachFiles(filePath); 
-              sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
+              messageReception.attachFiles(filePath);    
+              log(client, client.config.channels.auditlogs, { embed: messageReception });
             });
           });
     
@@ -240,8 +240,9 @@ module.exports = async (client, message) => {
           messageReception.setTitle("Modmail Ticket Continued!").setDescription(`▶️ <@${supportUser.id}>, your thread has **continued**! We're ready to continue!`).setColor("BLUE") 
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
-          await supportUser.send(messageReception);
-          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
+          await supportUser.send(messageReception); 
+          await message.channel.send(messageReception);
+          log(client, client.config.channels.auditlogs, { embed: messageReception });
           break;
           
         case "pause":  // pause a thread 
@@ -255,7 +256,9 @@ module.exports = async (client, message) => {
           await supportUser.send(messageReception);
           
           messageReception.setDescription(`Admin/mod, please use \`${client.config.prefix}continue\` to cancel.`);
-          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
+       
+          await message.channel.send(messageReception);
+          log(client, client.config.channels.auditlogs, { embed: messageReception });
           break;
     
         case "reply": // reply to user 
@@ -265,12 +268,13 @@ module.exports = async (client, message) => {
           let msg = modmailArgs.join(" "); 
           if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
           
-          messageReception.setTitle(`**<@${supportUser.id}>**, 💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
+          messageReception.setTitle(`**💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
           await supportUser.send(messageReception);
-          sendMessage(client, client.config.channel.auditlogs, { embed: messageReception });
+          await message.channel.send(messageReception);
+          log(client, client.config.channels.auditlogs, { embed: messageReception });
           break; 
     
         default:

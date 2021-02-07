@@ -14,12 +14,14 @@ module.exports = class purgeCommand extends Command {
             args: [
                 {
                     key: "numberMessages",
-                    prompt: "Please specify a number below 101!",
-                    type: "integer", 
+                    prompt: "Please specify a number between 2 and 101!",
+                    type: "string", 
                     validate: ((numberMessages) => {
-                        if (numberMessages < 2 || numberMessages > 101) {
-                            return "Please enter a number between 2 and 101!";
-                        };
+                        if (numberMessages.match(/^[0-9]*$/)) {
+                            return true;
+                        } else {
+                            return "Please enter a number between 1 and 101!"
+                        }
                     })
                 },
             ],
@@ -29,6 +31,11 @@ module.exports = class purgeCommand extends Command {
     async run( message, { numberMessages }) {  
         let number = Number(numberMessages);
         number = parseInt(number);
-        await message.channel.bulkDelete(number, true);
+
+        if (number < 1 || number > 101) {
+            return this.client.error("Please enter a number between 1 and 101!");
+        }
+
+        await message.channel.bulkDelete(number + 1, true);
     }
 }

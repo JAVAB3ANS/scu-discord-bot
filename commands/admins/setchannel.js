@@ -24,7 +24,7 @@ module.exports = class setChannelCommand extends Command {
           key: "channel",
           prompt: "What channel would you like to set this key to?",
           type: "channel",
-          examples: ["@welcome", "@server-info"]
+          oneOf: ["#welcome", "#server-info"]
         },
       ],
     });

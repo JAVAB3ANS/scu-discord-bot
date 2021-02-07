@@ -8,6 +8,7 @@ module.exports = class serverStatsCommand extends Command {
 			memberName: "server-stats",
 			description: "Get general server statistics!",
 			group: "utility",
+			guildOnly: true,
             throttling: {
                 usages: 2,
                 duration: 5,
@@ -32,10 +33,10 @@ module.exports = class serverStatsCommand extends Command {
 				return memberCount;
 			}
 
-			let serverembed = new MessageEmbed()
+			let serverEmbed = new MessageEmbed()
 			.setDescription(`__**${message.guild.name} - Statistics**__`)
-			.setColor(this.client.config.school_color)
-			.addField("Server Owner", `<@${message.guild.owner}>`, true)
+			.setColor(this.client.config.default_color)
+			.addField("Server Owner", `${message.guild.owner}`, true)
 			.addField("Server Region", message.guild.region, true) 
 			.addField("Server Name", message.guild.name, true)
 			.addField("Verification level", message.guild.verificationLevel, true)
@@ -44,8 +45,9 @@ module.exports = class serverStatsCommand extends Command {
 			.addField("Humans", checkMembers(message.guild), true)
 			.addField("Bots", checkBots(message.guild), true)
 			.addField("Guild Created At:", message.guild.createdAt, true)
+			.addField("Roles", message.guild.roles.cache.map(x =>x.name), true)
 			.setTimestamp();
-
-			message.channel.send(serverembed); 
+ 
+			message.channel.send(serverEmbed); 
 	} 
 }; 

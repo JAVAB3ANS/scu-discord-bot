@@ -9,7 +9,7 @@ module.exports = class sayCommand extends Command {
       memberName: "say",
       guildOnly: true,
       description: "Repeats what the user said.",
-      examples: ["say Hello world"],
+      oneOf: ["say Hello world"],
     });
   }
 

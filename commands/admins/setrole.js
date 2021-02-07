@@ -25,7 +25,7 @@ module.exports = class setRole extends Command {
           key: "role",
           prompt: "What role would you like to set this key to?",
           type: "role",
-          examples: ["@Student", "@Moderator"]
+          oneOf: ["@Student", "@Moderator"]
         },
       ],
     });

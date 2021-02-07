@@ -42,7 +42,7 @@ module.exports = class akiCommand extends Command {
         await aki.start();
 
         const msg = await message.channel.send(new MessageEmbed()
-       .setTitle(`**<@${message.author.username}>**, Question ${aki.currentStep + 1}`)
+       .setTitle(`**<@${message.author.id}>**, Question ${aki.currentStep + 1}`)
        .setColor("RANDOM")
        .setDescription(`**${aki.question}**\n${aki.answers.map((x, i) => `${x} | ${emojis[i]}`).join("\n")}`));
 
@@ -57,7 +57,7 @@ module.exports = class akiCommand extends Command {
                   await aki.win();
                   collector.stop();
                   await message.channel.send(new MessageEmbed()
-                  .setTitle(`**<@${message.author.username}>, is this this your character? :thinking:**`)
+                  .setTitle(`**<@${message.author.id}>, is this this your character? :thinking:**`)
                   .setDescription(`**${aki.answers[0].name}**\n${aki.answers[0].description}\nRanking as **#${aki.answers[0].ranking}**\n\n[yes (**y**) / no (**n**)]`)
                   .setImage(aki.answers[0].absolute_picture_path)
                   .setColor("RANDOM"));
@@ -69,12 +69,12 @@ module.exports = class akiCommand extends Command {
                                 return message.channel.send(new MessageEmbed()
                                   .setColor("RANDOM")
                                   .setTitle("**Great! I guessed right one more time. :smiley:**")
-                                  .setDescription(`<@${message.author.username}>, I love playing with you!`));
+                                  .setDescription(`<@${message.author.id}>, I love playing with you!`));
                             } else  {
                                 return message.channel.send(new MessageEmbed()
                                   .setColor("RANDOM")
-                                  .setTitle(`**<@${message.author.username}>, you're the winner! :relieved:**`)
-                                  .setDescription(`<@${message.author.username}>, I love playing with you!`));
+                                  .setTitle(`**<@${message.author.id}>, you're the winner! :relieved:**`)
+                                  .setDescription(`<@${message.author.id}>, I love playing with you!`));
                             }
                           });
                         return;

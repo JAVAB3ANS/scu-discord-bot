@@ -19,15 +19,16 @@ module.exports = class announceCommand extends Command {
           prompt: "Please choose a valid option \`msg, embed, append, edit\`",
           type: "string",
           oneOf: ["edit", "append", "embed", "msg"],
-          // validate: (option) => option == "edit" || option == "append" || option == "embed" || option.test(/<((#\d+)|(:.+?:\d+))>/g)
         },
         {
           key: "id",
           prompt: "Please provide a message id to edit or mention a channel to send this message to",
           type: "string",
           validate: (id) => {
-            if(!id.match(/^[0-9]{1,18}$/)) {
-              return "Please enter a proper snowflake!";
+            if(id.match(/^[0-9]*$/)) {
+              return true;
+            } else {
+                return "Please enter a proper snowflake!"
             }
           }
         },
@@ -35,7 +36,6 @@ module.exports = class announceCommand extends Command {
           key: "body",
           prompt: "Please provide some body text (embed format)",
           type: "string",
-          examples: ["{ embed: { description: \"Hello!\", color: \"BLUE\", timestamp: new Date() } }", "A COOL MESSAGE"]
         },
       ],
     });
@@ -63,10 +63,10 @@ module.exports = class announceCommand extends Command {
           }); 
         break;
       case "embed":  
-          announceChannel.send({ embed: JSON.parse(body), }); 
-        break;
+          announceChannel.send({ embed: JSON.parse(body)}); 
+          break;
       case "msg": 
-          announceChannel.send({ embed: { description: body}});
+          announceChannel.send(body);
  
           break;
     } 

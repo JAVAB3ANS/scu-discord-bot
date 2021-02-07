@@ -9,7 +9,7 @@ module.exports = class sendFileCommand extends Command {
       memberName: "sendfile",
       guildOnly: true,
       description: "Send a file as the bot (SVG files are NOT supported!)",
-      examples: ["sendfile i.imgur.com/abcdef", "sendfile i.imgur.com/abcdef,i.imgur.com/ghijk,i.imgur.com/lmnop"],
+      oneOf: ["sendfile i.imgur.com/abcdef", "sendfile i.imgur.com/abcdef,i.imgur.com/ghijk,i.imgur.com/lmnop"],
       args: [
         {
           key: "file",
