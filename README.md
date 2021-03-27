@@ -1,6 +1,6 @@
 ![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
-# SCU DISCORD NETWORK 
+# SCU DISCORD NETWORK
 ![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
 ![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
@@ -19,7 +19,7 @@
 ## Server Logo
 ![SCU Discord Network Logo](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/logo-pic.png?raw=true)
 
-## Main Commands:
+## Main Commands
 - Here are all of the bot's commands:
   - [Admins category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/admins)
   - [Utility category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/utility)
@@ -35,7 +35,7 @@ The bot is designed to respond to chat messages. To distinguish when the bot sho
 
 ![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png?raw=true)
 
-## Server Verification System:
+## Server Verification System
 - An Express.js server was programmed for a guild verification system which automatically gives graduating year, college major, and verified roles to SCU students on submitting their unique Google Form responses. Setting permissions through roles is the standard way of managing a Discord server without manual content filtering. 
 
 - The server is designed such that only those with certain roles can access certain voice and text channels. Without roles, anyone can create an account and spam messages, which the verify system effectively mitigates. Unlike many servers with role-react systems which give users on the click of an emoji on a message, my method proves effective and secure on many levels. In short, the only users who could have access to the server are current students and alumni given that they fill everything out with their correct credentials within the university's domain. 
@@ -46,7 +46,7 @@ The bot is designed to respond to chat messages. To distinguish when the bot sho
 
 ![serverVerification](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_verification_process.gif?raw=true)
 
-## Server Modmail Ticketing System:
+## Server Modmail Ticketing System
 
 ![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-help.png?raw=true)
 
@@ -88,7 +88,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 - By understanding Discord’s contemporary impact on modern communities, many people will find its features aligning to mirror aspects of the corporeal world where people want to talk. Its anti-superficial appeal, lack of predetermined content, and super responsive community all add to one thing: a place where people can genuinely be themselves in a secure, constructive space. On top of that, the versatility of the sum of its parts — text, voice, reaction emojis, and a plethora of other ways of expression — indeed promotes a definitive online experience in the midst of this time. Not only have I engaged in simply using the app, but my  Discord server-building experience has truly overcome the burden of proof for allowing people from all social areas to converse in a tight-knitted space. Given the longevity of the server and my current status as an undergraduate freshman studying CS, my work with this bot is obviously work-in-progress and is always keeping an eye out for the better things to come my way!
 
 
-## Creator(s), Contributor(s), and Special Thanks: 
+## Creator(s), Contributor(s), and Special Thanks
 - Made by [jasonanhvu](https://github.com/jasonanhvu) with guidance from other cool developers:
   - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaquazi](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
   - From GitHub: [NightZan999](https://github.com/NightZan999), [TheMaestro0](https://github.com/TheMaestro0), [thesportstacker](https://github.com/thesportstacker), [Cyanic76](https://github.com/Cyanic76), and [Cramenorn](https://github.com/Cramenorn)
