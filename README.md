@@ -9,7 +9,7 @@
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/discord.js)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/pm2)
 ![Discord Support](https://img.shields.io/discord/754545426958385213?label=Discord%20Support&labelColor=FFFFF&style=plastic&logo=Discord&link=https://discord.gg/hEVJZsSWcX&link=https://discord.gg/hEVJZsSWcX)
-[![Known Vulnerabilities](https://snyk.io/test/github/jasonanhvu/badge.svg)](https://snyk.io/test/github/jasonanhvu/badge.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/jasonanhvu/scu-discord-bot/badge.svg)](https://snyk.io/test/github/jasonanhvu/scu-discord-bot/badge.svg)
 
   - This is a 24/7 bot that I made for my [**SCU Discord Network**](https://invite.gg/gobroncos) to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
 
