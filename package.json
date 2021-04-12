@@ -9,7 +9,7 @@
     "better-sqlite3": "^7.1.0",
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
-    "chrono-node": "^1.4.8",
+    "chrono-node": "^2.2.4",
     "common-tags": "^1.8.0",
     "cors": "^2.8.5",
     "discord.js": "^12.5.0",
