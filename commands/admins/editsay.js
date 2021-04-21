@@ -29,6 +29,6 @@ module.exports = class sayCommand extends Command {
     message.delete();
     if (messageid.author.id !== this.client.user.id) return this.client.error("This must be a message that the bot, " + this.client.user.username + " sent", message);
     messageid.edit(content);
-    log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Bot Message Edited", description: `A message in **#${messageid.channel.name}** was edited\n\n[[Jump]](${messageid.url})`, color: 1232038}});
+    log(this.client, this.client.config.channels.auditlogs, { embed: { title: "Bot Message Edited", description: `A message in **#${messageid.channel.name}** was edited\n\n[[Jump]](${messageid.url})`, color: 1232038}});
   }
 };

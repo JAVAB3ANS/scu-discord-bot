@@ -25,6 +25,6 @@ module.exports = class sendFileCommand extends Command {
     message.channel.send("", {
       files: file.split(","),
     });
-    log(this.client, this.client.config.channel.auditlogs, { embed: { title: "Sent file!", description: `Sent filestring ${file} in ${message.channel}`, color: 1231238}});
+    log(this.client, this.client.config.channels.auditlogs, { embed: { title: "Sent file!", description: `Sent filestring ${file} in ${message.channel}`, color: 1231238}});
   }
 };

@@ -39,7 +39,7 @@ module.exports = class setRole extends Command {
         if (err) throw err;
         message.say("Successfully updated role value!");
       });
-      log(this.client, this.client.config.channel.auditlogs, { embed: { title: `Role Updated`, description: `${type} => @${role.name}`, color: 323295}});
+      log(this.client, this.client.config.channels.auditlogs, { embed: { title: `Role Updated`, description: `${type} => @${role.name}`, color: 323295}});
     } else {
       this.client.error("Could not find that role key", message);
     }
