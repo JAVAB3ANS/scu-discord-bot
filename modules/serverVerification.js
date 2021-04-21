@@ -1,131 +1,120 @@
-const { log } = require("../functions/log.js"); 
-const nodemailer = require("nodemailer"); 
-const fs = require("fs");
+const { MessageEmbed } = require("discord.js"); 
+const { log } = require("../functions/log.js");
 
-module.exports.run = async (client) => { 
-    
-    function sendAuthEmail(email, name, discorduser) { 
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: client.config.email.username,
-                pass: client.config.email.password
-            }
-        });
-         
-        fs.readFile("./assets/templateFiles/email.html", "utf8", function(err, data) {
-            if (err) {
-              return console.log(err);
-            }
-            const result = data.replace(/NAME/g, name).replace(/DISCORDUSER/g, discorduser);
-        
-            const mailOptions = {
-                from: `${message.guild.name} <${this.client.config.email.username}>`,
-                to: `<email>`,
-                subject: `${message.guild.name} Verification`,
-                html: result,
-                text: `${firstName}, thank you for verifying yourself in the server!\nIf you are not the intended recipient of this email, please contact ${this.client.config.email.username}.`,
+module.exports.run = async (client) => {
+  const express = require("express");
+  const cors = require("cors");
+  const helmet = require("helmet");
+  const app = express();
+
+  const guild = client.guilds.cache.get(client.config.verification.guildID);
+  app.use(express.json());
+  app.use(cors());
+  app.use(helmet());
+  //This will start on port 2000, if this collides with another service you may change it
+  const verifyMSG = {
+    title: "VERIFICATION SERVER",
+    description: `Verification listening at port 4000 [here](${client.config.verification.verifyURL})! ✅`,
+    color: "GREEN", 
+    timestamp: new Date()
+  }
+  app.listen(4000, () => {
+    console.log(verifyMSG.description);
+  });
+  app.all("/", (req, res) => {
+    res.status(200).send(`${verifyMSG.title} was deployed on ${verifyMSG.timestamp} ✅`);
+  });
+  app.post("/verify", (req, res) => {
+    //some basic auth
+    if (req.headers["key"] !== client.config.verification.key) {
+      //api key checker
+      res.status(401).send({ error: "❌ Invalid API Key " });
+      //data in body checker
+    } else if (Object.keys(req.body).length > 0) { //if member enters something, then fire this else block
+      res.status(200).send({ status: "Successful" });
+      //find member in guild
+      let member = guild.members.cache.find((member) => member.user.tag === req.body.discord);
+      //if the member isn't in the guild return an error in console 
+      if (member === null) { 
+        (client, `__**❌ ${guild.name} Verification**__`, `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](https://docs.google.com/forms/d/1O4iazeB8sDlTPYLLgTF9IhndV0ZJv-ulvFJyqFkTMO4/edit)!`, "red");
+      } else if (member.roles.cache.has(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent))) {
+          try {
+            //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
+            const dangerEmbed = {
+              title: `__**DANGER ALERT!**__`,
+              description: `❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!`,
+              color: client.config.school_color,
+              footer: { text: `${guild.name} Verification`, },
+              author: { name: "Verification Notice", icon_url: client.user.avatarURL(), },
+              timestamp: new Date()
             };
-        
-            // finally sends the email to the user with the code so they know what it is!
-            transporter.sendMail(mailOptions, function(error, info) {
-                if (error) {
-                    client.console(error);
-                } else {
-                    client.console("Email sent: " + info.response);
-                    log(
-                        `${client.config.channels.auditlogs}`,
-                        `Email sent to ${name} (${discorduser}) with the email adress ${email} for server verification.`
-                    );
-                }
-            });
-        });
-    }
-    
-    //TypeForm Responses Webhook server
-    function typeFormServer() {
-        const http = require("http");
-        const options = {
-        key: fs.readFileSync("./https/key.pem"),
-        cert: fs.readFileSync("./https/cert.pem"),
-        method: "POST",
-        path: "/typeform"
-        };
-        client.console("HTTP Server | Listening for requests".red);
-        http
-        .createServer(options, function(req, res) {
-            let body = "";
-            req.setEncoding("utf8");
-            req.on("data", function(chunk) {
-            body += chunk;
-        });
+            member.send(`<@${member.user.id}>`, {embed: dangerEmbed});
+            log(client, client.config.channels.auditlogs, { embed: { title: "__**DANGER ALERT!**__", description: "❌ Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!", color: "red"}});
+          } catch (err) {
+              if(err === "TypeError: Cannot read property 'roles' of undefined") return;
+          } 
+      } else {
+          log(client, client.config.channels.auditlogs, { embed: { title: "__**✅ Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
+          if (req.body.status === "SCU Faculty/Staff") {
+            //changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
+            member.setNickname(req.body.name);
+            member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedPersonnel)); //the SCU Faculty/Staff role
+          } else {
+              //gives member the verified student role
+              
+              member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)); //the Student role
 
-        req.on("end", function() {
-            if (body) {
-                client.console("Crypto | Verified");
-                let data = JSON.parse(body);
-                console.log(data);
-    
-                let discorduser = data[2].answer; //discord username
-                let discordid = client.users.cache.find(user => user.tag === `${discorduser}`);
-    
-                let email = data[1].answer; //email
-                let name = data[0].answer; //name
-                veriEnmap.defer.then(() => {
-                sendAuthEmail(email, name, discorduser);
-                client.console(`Auth email sent to ${email}`);
-                veriEnmap.defer.then(() => {
-                        veriEnmap.set(`${discordid.id}`, {
-                        name: `${name}`,
-                        email: `${email}`,
-                        class: `${data[3].answer}`,
-                        roles: data[4].answer
-                    });
-    
-                    discordid.send(
-                        `You have been sucessfully verified in the Discord server. If you believe this was an error email us at vchsesports@gmail.com\n\nConfirmation Info:\n\`\`\`Discord: ${discorduser}\nEmail: ${veriEnmap.get(
-                            discordid.id,
-                            "email"
-                        )}\`\`\``
-                    );
-                    let guild = client.guilds.cache.get(`${client.config.verification.guildID}`);
-                    let join = guild.channels.cache.find(jn => jn.name === `${client.config.channels.welcome}`);
-                    join.send(`✅ **${discordid.username}** has been verified, welcome ${name}.`);
-                    console.log(
-                    `set enmap data\n${name}\n${email}\n${discordid.username}\nwith given username: ${discorduser}`
-                    );
-                    let addRole = guild.roles.cache.find(r => r.name === `${client.config.serverRoles.verifiedStudent}`);
+              if (req.body.major != null) {
+                req.body.major.forEach((major) => {
+                  //loops thru members' inputted major role(s) from the checklist 
+                  // works for double and triple majors and also for one major [given that they're honest :) ]
+                  let majorRole = guild.roles.cache.find((ch) => ch.name === major);
+                  member.roles.add(majorRole);
+                });
+              }
+              
+              member.roles.add(guild.roles.cache.find((role) => role.name === req.body.status));
+          
+              //set their nickname like this: [First Name] || [Major]
+              //also, if nickname is over 32 characters, catch error and log it in #audit-logs so we could manually adjust it
+             
+              const nickname = `${req.body.name} || ${req.body.major}`; 
+              
+              if (nickname.length > 32) {
+                log(client, client.config.channels.auditlogs, { embed: { title: `__**❌ ${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}**\n>`, color:  "red"}});
+              }
+              
+              member.setNickname(nickname);
+        }       
+          //remove Unverified role from member in all conditions
+          member.roles.remove(guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent));
 
-                    // add the roles
-                    guild.members
-                        .get(discordid.id)
-                        .addRole(addRole)
-                        .catch(console.error);
-                    // set nickname
-                    guild.members
-                        .get(discordid.id)
-                        .setNickname(
-                        `${discordid.username} (${veriEnmap.get(`${discordid.id}`, "name")})`,
-                        "Joined server."
-                        );
-                    client.console("Updated user: " + discorduser);
-                    veriEnmap.get(discordid.id, "roles").forEach(function(choice) {
-                        let role = guild.roles.cache.find(r => r.name === `${choice}`);
-                        guild.members.cache.get(discordid.id).addRole(role);
-                    });
-                    //set class (freshman, sophomore, junior, senior, etc)
-                    let collegeClass = guild.roles.cache.find(r => r.name === `${veriEnmap.get(discordid.id, "class")}`);
-                    guild.members.cache.get(discordid.id).addRole(collegeClass);
-                });
-                });
-                res.end("<h1>Complete</h1>");
-            } else {
-                client.console("Crypto | Invalid Signature");
-                return res.end("<h1>Error</h1>");
-            }
-            });
-        })
-        .listen(4000);
+          //send them a confirmation
+          const verifyConfirmation = new MessageEmbed()
+            .setTitle("__**Successful Verification**__")
+            .setDescription(`You have been verified successfully in the **${guild.name}**! Here is your information for confirmation. If anything is inputted incorrectly, please tell contact **ADMIN** or **MOD** to quickly adjust your roles! Remember to read <#${client.config.channels.info}> for more information!`)
+            .setColor(client.config.school_color)
+            .setFooter(`${guild.name} Verification`)
+            .setAuthor("Verification Confirmation", client.user.avatarURL())
+            .attachFiles(["./assets/verified.gif"])
+            .setThumbnail("attachment://verified.gif")
+            .setTimestamp()
+            .addFields(
+              { name: "First Name", value: req.body.name, },
+              { name: "Current Major(s)", value: (req.body.major || "none"), }, //will output none if no major is inputted
+              { name: "Member Status", value: req.body.status, },
+              { name: "Discord Tag <-- (DiscordName#0000)", value: req.body.discord, },
+            );
+          member.send(`<@${member.user.id}>`, { embed: verifyConfirmation});
+          const verifyEmbed = { title: "__**✅ NEW VERIFIED MEMBER!**__", description: `You are now verified! Everyone please welcome **${req.body.name}** to the server!`, color: client.config.school_color, timestamp: new Date()};
+          
+          guild.channels.cache.get(client.config.channels.verifylogs).send(`<@${member.user.id}>`, { embed: verifyConfirmation}).then((m) => m.react("👍"));
+            
+          guild.channels.cache.get(client.config.channels.welcome).send(`<@${member.user.id}>`, { embed: verifyEmbed}).then((m) => m.react("👋"));
+      }
+    } else {
+        //if no body.. return this
+        res.status(401).send({ error: "No data found" });
     }
-    typeFormServer(); 
+  });
 };

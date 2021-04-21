@@ -72,3 +72,4 @@ client
     .on("guildMemberAdd", (member) => require("./events/guildMemberAdd")(client, member));
  
 client.login(client.config.token); 
+ 
