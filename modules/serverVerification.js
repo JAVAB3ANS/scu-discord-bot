@@ -106,7 +106,7 @@ module.exports.run = async (client) => {
               { name: "Discord Tag <-- (DiscordName#0000)", value: req.body.discord, },
             );
           member.send(`<@${member.user.id}>`, { embed: verifyConfirmation});
-          const verifyEmbed = { title: "__**âœ… NEW VERIFIED MEMBER!**__", description: `You are now verified! Everyone please welcome **${req.body.name}** to the server!`, color: client.config.school_color, timestamp: new Date()};
+          const verifyEmbed = { title: "__**✅ NEW VERIFIED MEMBER!**__", description: `You are now verified! Everyone please welcome **${req.body.name}** to the server!`, color: client.config.school_color, timestamp: new Date()};
           
           guild.channels.cache.get(client.config.channels.verifylogs).send(`<@${member.user.id}>`, { embed: verifyConfirmation}).then((m) => m.react("👍"));
             
