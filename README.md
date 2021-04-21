@@ -37,7 +37,15 @@ The bot is designed to respond to chat messages. To distinguish when the bot sho
 ![ping](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_ping.png?raw=true)
 
 ## Server Verification System
-- [WORK IN PROGRESS - FIXING THIS AT THE MOMENT...]
+An Express.js server was programmed for a guild verification system which automatically gives graduating year, college major, and verified roles to SCU students on submitting their unique Google Form responses. Setting permissions through roles is the standard way of managing a Discord server without manual content filtering.
+
+The server is designed such that only those with certain roles can access certain voice and text channels. Without roles, anyone can create an account and spam messages, which the verify system effectively mitigates. Unlike many servers with role-react systems which give users on the click of an emoji on a message, my method proves effective and secure on many levels. In short, the only users who could have access to the server are current students and alumni given that they fill everything out with their correct credentials within the university's domain.
+
+Assigning roles to each user is done though a text pattern: <first name> <current college major>. The server consists of 3 main types of roles, one that distinguishes which major they are in and their graduating year. On the Google form, this also accommodates for students who are double and triple majors, which is permitted through the Discord API as long as the user's nickname is below 32 characters.
+
+A challenge was detecting whether the user's response in the Google form was invalid. I used regex (regular expressions) to validate whether the number put their names properly with the first uppercase letter and such. On top of that, when users didn't put in their correct Discord tag in the specific form input section, the bot would send an error message so I would have to manually delete the user's response so they could redo the form and automatically get Discord roles through the Express.js server receiving a request from Google forms/scripts api.
+
+![server verification](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_verification_process.gif?raw=true)
 
 ## Server Modmail Ticketing System
 
