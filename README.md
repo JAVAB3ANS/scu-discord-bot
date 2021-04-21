@@ -1,30 +1,30 @@
-![SCU Discord Network Banner](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
+![SCU Discord Network Banner](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)
 
 # SCU DISCORD NETWORK
-![Forks](https://img.shields.io/github/forks/jasonanhvu/scu-discord-bot)
-![Stars](https://img.shields.io/github/stars/jasonanhvu/scu-discord-bot)
-![License](https://img.shields.io/github/license/jasonanhvu/scu-discord-bot)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/jasonanhvu/scu-discord-bot)
-![GitHub repo size](https://img.shields.io/github/repo-size/jasonanhvu/scu-discord-bot)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/discord.js)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/jasonanhvu/scu-discord-bot/pm2)
+![Forks](https://img.shields.io/github/forks/JAVA9620/scu-discord-bot)
+![Stars](https://img.shields.io/github/stars/JAVA9620/scu-discord-bot)
+![License](https://img.shields.io/github/license/JAVA9620/scu-discord-bot)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/JAVA9620/scu-discord-bot)
+![GitHub repo size](https://img.shields.io/github/repo-size/JAVA9620/scu-discord-bot)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/JAVA9620/scu-discord-bot/discord.js)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/JAVA9620/scu-discord-bot/pm2)
 ![Discord Support](https://img.shields.io/discord/754545426958385213?label=Discord%20Support&labelColor=FFFFF&style=plastic&logo=Discord&link=https://discord.gg/hEVJZsSWcX&link=https://discord.gg/hEVJZsSWcX)
-[![Known Vulnerabilities](https://snyk.io/test/github/jasonanhvu/scu-discord-bot/badge.svg)](https://snyk.io/test/github/jasonanhvu/scu-discord-bot)
+[![Known Vulnerabilities](https://snyk.io/test/github/JAVA9620/scu-discord-bot/badge.svg)](https://snyk.io/test/github/JAVA9620/scu-discord-bot)
 
-  - This is a 24/7 bot that I made for my [**SCU Discord Network**](https://invite.gg/gobroncos) to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
+  - This is a 24/7 bot that I made for my **SCU Discord Network** to provide a comprehensive and effective social media platform for Santa Clara University students to utilize especially in the midst of the worldwide COVID-19 pandemic.
 
   - Utilized the Node.js environment and Node module Discord.js to deploy a bot that greets/sends direct messages, interacts with over 700 students, and performs an assortment of automated tasks to better the server experience. 
 
   - Very open to promoting this student-run online network and applying for [Discord's Partner Program](https://discord.com/partners) soon.
 
 ## Server Logo
-![SCU Discord Network Logo](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/logo-pic.png?raw=true)
+![SCU Discord Network Logo](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/logo-pic.png?raw=true)
 
 ## Main Commands
 - Here are all of the bot's commands:
-  - [Admins category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/admins)
-  - [Utility category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/utility)
-  - [Fun category!](https://github.com/jasonanhvu/scu-discord-bot/tree/master/commands/fun)
+  - [Admins category!](https://github.com/JAVA9620/scu-discord-bot/tree/master/commands/admins)
+  - [Utility category!](https://github.com/JAVA9620/scu-discord-bot/tree/master/commands/utility)
+  - [Fun category!](https://github.com/JAVA9620/scu-discord-bot/tree/master/commands/fun)
 
 ## Implementation
 The Discord bot is implemented using Node.js and the discord.js library. The library provides a very accessible method of interacting with the Discord API. Node.js was chosen as various npm libraries became very useful.
@@ -34,33 +34,33 @@ The next section will discuss each feature, their implementation choices, and an
 ## Bot Interaction
 The bot is designed to respond to chat messages. To distinguish when the bot should respond, messages towards the bot are prefixed with ```&```. which precedes any given command the user would like to use. For example, to inquire about the current ping and latency of the bot's API, one would use ```&ping```.
 
-![ping](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_ping.png?raw=true)
+![ping](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_ping.png?raw=true)
 
 ## Server Verification System
 - [WORK IN PROGRESS - FIXING THIS AT THE MOMENT...]
 
 ## Server Modmail Ticketing System
 
-![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-help.png?raw=true)
+![modmail](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu-help.png?raw=true)
 
 - The modmail ticketing system is basically an open forum with the admin/mods of the college server. When users direct message the bot with or without an message attachment/URL, they wil be able to communicate with the moderators on demand. Whether it be suggesting new ideas or asking about how the 
 server operates, this ensures 100% trust and transparency between the server leaders and its members.
 
 - Not to mention that this also works for prospective students who want to ask for roles in the server just so they could get a feel of the school's relative student body (around 11-12% here) and how the university life was like in general before lockdown.
 
-![modmail](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu-modmail-process.gif?raw=true)
+![modmail](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu-modmail-process.gif?raw=true)
 
 ## Zoom REST API Status Scraper
 - The command `zoom.js` uses Zoom's REST API endpoint to compile all of Zoom's technical services onto one embed and see if they are fully operational as indicated by a ✅. Given that we as students use Zoom as the lifeline of our virtual education, knowing that the digital platform is in good IT hands is relieving and therapeutic in itself.
 
-![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_zoom.png?raw=true)
+![zoom](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_zoom.png?raw=true)
 
 ## School COVID-19 Dashboard Scraper
 - The command `covid19.js` is used to access the school's COVID-19 testing dashboard and print out its contents: `date, tests, positive tests, and positivity rate`. Since these health and wellness tests are usually conducted at my school weekly, a node-schedule job was scheduled to output the COVID-19 data weekly on Friday mornings. Since the website does not have an API to access its information, retrieving the information is performed through data scraping. Cheerio library was used to access and scrape data through HTML. 
 
 - The challenging areas of scraping the data was dealing with the formatting. Normally, the data would be presented in the same exact format. At a period of time, a different format was used temporarily, which broke the bot as no data was retrieved due to differing HTML tags. As a temporary fix, the function was adjusted to work with the temporary format. Another challenging portion was message length limits. Discord has a 2000 character limit on each message, so particularly long menus would not fit within a single message. As a design choice, if any message was too long, a link to the website would be in the body of the message instead. Ideally, multiple messages would be sent to break up the menu into sendable parts, but due to time constraints and readability issues, this was never implemented. To further improve this functionality, the bot should be able to detect where and when to break up a message into digestable parts.
 
-![zoom](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_covid.png?raw=true)
+![zoom](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_covid.png?raw=true)
 
 ## Server-Wide Announcements
 - The idea of the Discord server was to take advantage of the various text channels and dedicate each one to a specific topic. As of time of writing, communications throughout the community exist through various Facebook, Instagram, Reddit groups dedicated to community events/announcements. 
@@ -69,7 +69,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 - I learned here to exercise internet etiquette and to not mention everyone in the server. Instead, the channel will only light up to indicate an unread message opposed to mentioning 600+ students which may come off as unsolicited and unsettling.
 
-![announcement](https://github.com/jasonanhvu/scu-discord-bot/blob/master/assets/scu_announcement.png?raw=true)
+![announcement](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_announcement.png?raw=true)
 
 4) Final Thoughts:
 - This was an impromptu project for fun that eventually turned into a pretty big deal well at least for me. The Discord community’s ability to listen to its audience base is profound, both technically and socially. Whether it is listening to user-experience suggestions or bug fixes for the app’s online client, the developers are always responsive and willing to help. By also allowing users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, something that very few applications can encourage for an audience with a primarily end-user base. That being stated, the platform is as meaningful to the average user as it is to individuals who want to dabble behind the scenes.
@@ -82,7 +82,7 @@ server operates, this ensures 100% trust and transparency between the server lea
 
 
 ## Creator(s), Contributor(s), and Special Thanks
-- Made by [jasonanhvu](https://github.com/jasonanhvu) with guidance from other cool developers:
+- Made by [JAVA9620](https://github.com/JAVA9620) with guidance from other cool developers:
   - From SCU: [Saamstep](https://github.com/Saamstep), [kairanaquazi](https://github.com/kairanaquazi), and [markrizko](https://github.com/markrizko)
   - From GitHub: [NightZan999](https://github.com/NightZan999), [TheMaestro0](https://github.com/TheMaestro0), [thesportstacker](https://github.com/thesportstacker), [Cyanic76](https://github.com/Cyanic76), and [Cramenorn](https://github.com/Cramenorn)
   - Discord Servers: [Code Ring](https://discord.gg/9XC9v7nfuB), [Plexi Development](https://discord.gg/plexidev), [The Coding Den](https://discord.gg/code), [JS Programming Language Community](https://disboard.org/server/join/779474636780863488), [Discord API](https://discord.gg/discord-api), [The Programmer's Hangout](https://discord.gg/programming), [Discord.js Official](https://discord.com/invite/bRCvFy9), [Discord Bots]( https://discord.gg/0cDvIgU2voWn4BaD), [JavaScript Universe](https://discord.gg/cf25CQKc4v), [/r/Discord_Bots](https://discord.gg/xRFmHYQ), [Programming Discussions](http://invite.progdisc.club/)
