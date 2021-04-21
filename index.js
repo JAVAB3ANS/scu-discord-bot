@@ -46,18 +46,21 @@ client.dispatcher.addInhibitor( (client, msg) => {
 }); 
 
 client.once("ready", () => {
-  client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📩` }, status: "online"});  
+  client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! :mailbox:` }, status: "online"});  
 
   fs.readdir("./modules", (err, files) => {
     log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services :white_check_mark:`, color: "GREEN"}});
     files.forEach((file) => {
-      if (!file.includes("js")) { return; }
+      if (!file.includes("js")) return;
       let eventFunction = require(`./modules/${file}`);
       let eventName = file.split(".")[0];
       if (client.config.services[eventName]) {
         eventFunction.run(client);
         log(client, client.config.channels.auditlogs, { embed: { title: "Service started!", description: `Started ${eventName} service :white_check_mark:`, color: "GREEN"}});
-      } 
+      } else {
+          log(client, client.config.channels.auditlogs, { embed: { title: "Service disabled!", description: `Disabled ${eventName} service :x:`, color: "RED"}});
+
+      }
     });
   });
 
