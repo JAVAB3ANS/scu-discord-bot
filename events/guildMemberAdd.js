@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { log } = require("../functions/log.js");
 
 module.exports = async (client, member) => {
-  if(member.user.bot) {return; } //ignore members who are bot users
+  if(member.user.bot)  return;   //ignore members who are bot users
 
   const guild = client.guilds.cache.get(client.config.verification.guildID);
  
@@ -14,7 +14,7 @@ module.exports = async (client, member) => {
   const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
   .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
   .setDescription("We're glad to have you here! Follow instructions in your DM's and Go Broncos!") //Setting embed description
-  .setThumbnail("https://jasonanhvu.github.io/scu-discord-bot/assets/logo-pic.png")
+  .setThumbnail("https://JAVA9620.github.io/scu-discord-bot/assets/logo-pic.png")
   .setTimestamp() // Sets a timestamp at the end of the embed
   .attachFiles(["./assets/scu_banner.png"])
   .setImage("attachment://scu_banner.png")
