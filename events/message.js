@@ -145,7 +145,7 @@ module.exports = async (client, message) => {
               //creates first image which is the SCU banner :)
 
               let guildBannerImg = document.createElement("img");
-              guildBannerImg.setAttribute("src", "https://raw.githubusercontent.com/jasonanhvu/scu-discord-bot/master/assets/scu_banner.png?raw=true");
+              guildBannerImg.setAttribute("src", "https://raw.githubusercontent.com/JAVA9620/scu-discord-bot/master/assets/scu_banner.png?raw=true");
               guildBannerImg.setAttribute("width", "500");
               guildElement.appendChild(guildBannerImg);
 
@@ -155,7 +155,7 @@ module.exports = async (client, message) => {
               // creates second image which says "Modmail Ticket!"
 
               let guildTicketImg = document.createElement("img");
-              guildTicketImg.setAttribute("src", "https://raw.githubusercontent.com/jasonanhvu/scu-discord-bot/master/assets/scu_modmail_ticket.png?raw=true");
+              guildTicketImg.setAttribute("src", "https://raw.githubusercontent.com/JAVA9620/scu-discord-bot/master/assets/scu_modmail_ticket.png?raw=true");
               guildTicketImg.setAttribute("width", "500");
               guildElement.appendChild(guildTicketImg);
     
