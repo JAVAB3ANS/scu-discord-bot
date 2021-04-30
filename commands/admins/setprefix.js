@@ -31,7 +31,7 @@ module.exports = class setPrefixCommand extends Command {
       localConf.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(localConf, null, 3), (err) => {
         if (err) { throw err; }
-        log(this.client, { embed: { title: "CHANGED PREFIX!", description: `Successfully updated prefix to \`${newPrefix}\``, color: "GREEN"}});      
+        log(this.client, this.client.config.channels.auditlogs, { embed: { title: "CHANGED PREFIX!", description: `Successfully updated prefix to \`${newPrefix}\``, color: "GREEN"}});      
       })
        
     } else {

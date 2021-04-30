@@ -16,9 +16,9 @@ module.exports = class botoptionsCommand extends Command {
             args: [
                 {
                     key: "option",
-                    prompt: "Please choose a valid option \`restart, shutdown\`",
+                    prompt: "Please choose a valid option \`restart, shutdown, git-pull\`",
                     type: "string",
-                    oneOf: ["restart", "shutdown"],
+                    oneOf: ["restart", "shutdown", "git-pull"],
                 }
             ]
         });
@@ -32,7 +32,7 @@ module.exports = class botoptionsCommand extends Command {
         } else if (option === "git-pull") {
             childProc.exec("git pull origin master");
         } else {
-            this.client.error("Please enter either \`restart\`, \`git-pull\`, or \`shutdown\`!");
+            this.client.error("Please enter either \`restart\`, \`git-pull\`, or \`shutdown\`!", message);
         }
                      
         const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];

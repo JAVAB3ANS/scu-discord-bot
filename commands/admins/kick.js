@@ -14,9 +14,9 @@ module.exports = class kickCommand extends Command {
             },
             args: [
                 {
-                    key: "member",
+                    key: "person",
                     prompt: "Please mention a user!",
-                    type: "user",
+                    type: "member",
                 },
                 {
                     key: "reason",
@@ -27,29 +27,34 @@ module.exports = class kickCommand extends Command {
         });
     }
 
-    async run ( message, { member, reason}) {
-           member = message.mentions.members.first(); 
-            
-           if(member.user.id === this.client.config.serverRoles.owner || !this.client.config.serverRoles.modRoles.forEach((modRole) => message.member.cache.has(modRole))) {
+    async run ( message, { person, reason}) {    
+           if((person.id === this.client.config.serverRoles.owner) || (person.id === this.client.config.serverRoles.modRoles.forEach((modRole) => message.member.roles.cache.has(modRole)))) {
                 return message.channel.send({embed: {
                     description: "I can't kick my owner or mods!",
                     color: this.client.config.school_color
                 }});
             } 
 
-            if(member.user.id === message.author.id) {
+            if(person.id === message.author.id) {
                 return message.channel.send({embed: {
                     description: "You can't kick yourself!",
                     color: this.client.config.school_color
                 }});
             }
+
+            if(person.roles.highest.position >= message.member.roles.highest.position) {
+                return message.channel.send({ embed: {
+                    description: `They have more power than you or they share equal power!`,
+                    color: this.client.config.school_color
+                }});
+            } 
  
             if(!reason) {
                 this.client.error("You must provide a reason to kick the user!", message);
-            } else {
-                await member.kick(reason);
+            } 
+         
+            await person.kick(reason);
 
-                log(this.client, { embed: { title: `User [${member.user.tag}] Kicked!`, description: `Reason: ${reason}`, color: "RED"}});
-	        }
+            log(this.client, this.client.config.channels.auditlogs, { embed: { title: `User Kicked!`, description: `- Moderator: <@${message.author.id}\n- User: <@${person.id}>\n- Reason: \`\`\`${reason}\`\`\``, color: "RED"}});
     }
-};
+}; 

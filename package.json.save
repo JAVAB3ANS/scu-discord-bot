@@ -1,3 +1,4 @@
+
 {
   "name": "scu-discord-bot",
   "version": "1.0.0",
@@ -20,7 +21,6 @@
     "nodemailer": "^6.4.17",
     "pm2": "^4.5.6",
     "quick.db": "^7.1.3",
-    "quickchart-js": "^1.0.7",
     "to-title-case": "^1.0.0"
   },
   "devDependencies": {},
