@@ -29,6 +29,7 @@ module.exports = class banCommand extends Command {
 
     async run ( message, { member, reason}) {
             member = message.mentions.members.first(); 
+	    member.channel.send(member);
 
             if(member.user.id === this.client.config.serverRoles.owner || !this.client.config.serverRoles.modRoles.forEach((modRole) => message.member.cache.has(modRole))) {
                 return message.channel.send({embed: {
