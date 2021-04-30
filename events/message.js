@@ -9,7 +9,7 @@ const { log } = require("../functions/log.js");
 
 module.exports = async (client, message) => {
     // Checks if the Author is a Bot, or the message isn`t from the guild, ignore it.
-  if (!message.content.startsWith(client.config.prefix) && message.channel.type !== "dm" || message.author.bot || message.guild) return; 
+  if (!message.content.startsWith(client.config.prefix) && message.channel.type !== "dm" || message.author.bot) { return; } 
   
     const messageReception = new MessageEmbed().setColor(client.config.school_color)
     .setAuthor(message.author.tag, message.author.displayAvatarURL()); 

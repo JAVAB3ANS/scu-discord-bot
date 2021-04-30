@@ -1,3 +1,4 @@
+  
 const { Command } = require("discord.js-commando");
 const childProc = require ("child_process");
 
@@ -32,10 +33,10 @@ module.exports = class botoptionsCommand extends Command {
         } else if (option === "git-pull") {
             childProc.exec("git pull origin master");
         } else {
-            this.client.error("Please enter either \`restart\`, \`git-pull\`, or \`shutdown\`!", message);
+            this.client.error("Please enter either \`restart\`, \`git-pull\`, or \`shutdown\`!");
         }
                      
-        const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];
+        const frames = ["?", "???? 25%", "???????? 50", "???????????? 75%", "???????????????? 100%"];
 
         const msg = await message.channel.send(`${option}ing the bot...`);
         

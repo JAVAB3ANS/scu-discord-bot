@@ -46,7 +46,7 @@ client.dispatcher.addInhibitor( (client, msg) => {
 }); 
 
 client.once("ready", () => {
-  client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! 📫` }, status: "online"});  
+  client.user.setPresence({activity: { name: `${client.config.prefix}help || DM me for help! :mailbox:` }, status: "online"});  
 
   fs.readdir("./modules", (err, files) => {
     log(client, client.config.channels.auditlogs, { embed: { title: "Services", description: `Found  ${Object.keys(client.config.services).length} services ✅`, color: "GREEN"}});
@@ -71,4 +71,5 @@ client
     .on("message", (message) => require("./events/message")(client, message))
     .on("guildMemberAdd", (member) => require("./events/guildMemberAdd")(client, member));
  
-client.login(client.config.token);  
+client.login(client.config.token); 
+ 
