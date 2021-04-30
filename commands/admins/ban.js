@@ -46,7 +46,8 @@ module.exports = class banCommand extends Command {
 
 	    if(person.roles.highest.position <= message.member.roles.highest.position) {
                 return message.channel.send({ embed: {
-                    description: `They have more power than you`,
+                    description: `They have more power than you!`,
+ 
                     color: this.client.config.school_color
     		}});
             }
