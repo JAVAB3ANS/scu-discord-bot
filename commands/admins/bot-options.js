@@ -1,4 +1,3 @@
-  
 const { Command } = require("discord.js-commando");
 const childProc = require ("child_process");
 
@@ -36,7 +35,7 @@ module.exports = class botoptionsCommand extends Command {
             this.client.error("Please enter either \`restart\`, \`git-pull\`, or \`shutdown\`!");
         }
                      
-        const frames = ["?", "???? 25%", "???????? 50", "???????????? 75%", "???????????????? 100%"];
+        const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];
 
         const msg = await message.channel.send(`${option}ing the bot...`);
         

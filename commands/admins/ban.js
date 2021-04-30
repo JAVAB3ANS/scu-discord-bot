@@ -14,7 +14,7 @@ module.exports = class banCommand extends Command {
             },
             args: [
                 {
-                    key: "member",
+                    key: "person",
                     prompt: "Please mention a user!",
                     type: "user",
                 },
@@ -30,13 +30,14 @@ module.exports = class banCommand extends Command {
      async run ( message, { person, reason}) {
  
             
-           if(person.id === this.client.config.serverRoles.owner) || (!this.client.config.serverRoles.modRoles.forEach((modRole) => message.member.roles.cache.has(modRole))) {
-                return message.channel.send({embed: {
-                    description: "I can't ba nmy owner or mods!",
-                    color: this.client.config.school_color
-                }});
-            } 
-
+           if ((person.id === this.client.config.serverRoles.owner) || (!this.client.config.serverRoles.modRoles.forEach(modRole => message.member.roles.cache.has(modRole)))) 
+	            return message.channel.send({
+                    embed: {
+                        description: "I can't ban my owner or mods!",
+                        color: this.client.config.school_color
+                    }
+	        });
+ 
             if(person.id === message.author.id) {
                 return message.channel.send({embed: {
                     description: "You can't ban yourself!",
@@ -52,12 +53,12 @@ module.exports = class banCommand extends Command {
     		}});
             }
  
-            if(!reason) {
-                this.client.error("You must provide a reason to ban the user!", message);
-            } 
+        if(!reason) {
+            this.client.error("You must provide a reason to ban the user!", message);
+        } 
 
-                await person.ban(reason);
+        await person.ban(reason);
 
-                log(this.client, this.client.config.channels.auditlogs, { embed: { title: `User Banned!`, description: `- Moderator: <@${message.author.id}>\n- User: <@${person.id}>\n- Reason: \`\`\`${reason}\`\`\``, color: "RED"}});
- 
-};
+        log(this.client, this.client.config.channels.auditlogs, { embed: { title: `User Banned!`, description: `- Moderator: <@${message.author.id}>\n- User: <@${person.id}>\n- Reason: \`\`\`${reason}\`\`\``, color: "RED"}});
+    }
+}; 
