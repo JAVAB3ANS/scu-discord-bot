@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
   
               channel.overwritePermissions(perms);
             } catch (err) {
-                if (err === "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") { return; }
+                if (err === "TypeError [INVALID_TYPE]: Supplied parameter is not a User nor a Role.") return;
             }
             
             messageReception.setTitle("ModMail Ticket Created").setThumbnail("attachment://verified.gif") 
@@ -82,14 +82,13 @@ module.exports = async (client, message) => {
     if (support) {
       support = await db.fetch(`support_${support}`);
       const supportUser = client.users.cache.get(support.targetID);
-      if (!supportUser) { return message.channel.delete(); }
-  
+      if (!supportUser) return message.channel.delete();  
       function modmailCommands() {
         const commands = [  
-          { cmd: "complete", desc: "✅ Close a ticket channel and logs the support channel`s content!" },   
-          { cmd: "continue", desc: "▶️ Continue the modmail session!"},   
-          { cmd: "pause", desc: "⏸️ Pause the modmail session!" }, 
-          { cmd: "reply", desc: "💬 DM the user who sent the modmail ticket!"},
+          { cmd: "complete", desc: "? Close a ticket channel and logs the support channel`s content!" },   
+          { cmd: "continue", desc: "?? Continue the modmail session!"},   
+          { cmd: "pause", desc: "?? Pause the modmail session!" }, 
+          { cmd: "reply", desc: "?? DM the user who sent the modmail ticket!"},
         ];
         let str = "```\n";
         for (let i in commands) {
@@ -105,7 +104,7 @@ module.exports = async (client, message) => {
   
       switch (message.content.split(" ")[0].slice(1).toLowerCase()) { //if message content in the support user channel is a modmail command, execute the results...
         case "cmds": //on default, give list of modmail sub-commands :)
-          messageReception.setTitle("**📩  MODMAIL COMMANDS!**").setColor(client.config.default_color).setDescription(modmailCommands());
+          messageReception.setTitle("**??  MODMAIL COMMANDS!**").setColor(client.config.default_color).setDescription(modmailCommands());
           await message.channel.send(messageReception);
           break; 
     
@@ -113,7 +112,7 @@ module.exports = async (client, message) => {
           if(isPause === true || isPause === "true") return client.error("Continue the support user's thread before completing the ticket!", message); 
     
           messageReception.setTitle("ModMail Ticket Resolved").setFooter(`ModMail Ticket Closed -- ${supportUser.tag}`)
-          .setDescription(`✅ *Your ModMail has been marked as **complete** and has been logged by the admins/mods. If you wish to create a new one, please send a message to the bot.*`)     
+          .setDescription(`? *Your ModMail has been marked as **complete** and has been logged by the admins/mods. If you wish to create a new one, please send a message to the bot.*`)     
           
           await supportUser.send(`<@${supportUser.id}>`, { embed: messageReception });
     
@@ -160,7 +159,7 @@ module.exports = async (client, message) => {
               guildElement.appendChild(guildTicketImg);
     
               fs.appendFile(filePath, guildElement.outerHTML, function (err) {
-                if (err) { return; }
+                if (err) return; 
               });
     
               //for each normal user message sent in the ticketing channel, put them in a div and nest elements in their respective places
@@ -204,7 +203,7 @@ module.exports = async (client, message) => {
                         messageContainer.appendChild(embedSpan);
                     }      
                   } catch (err) { 
-                        if (err === "TypeError: Cannot read property 'text' of null") { return; }
+                        if (err === "TypeError: Cannot read property 'text' of null") return; 
                   }            
                 } 
     
@@ -220,7 +219,7 @@ module.exports = async (client, message) => {
                 parentContainer.appendChild(messageContainer); 
     
                 fs.appendFile(filePath, parentContainer.outerHTML, function (err) {
-                  if (err) { console.log(err); }
+                  if (err) console.log(err);
                 });
               });
               messageReception.attachFiles(filePath);    
@@ -237,7 +236,7 @@ module.exports = async (client, message) => {
           
           await db.delete(`suspended${support.targetID}`);
           
-          messageReception.setTitle("Modmail Ticket Continued!").setDescription(`▶️ <@${supportUser.id}>, your thread has **continued**! We're ready to continue!`).setColor("BLUE") 
+          messageReception.setTitle("Modmail Ticket Continued!").setDescription(`?? <@${supportUser.id}>, your thread has **continued**! We're ready to continue!`).setColor("BLUE") 
           .attachFiles(["./assets/continued.gif"]).setThumbnail("attachment://continued.gif").setFooter(`ModMail Ticket Continued -- ${supportUser.tag}`); 
           
           await supportUser.send(messageReception); 
@@ -250,7 +249,7 @@ module.exports = async (client, message) => {
           
           await db.set(`suspended${support.targetID}`, true);
           
-          messageReception.setTitle("Modmail Ticket Paused!").setDescription(`⏸️ <@${supportUser.id}>, your thread has been **paused**!`).setColor("YELLOW")
+          messageReception.setTitle("Modmail Ticket Paused!").setDescription(`?? <@${supportUser.id}>, your thread has been **paused**!`).setColor("YELLOW")
           .attachFiles(["./assets/paused.gif"]).setThumbnail("attachment://paused.gif").setFooter(`ModMail Ticket Paused -- ${supportUser.tag}`); 
     
           await supportUser.send(messageReception);
@@ -266,9 +265,9 @@ module.exports = async (client, message) => {
           if(isPause === true || isPause === "true") return client.error("This ticket is already paused. Unpause it to continue.", message); 
     
           let msg = modmailArgs.join(" "); 
-          if (!msg) { return client.error("Please enter a message for the support ticket user!", messgae); }
+          if (!msg) return client.error("Please enter a message for the support ticket user!", message); 
           
-          messageReception.setTitle(`**💬 Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
+          messageReception.setTitle(`**?? Admin/mod replied to you!**`).setFooter(`ModMail Ticket Replied -- ${supportUser.tag}`)
           .setDescription(`> ${msg}`).attachFiles(["./assets/reply.gif"]).setThumbnail("attachment://reply.gif")
           .setImage(message.attachments.first() ? message.attachments.first().url : "") ;
           
@@ -278,7 +277,7 @@ module.exports = async (client, message) => {
           break; 
     
         default:
-          await message.react("❌");
+          await message.react("?");
           await message.delete({ timeout: 3000 });
           break;
         }
