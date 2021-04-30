@@ -18,7 +18,7 @@ module.exports = class botoptionsCommand extends Command {
                     key: "option",
                     prompt: "Please choose a valid option \`restart, shutdown\`",
                     type: "string",
-                    oneOf: ["restart", "shutdown"],
+                    oneOf: ["restart", "shutdown", "git-pull"],
                 }
             ]
         });
