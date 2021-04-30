@@ -16,7 +16,7 @@ module.exports = class banCommand extends Command {
                 {
                     key: "person",
                     prompt: "Please mention a user!",
-                    type: "user",
+                    type: "member",
                 },
                 {
                     key: "reason",
@@ -30,7 +30,7 @@ module.exports = class banCommand extends Command {
      async run ( message, { person, reason}) {
  
             
-           if ((person.id === this.client.config.serverRoles.owner) || (!this.client.config.serverRoles.modRoles.forEach(modRole => message.member.roles.cache.has(modRole)))) 
+           if ((person.id === this.client.config.serverRoles.owner) || (this.client.config.serverRoles.modRoles.forEach(modRole => message.member.roles.cache.has(modRole)))) 
 	            return message.channel.send({
                     embed: {
                         description: "I can't ban my owner or mods!",
@@ -43,14 +43,6 @@ module.exports = class banCommand extends Command {
                     description: "You can't ban yourself!",
                     color: this.client.config.school_color
                 }});
-            }
-
-	    if(person.roles.highest.position <= message.member.roles.highest.position) {
-                return message.channel.send({ embed: {
-                    description: `They have more power than you!`,
- 
-                    color: this.client.config.school_color
-    		}});
             }
  
         if(!reason) {
