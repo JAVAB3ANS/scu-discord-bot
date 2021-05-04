@@ -24,7 +24,7 @@ module.exports = class covid19Command extends Command {
       const response = await fetch("https://www.scu.edu/preparedscu/covid-19/confirmed-cases/");
       const body = await response.text();
 
-      const frames = ["?", "???? 25%", "???????? 50", "???????????? 75%", "???????????????? 100%"];
+      const frames = ["□", "□□□□ 25%", "□□□□□□□□ 50", "□□□□□□□□□□□□ 75%", "□□□□□□□□□□□□□□□□ 100%"];
 
       const msg = await message.channel.send(`Generating COVID-19 data from the SCU On-Campus Testing Dashboard...`);
       
@@ -116,7 +116,7 @@ module.exports = class covid19Command extends Command {
             .setImage(chart.getUrl()) 
 
             const pages = [newStuff, chartData];
-            const emojiList = ["?", "?"];
+            const emojiList = ["◀️", "▶️"];
   
           paginationEmbed(message, pages, emojiList); 
         }

@@ -10,15 +10,15 @@ module.exports = class announceCommand extends Command {
           usages: 2,
           duration: 5,
 			},
-      description: "Make a formatted announcement using Embed data",
+      description: "Make a formatted announcement using embed data",
       // format: "announce [#channel] [message goes here]\nannounce edit [message id] [new message]\nannounce append [message id] [text to append\nannounce embed [embed JSON]",
       // examples: [""],
       args: [
         {
           key: "option",
-          prompt: "Please choose a valid option \`msg, embed, append, edit\`",
+          prompt: "Please choose a valid option \`msg, embed, edit\`",
           type: "string",
-          oneOf: ["edit", "append", "embed", "msg"],
+          oneOf: ["edit", "append", "embed"],
         },
         {
           key: "id",
@@ -33,42 +33,71 @@ module.exports = class announceCommand extends Command {
           }
         },
         {
+          key: "title",
+          prompt: "Please provide some title text (embed format)",
+          type: "string",
+        },
+
+        {
           key: "body",
           prompt: "Please provide some body text (embed format)",
           type: "string",
         },
+        {
+          key: "color",
+          prompt: "Please provide some color text (embed format)",
+          type: "string",
+        },
+        {
+          key: "footer",
+          prompt: "Please provide some body footer (embed format)",
+          type: "string",
+        },
+ 
       ],
     });
   }
 
-  async run(message, { option, id, body }) {
-    const announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
+  async run(message, { option, id, title, body, color, footer }) {
     switch (option) {
-      case "edit": 
+      case "edit":
+        try {
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
-                description: body, 
+		title: title,
+                description: body,
+		color: color,
+		footer: footer
               },
             });
-          }); 
+          });
+        } catch (e) {
+          return this.client.error(e + "Channel not found, you must run in same channel as message!", message);
+        }
         break;
-      case "append": 
+      case "append":
+        try {
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
               embed: {
-                description: m.embeds[0].description + " " + body, 
+                description: m.embeds[0].description + " " + body,
               },
             });
-          }); 
+          });
+        } catch (e) {
+          return this.client.error("Channel not found, you must run in same channel as message!", message);
+        }
+        break; 
+      case "embed":
+        try {
+          let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
+          announceChannel.send({ embed: { title: title, description: body, footer: footer, color: color } });
+        } catch (e) {
+          return this.client.error(e, message);
+        }
         break;
-      case "embed":  
-          announceChannel.send({ embed: JSON.parse(body)}); 
-          break;
-      case "msg": 
-          announceChannel.send(body);
- 
-          break;
-    } 
-  } 
+    }
+    message.delete();
+  }
 }; 

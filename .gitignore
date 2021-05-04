@@ -7,3 +7,4 @@ json.sqlite
 events/modmailLogs/ 
 .snyk
 .gitignore 
+package-lock.json
