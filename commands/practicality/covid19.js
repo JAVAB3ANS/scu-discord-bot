@@ -10,9 +10,9 @@ module.exports = class covid19Command extends Command {
     constructor(client) {
         super(client, {
             name: "covid19",  
-            description: "Get daily and instant COVID-19 data at SCU here...",  
-            group: "utility",
+            group: "practicality",
             memberName: "covid19",
+            description: "Get daily and instant COVID-19 data at SCU here...",  
             throttling: {
                 usages: 2,
                 duration: 5,

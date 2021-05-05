@@ -10,13 +10,11 @@ module.exports = class announceCommand extends Command {
           usages: 2,
           duration: 5,
 			},
-      description: "Make a formatted announcement using embed data",
-      // format: "announce [#channel] [message goes here]\nannounce edit [message id] [new message]\nannounce append [message id] [text to append\nannounce embed [embed JSON]",
-      // examples: [""],
+      description: "Make a formatted announcement using embed data", 
       args: [
         {
           key: "option",
-          prompt: "Please choose a valid option \`msg, embed, edit\`",
+          prompt: "Please choose a valid option \`edit, append, embed\`",
           type: "string",
           oneOf: ["edit", "append", "embed"],
         },
@@ -34,23 +32,28 @@ module.exports = class announceCommand extends Command {
         },
         {
           key: "title",
-          prompt: "Please provide some title text (embed format)",
+          prompt: "Please provide some title text.",
           type: "string",
         },
 
         {
           key: "body",
-          prompt: "Please provide some body text (embed format)",
+          prompt: "Please provide some body text.",
           type: "string",
         },
         {
           key: "color",
-          prompt: "Please provide some color text (embed format)",
+          prompt: "Please provide some color.",
           type: "string",
         },
         {
+  	  key: "image",
+  	  prompt: "Please provide an image URL.",
+	  type: "string",
+        },
+        {
           key: "footer",
-          prompt: "Please provide some body footer (embed format)",
+          prompt: "Please provide some footer text.",
           type: "string",
         },
  
@@ -68,7 +71,8 @@ module.exports = class announceCommand extends Command {
 		title: title,
                 description: body,
 		color: color,
-		footer: footer
+		footer: footer,
+		image: image
               },
             });
           });
@@ -92,7 +96,7 @@ module.exports = class announceCommand extends Command {
       case "embed":
         try {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({ embed: { title: title, description: body, footer: footer, color: color } });
+          announceChannel.send({ embed: { title: title, description: body, footer: footer, image: image, color: color } });
         } catch (e) {
           return this.client.error(e, message);
         }

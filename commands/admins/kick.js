@@ -5,9 +5,10 @@ module.exports = class kickCommand extends Command {
     constructor(client) {
         super(client, {
             name: "kick",
+            group: "admins",
             memberName: "kick",
             description: "Kick members!", 
-            group: "admins",
+	    guildOnly: true,
             throttling: {
                 usages: 2,
                 duration: 5,

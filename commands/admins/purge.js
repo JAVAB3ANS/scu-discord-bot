@@ -4,9 +4,10 @@ module.exports = class purgeCommand extends Command {
     constructor(client) {
         super(client, {
             name: "purge",
+            group: "admins",
             memberName: "purge",
             description: "Purge 'x' amount of messages!", 
-            group: "admins",
+	    guildOnly: true,
             throttling: {
                 usages: 2,
                 duration: 5,

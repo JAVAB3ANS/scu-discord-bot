@@ -9,6 +9,7 @@ module.exports = class setChannelCommand extends Command {
       group: "admins",
       memberName: "setchannel",
       description: "Update channel key values", 
+      guildOnly: true,
       args: [
         {
           key: "type",

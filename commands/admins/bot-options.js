@@ -4,8 +4,8 @@ const childProc = require ("child_process");
 module.exports = class botoptionsCommand extends Command {
     constructor(client) {
         super(client, {
-            name: "botoptions",
-            memberName: "botoptions",
+            name: "bot-options",
+            memberName: "bot-options",
             description: "Restart, shutdown, or git-pull the bot!",
             group: "admins",
             guildOnly: true,  

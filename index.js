@@ -14,9 +14,9 @@ const { log } = require("./functions/log.js");
 client.registry
   .registerDefaultTypes()
   .registerGroups([  
-    ["admins", "Admin"],
-    ["utility", "Utility"],
+    ["admins", "Admins"],
     ["fun", "Fun"],
+    ["practicality", "Practicality"],
   ])
   .registerDefaultGroups()
   .registerDefaultCommands({
@@ -28,7 +28,7 @@ client.registry
 client.dispatcher.addInhibitor( (client, msg) => {
   try { 
     switch (msg.command.group.name) {
-      case "Admin":
+      case "Admins":
         if (!client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole)) || !msg.author.id === client.config.serverRoles.owner) {
           client.error(`***<@${msg.author.id}>, You don't have permission to use this command***`, msg);
           msg.delete();

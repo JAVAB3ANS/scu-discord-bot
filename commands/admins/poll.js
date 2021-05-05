@@ -5,10 +5,10 @@ module.exports = class pollCommand extends Command {
     constructor(client) {
         super(client, {
             name: "poll",
+	    group: "admins",
             memberName: "poll",
-            description: "Create a poll with reactions!!",  
-			group: "admins",
-			guildOnly: true, 
+            description: "Create a poll with reactions!!",   
+	    guildOnly: true, 
             throttling: {
                 usages: 2,
                 duration: 5,
