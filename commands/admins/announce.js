@@ -61,7 +61,7 @@ module.exports = class announceCommand extends Command {
     });
   }
 
-  async run(message, { option, id, title, body, color, footer }) {
+  async run(message, { option, id, title, body, color, image, footer }) {
     switch (option) {
       case "edit":
         try {
@@ -96,12 +96,11 @@ module.exports = class announceCommand extends Command {
       case "embed":
         try {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({ embed: { title: title, description: body, footer: footer, image: image, color: color } });
+          announceChannel.send({ embed: { title: title, description: body, image: { url: image }, footer: { text: footer }, color: color } });
         } catch (e) {
           return this.client.error(e, message);
         }
-        break;
-    }
+        break;    }
     message.delete();
   }
-}; 
+};
