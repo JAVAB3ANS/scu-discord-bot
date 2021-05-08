@@ -108,9 +108,9 @@ module.exports.run = async (client) => {
           member.send(`<@${member.user.id}>`, { embed: verifyConfirmation});
           const verifyEmbed = { title: "__**:white_check_mark: NEW VERIFIED MEMBER!**__", description: `You are now verified! Everyone please welcome **${req.body.name}** to the server!`, color: client.config.school_color, timestamp: new Date()};
           
-          guild.channels.cache.get(client.config.channels.verifylogs).send(`<@${member.user.id}>`, { embed: verifyConfirmation}).then((m) => m.react("??"));
+          guild.channels.cache.get(client.config.channels.verifylogs).send(`<@${member.user.id}>`, { embed: verifyConfirmation}).then((m) => m.react("👍"));
             
-          guild.channels.cache.get(client.config.channels.welcome).send(`<@${member.user.id}>`, { embed: verifyEmbed}).then((m) => m.react("??"));
+          guild.channels.cache.get(client.config.channels.welcome).send(`<@${member.user.id}>`, { embed: verifyEmbed}).then((m) => m.react("👋"));
       }
     } else {
         //if no body.. return this
