@@ -23,7 +23,7 @@ module.exports = class announceCommand extends Command {
           prompt: "Please provide a message id to edit or mention a channel to send this message to",
           type: "string",
           validate: (id) => {
-            if(id.match(/^[0-9]*$/)) {
+            if(id.match(/^[0-9]*$/) && id.length === 18) {
               return true;
             } else {
                 return "Please enter a proper snowflake!"
@@ -34,12 +34,26 @@ module.exports = class announceCommand extends Command {
           key: "title",
           prompt: "Please provide some title text.",
           type: "string",
+          validate: (title) => {
+            if (title.length < 256) {
+              return true;
+            } else {
+                return "Please enter embed title under 256 characters!"
+            }
+          }
         },
 
         {
           key: "body",
           prompt: "Please provide some body text.",
           type: "string",
+          validate: (body) => {
+            if (body.length < 2048) {
+              return true;
+            } else {
+                return "Please enter embed description under 2048 characters!";
+            }
+          }
         },
         {
           key: "color",
@@ -47,21 +61,35 @@ module.exports = class announceCommand extends Command {
           type: "string",
         },
         {
-  	  key: "image",
-  	  prompt: "Please provide an image URL.",
-	  type: "string",
+          key: "image",
+          prompt: "Please provide an image URL.",
+          type: "string",
+          validate: (image) => {
+            if (image.match(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i)) {
+              return true;
+            } else {
+                return "Please enter a proper image URL with the listed extensions!";
+            }
+          }
         },
         {
           key: "footer",
           prompt: "Please provide some footer text.",
           type: "string",
+          validate: (footer) => {
+            if (footer.length < 2048) {
+              return true;
+            } else {
+                return "Please enter embed footer under 2048 characters!";
+            }
+          }
         },
  
       ],
     });
   }
 
-  async run(message, { option, id, title, body, color, footer }) {
+  async run(message, { option, id, title, body, color, image, footer }) {
     switch (option) {
       case "edit":
         try {
@@ -96,12 +124,11 @@ module.exports = class announceCommand extends Command {
       case "embed":
         try {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({ embed: { title: title, description: body, footer: footer, image: image, color: color } });
+          announceChannel.send({ embed: { title: title, description: body, image: { url: image }, footer: { text: footer }, color: color } });
         } catch (e) {
           return this.client.error(e, message);
         }
-        break;
-    }
+        break;    }
     message.delete();
   }
-}; 
+};
