@@ -22,7 +22,7 @@ module.exports.run = async (client) => {
     console.log(verifyMSG.description);
   });
   app.all("/", (req, res) => {
-    res.status(200).send(`${verifyMSG.title} was deployed on ${verifyMSG.timestamp} ?`);
+    res.status(200).send(`${verifyMSG.title} was deployed on ${verifyMSG.timestamp} ✅`);
   });
   app.post("/verify", (req, res) => {
     //some basic auth
