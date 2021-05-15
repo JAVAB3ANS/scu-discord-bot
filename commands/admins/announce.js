@@ -99,8 +99,8 @@ module.exports = class announceCommand extends Command {
 		title: title,
                 description: body,
 		color: color,
-		footer: footer,
-		image: image
+		footer: { text: footer },
+		image: { url: image }
               },
             });
           });
