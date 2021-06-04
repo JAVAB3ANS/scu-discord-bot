@@ -1,11 +1,11 @@
 const { MessageEmbed } = require("discord.js"); 
 const { log } = require("../functions/log.js");
 
-module.exports = async (client, member) => {
-  if(member.user.bot)  return;   //ignore members who are bot users
-
+module.exports = async (client, member) => { 
   const guild = client.guilds.cache.get(client.config.verification.guildID);
- 
+
+  if(member.user.bot || !guild)  return;   //ignore members who are bot users and ignores messages not in this guild
+
   let role = member.guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent);
   await member.roles.add(role);
 
