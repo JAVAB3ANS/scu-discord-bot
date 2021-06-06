@@ -18,8 +18,7 @@ module.exports = class scheduleCommand extends Command {
                 {
                   key: "courseName",
                   prompt: "Enter a course name to lookup",
-                  type: "string",
-                  oneOf: ["MATH 13", "ARTS 74", "ARTH 11", "ENGR 110", "COEN 60"]
+                  type: "string", 
                 },
               ],
         });
