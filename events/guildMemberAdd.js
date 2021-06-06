@@ -4,9 +4,9 @@ const { log } = require("../functions/log.js");
 module.exports = async (client, member) => { 
   const guild = client.guilds.cache.get(client.config.verification.guildID);
 
-  if(member.user.bot || !guild)  {
-	return this.client.error("Ignore members who are bot users and ignores messages not in this guild!", message);    
-  } else {
+  if(member.user.bot) return;
+	
+  if (guild) {
 let role = member.guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent);
   await member.roles.add(role);
 
