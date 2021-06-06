@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando"); 
-const getClassLogistics = require("../functions/getClassLogistics.js");
+const getClassLogistics = require("../../functions/getClassLogistics.js");
 const request = require("request"); 
  
 module.exports = class scheduleCommand extends Command {
