@@ -1,7 +1,7 @@
 {
   "name": "scu-discord-bot",
   "version": "1.0.0",
-  "description": "![SCU Discord Network Banner](https://github.com/JAVA9620/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)",
+  "description": "![SCU Discord Network Banner](https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)",
   "main": "index.js",
   "dependencies": {
     "aki-api": "^5.2.1",
@@ -31,12 +31,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JAVA9620/scu-discord-bot.git"
+    "url": "git+https://github.com/JAVAB3ANS/scu-discord-bot.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JAVA9620/scu-discord-bot/issues"
+    "url": "https://github.com/JAVAB3ANS/scu-discord-bot/issues"
   },
-  "homepage": "https://github.com/JAVA9620/scu-discord-bot#readme"
+  "homepage": "https://github.com/JAVAB3ANS/scu-discord-bot#readme"
 }
