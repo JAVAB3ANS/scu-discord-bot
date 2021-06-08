@@ -9,7 +9,7 @@ var response = latestResponse.getItemResponses();
      if (response[i].getItem().getTitle() == "First Name") {
        items['name'] = response[i].getResponse()
      }
-     if (response[i].getItem().getTitle() == "Current Major(s)") {
+     if (response[i].getItem().getTitle() == "Current Major(s)/Minor(s)") {
        items['major'] = response[i].getResponse()
      }
      if (response[i].getItem().getTitle() == "Member Status") {
