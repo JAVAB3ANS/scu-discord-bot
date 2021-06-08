@@ -106,7 +106,7 @@ module.exports.run = async (client) => {
             .setTimestamp()
             .addFields(
               { name: "First Name", value: req.body.name, },
-              { name: "Current Major(s)", value: (req.body.major || "none"), }, //will output none if no major is inputted
+              { name: "Current Major(s)/Minor(s)", value: (req.body.major || "none"), }, //will output none if no major is inputted
               { name: "Member Status", value: req.body.status, },
               { name: "Discord Tag <-- (DiscordName#0000)", value: req.body.discord, },
             );
