@@ -6,7 +6,7 @@ module.exports = async (client, member) => {
 
   if(member.user.bot) return;
 	
-  if (guild) {
+  try {
     let role = member.guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent);
     await member.roles.add(role);
 
@@ -43,6 +43,8 @@ module.exports = async (client, member) => {
     await member.send(welcomeEmbed2);
     
     log(client, client.config.channels.auditlogs, { embed: { title: "NEW JOIN DM SENT!", description: `:white_check_mark: Private DM has been sent to new user: <@${member.user.id}>`, color: "GREEN"}}); //send private DM to new user
+  } catch (err) {
+	if (err) return;
   }
   
 };
