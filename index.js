@@ -39,9 +39,7 @@ client.dispatcher.addInhibitor( (client, msg) => {
         return true; 
     } 
   } catch(err) {
-      if (err === "TypeError: Inhibitor \"\" had an invalid result; must be a string or an Inhibition object.") {
-        return;
-      }
+      if (err === "TypeError: Inhibitor \"\" had an invalid result; must be a string or an Inhibition object.") return; 
   }
 }); 
 
