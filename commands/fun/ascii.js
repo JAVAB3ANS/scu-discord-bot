@@ -1,4 +1,5 @@
 const figlet = require("figlet");
+const figlet = require("figlet");
 const { Command } = require("discord.js-commando");
 
 module.exports = class asciiCommand extends Command {
@@ -12,24 +13,14 @@ module.exports = class asciiCommand extends Command {
 			usages: 2,
 			duration: 5,
 		  },
-		  args: [
-			{
-			  key: "text",
-			  prompt: "Enter string!",
-			  type: "string", 
-			  validate: ((text) => {
-				  if(text.length > 9) {
-					  return "Please do at least 9 words at a time! It'll look better!";
-				  }
-			  })
-			},
-		  ],
 		});
 	  }
 
-    async run ( message, { text }){
+    async run ( message ) {
 
-        text = message.content.slice(6).split(" ").join(" ");
+        let text = message.content.slice(6).split(" ").join(" ");
+
+	if (!text || text.length > 12) return message.channel.send("You didn't say any text or the given text wasn't within 12 characters!");
 
         figlet.text(text, function (err, data) {  
             message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `}});
