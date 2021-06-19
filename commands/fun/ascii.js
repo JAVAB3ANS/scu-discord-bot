@@ -1,5 +1,4 @@
 const figlet = require("figlet");
-const figlet = require("figlet");
 const { Command } = require("discord.js-commando");
 
 module.exports = class asciiCommand extends Command {
@@ -18,9 +17,9 @@ module.exports = class asciiCommand extends Command {
 
     async run ( message ) {
 
-        let text = message.content.slice(6).split(" ").join(" ");
+        let text = message.content.split(" ").slice(1).join(" ");
 
-	if (!text || text.length > 12) return message.channel.send("You didn't say any text or the given text wasn't within 12 characters!");
+	if (!text || text.length > 13) return message.channel.send("You didn't say any text or the given text wasn't within 12 characters!");
 
         figlet.text(text, function (err, data) {  
             message.channel.send({ embed: { description: `\`\`\`${data}\`\`\` `}});
