@@ -18,7 +18,7 @@
 
 - Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 800 students, and performs a variety of automated tasks to improve the server experience.
 
-- Very eager to promote this student-run online network and to apply for [Discord's Partner Program](https://discord.com/partners) as soon as possible.
+- Very eager to promote this student-run online network and to apply for [Discord's Partner Program](https://discord.com/partners).
 
 ## Server Logo
 <p align="center">
