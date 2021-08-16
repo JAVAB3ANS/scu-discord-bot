@@ -56,6 +56,7 @@ module.exports.run = async (client) => {
             } 
         } else {
             log(client, client.config.channels.auditlogs, { embed: { title: "__**:white_check_mark: Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
+            
             if (req.body.status === "SCU Faculty/Staff") {
               //changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
               member.setNickname(req.body.name);
@@ -65,28 +66,32 @@ module.exports.run = async (client) => {
                 
                 member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)); //the Student role
   
-                if (req.body.major != null) {
-                  req.body.major.forEach((major) => {
-                    //loops thru members' inputted major role(s) from the checklist 
-                    // works for double and triple majors and also for one major [given that they're honest :) ]
-                    let majorRole = guild.roles.cache.find((ch) => ch.name === major);
-                    member.roles.add(majorRole);
-                  });
+                try {  
+                  if (req.body.major != null) {
+                    req.body.major.forEach((major) => {
+                      //loops thru members' inputted major role(s) from the checklist 
+                      // works for double and triple majors and also for one major [given that they're honest :) ]
+                      let majorRole = guild.roles.cache.find((ch) => ch.name === major);
+                      member.roles.add(majorRole);
+                    });
+                  }        
+                } catch (err) {
+                    if (err === "TypeError [INVALID_TYPE]: Supplied roles is not a Role, Snowflake or Array or Collection of Roles or Snowflakes.") return;
                 }
                 
                 member.roles.add(guild.roles.cache.find((role) => role.name === req.body.status));
             
                 //set their nickname like this: [First Name] || [Major]
                 //also, if nickname is over 32 characters, catch error and log it in #audit-logs so we could manually adjust it
-               
+              
                 const nickname = `${req.body.name} || ${req.body.major}`; 
-                 
+                
                 if (nickname.length > 32) {
                   log(client, client.config.channels.auditlogs, { embed: { title: `__**${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}** so fix it [here!](${client.config.verification.googleform})`, color:  client.config.school_color}});
                 } 
                 
                 member.setNickname(nickname);
-          }       
+            }
             //remove Unverified role from member in all conditions
             member.roles.remove(guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent));
   
