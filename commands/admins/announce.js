@@ -29,20 +29,7 @@ module.exports = class announceCommand extends Command {
                 return "Please enter a proper snowflake!"
             }
           }
-        },
-        {
-          key: "title",
-          prompt: "Please provide some title text.",
-          type: "string",
-          validate: (title) => {
-            if (title.length < 256) {
-              return true;
-            } else {
-                return "Please enter embed title under 256 characters!"
-            }
-          }
-        },
-
+        }, 
         {
           key: "body",
           prompt: "Please provide some body text.",
@@ -53,55 +40,19 @@ module.exports = class announceCommand extends Command {
             } else {
                 return "Please enter embed description under 2048 characters!";
             }
-          }
-        },
-        {
-          key: "color",
-          prompt: "Please provide some color.",
-          type: "string",
-        },
-        {
-          key: "image",
-          prompt: "Please provide an image URL.",
-          type: "string",
-          validate: (image) => {
-            if (image.match(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i)) {
-              return true;
-            } else {
-                return "Please enter a proper image URL with the listed extensions!";
-            }
-          }
-        },
-        {
-          key: "footer",
-          prompt: "Please provide some footer text.",
-          type: "string",
-          validate: (footer) => {
-            if (footer.length < 2048) {
-              return true;
-            } else {
-                return "Please enter embed footer under 2048 characters!";
-            }
-          }
-        },
- 
+          } 
+        }, 
       ],
     });
   }
 
-  async run(message, { option, id, title, body, color, image, footer }) {
+  async run(message, { option, id, body }) {
     switch (option) {
       case "edit":
         try {
           message.channel.messages.fetch(id).then((m) => {
             m.edit({
-              embed: {
-		title: title,
-                description: body,
-		color: color,
-		footer: { text: footer },
-		image: { url: image }
-              },
+              embed: JSON.parse(body) 
             });
           });
         } catch (e) {
@@ -124,11 +75,14 @@ module.exports = class announceCommand extends Command {
       case "embed":
         try {
           let announceChannel = this.client.channels.cache.get(`${id.replace(/</g, "").replace(/>/g, "").replace(/#/g, "")}`);
-          announceChannel.send({ embed: { title: title, description: body, image: { url: image }, footer: { text: footer }, color: color } });
+          announceChannel.send({
+            embed: JSON.parse(body),
+          });
         } catch (e) {
-          return this.client.error(e, message);
+            if (e === "RangeError [COLOR_RANGE]: Color must be within the range 0 - 16777215 (0xFFFFFF).") return;
         }
-        break;    }
+        break;    
+    }
     message.delete();
   }
-};
+}; 
