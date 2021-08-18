@@ -56,7 +56,9 @@ module.exports = class announceCommand extends Command {
             });
           });
         } catch (e) {
-          return this.client.error(e + "Channel not found, you must run in same channel as message!", message);
+            if (e === "DiscordAPIError: Unknown Message") {
+              return this.client.error(e, message);
+            }
         }
         break;
       case "append":
@@ -69,7 +71,7 @@ module.exports = class announceCommand extends Command {
             });
           });
         } catch (e) {
-          return this.client.error("Channel not found, you must run in same channel as message!", message);
+            return this.client.error(e, message);
         }
         break; 
       case "embed":
@@ -79,7 +81,9 @@ module.exports = class announceCommand extends Command {
             embed: JSON.parse(body),
           });
         } catch (e) {
-            if (e === "RangeError [COLOR_RANGE]: Color must be within the range 0 - 16777215 (0xFFFFFF).") return;
+            if (e === "RangeError [COLOR_RANGE]: Color must be within the range 0 - 16777215 (0xFFFFFF).") {
+              return this.client.error(e, message);
+            };
         }
         break;    
     }
