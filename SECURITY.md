@@ -28,4 +28,4 @@ currently being supported with security updates.
 
 Please this section to report a vulnerability in my code.
 
-Feel free to make a pull request and I'll be down to discuss with you! Thank you for your help in making this project secure and safe!
+Feel free to make a pull request and I'll discuss with you! Thank you for your help in making this project secure and safe!
