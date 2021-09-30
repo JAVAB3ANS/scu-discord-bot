@@ -29,10 +29,10 @@ client.dispatcher.addInhibitor( (client, msg) => {
   try { 
     switch (msg.command.group.name) {
       case "Admins":
-        if (!client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole)) || !msg.author.id === client.config.serverRoles.owner) {
+        if (!(client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole))) || !(msg.author.id === client.config.serverRoles.owner)) {
           client.error(`***<@${msg.author.id}>, You don't have permission to use this command***`, msg);
           msg.delete();
-          return false
+          return false;
         }
         break;
       default:
