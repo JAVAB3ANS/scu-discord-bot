@@ -14,7 +14,7 @@
 
 - This is a 24/7 bot that I created for my **SCU Discord Network** to provide a comprehensive and effective social media platform for Santa Clara University students to use, particularly in the midst of the global COVID-19 pandemic.
 
-- Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 900 students, and performs a variety of automated tasks to improve the server experience.
+- Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 1000 students, and performs a variety of automated tasks to improve the server experience.
 
 - Very eager to promote this student-run online network and to apply for [Discord's Partner Program](https://discord.com/partners).
 
