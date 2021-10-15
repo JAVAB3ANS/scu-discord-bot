@@ -25,22 +25,22 @@ client.registry
   })
   .registerCommandsIn(path.join(__dirname, "commands")); 
 
-client.dispatcher.addInhibitor( (client, msg) => {
-  try { 
-    switch (msg.command.group.name) {
-      case "Admins":
-        if (!(client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole))) || !(msg.author.id === client.config.serverRoles.owner)) {
-          client.error(`***<@${msg.author.id}>, You don't have permission to use this command***`, msg);
-          msg.delete();
-          return false;
-        }
-        break;
-      default:
-        return true; 
-    } 
-  } catch(err) {
-      if (err === "TypeError: Inhibitor \"\" had an invalid result; must be a string or an Inhibition object.") return; 
-  }
+  client.dispatcher.addInhibitor( (client, msg) => {
+    try { 
+      switch (msg.command.group.name) {
+        case "Admins":
+          if (!client.config.serverRoles.modRoles.forEach((modRole) => msg.member.roles.cache.has(modRole)) || !msg.author.id === client.config.serverRoles.owner) {
+            client.error(`***<@${msg.author.id}>, You don't have permission to use this command***`, msg);
+            msg.delete();
+            return false;
+          }
+          break;
+        default:
+          return true; 
+      } 
+    } catch(err) {
+        if (err === "TypeError: Inhibitor \"\" had an invalid result; must be a string or an Inhibition object.") return; 
+    }
 }); 
 
 client.once("ready", () => {
