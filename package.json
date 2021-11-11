@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "aki-api": "^5.2.1",
-    "axios": "^0.21.2",
+    "axios": "^0.23.0",
     "cheerio": "^1.0.0-rc.6",
     "cors": "^2.8.5",
     "degenerator": "^3.0.1",
@@ -25,7 +25,7 @@
     "quickchart-js": "^1.2.0",
     "tar": "^6.1.11",
     "to-title-case": "^1.0.0",
-    "vm2": "^3.9.4"
+    "vm2": "^3.9.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
