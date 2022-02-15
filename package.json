@@ -28,7 +28,7 @@
     "simple-get": "^4.0.1",
     "tar": "^6.1.11",
     "to-title-case": "^1.0.0",
-    "vm2": "^3.9.7"
+    "vm2": "^3.9.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
