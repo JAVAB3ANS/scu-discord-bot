@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando"); 
-import { Client } from "courseAvail";
+import { Client } from "../../functions/courseavail.js";
 const client = new Client(); 
  
 module.exports = class coursesCommand extends Command {

@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { Command } = require("discord.js-commando"); 
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
-const paginationEmbed = require('discord.js-pagination');
+const paginationEmbed = require("discord.js-pagination");
 const QuickChart = require(`quickchart-js`); 
 const chart = new QuickChart();
  
