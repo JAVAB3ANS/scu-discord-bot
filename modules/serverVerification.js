@@ -86,9 +86,13 @@ module.exports.run = async (client) => {
               
                 const nickname = `${req.body.name} || ${req.body.major}`; 
                 
-                if (nickname.length > 32) {
-                  log(client, client.config.channels.auditlogs, { embed: { title: `__**${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}** so fix it [here!](${client.config.verification.googleform})`, color:  client.config.school_color}});
-                } 
+                try { 
+                  if (nickname.length > 32) {
+                    log(client, client.config.channels.auditlogs, { embed: { title: `__**${req.body.name}'s nickname is over 32 characters!**__`, description: `> <@${member.user.id}> returned **${nickname}** so fix it [here!](${client.config.verification.googleform})`, color:  client.config.school_color}});
+                  } 
+                } catch (err) {
+                    if (err === "DiscordAPIError: Invalid Form Body") return;
+                }
                 
                 member.setNickname(nickname);
             }
