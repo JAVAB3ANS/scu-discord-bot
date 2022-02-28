@@ -33,9 +33,9 @@ module.exports = class coursesCommand extends Command {
  
     async run ( message, courseName, quarter ) {
       client.search(courseName, quarter)
-        .then(results => {
+        .then((results) => {
           console.log(results);
           message.channel.send(results);
-        })
-      }
-}
+        });
+      };
+};
