@@ -92,7 +92,7 @@
   <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu_announcement.png?raw=true">
 </p>
 
-## Final Thoughts:
+## Final Thoughts
 - This was an impromptu project for fun that grew into quite a big deal (well, at least for me). The Discord community's ability to listen to its user base is remarkable, both technically and socially. The developers are always responsive and willing to help, whether it is listening to user-experience suggestions or bug fixes for the app's online client. By also giving users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, which very few applications can encourage for an audience that is primarily comprised of end-users. Having said that, the platform is just as useful to the average person. Having said that, the platform is as useful to the average user as it is to those who want to work behind the scenes.
 
 - Within the scope of this college server bot, I recently made my code more efficient by utilizing the Discord.js Commando framework, which employs a much more object-oriented programming approach. Looking back, this was a significant improvement over simply using if, else if, and else statements to have the bot scan for specific strings and prefixes and output whatever result the users desired.
