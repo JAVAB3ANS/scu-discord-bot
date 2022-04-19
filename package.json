@@ -4,8 +4,8 @@
   "description": "![SCU Discord Network Banner](https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu_banner.png?raw=true)",
   "main": "index.js",
   "dependencies": {
-    "aki-api": "^5.2.1", 
-    "axios": "^0.26.1", 
+    "aki-api": "^5.2.1",
+    "axios": "^0.25.0",
     "cheerio": "^1.0.0-rc.6",
     "cors": "^2.8.5",
     "degenerator": "^3.0.1",
