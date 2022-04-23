@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "aki-api": "^5.2.1",
-    "axios": "^0.25.0",
+    "axios": "^0.26.1",
     "cheerio": "^1.0.0-rc.6",
     "cors": "^2.8.5",
     "degenerator": "^3.0.1",
