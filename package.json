@@ -36,8 +36,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node .",
     "start": "pm2 start index.js && pm2 log",
-    "restart": "pm2 restart index.js && pm2 log",
-    "server": "sudo chmod 600 /home/pi/Documents/scu-discord-bot/.ssh/java96207336.SCU-BOT.pem && ssh -i /home/pi/Documents/scu-discord-bot/.ssh/java96207336.SCU-BOT.pem java96207336.SCU-BOT@java96207336-64476.portmap.io -f -N -R 64476:localhost:4000"
+    "restart": "pm2 restart index.js && pm2 log"
   },
   "repository": {
     "type": "git",

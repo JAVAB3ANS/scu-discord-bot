@@ -16,12 +16,12 @@ try:
 except HTTPError as e:
     print("The server couldn\'t fulfill the request.")
     print("Error code: ", e.code)
-    os.system("sudo npm run server")
+    os.system(config["verification"]["server"])
 
 except URLError as e:
     print("We failed to reach a server.")
     print("Reason: ", e.reason)
-    os.system("sudo npm run server")
+    os.system(config["verification"]["server"])
 
 else:
     print (response.read().decode("utf-8"))
