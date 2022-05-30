@@ -7,21 +7,23 @@ from urllib.error import URLError, HTTPError
 
 with open("config.json") as file:
     config = json.load(file)
-    
-req = Request(config["verification"]["verifyURL"])
 
-try:
-    response = urlopen(req)
+while True:
+    req = Request(config["verification"]["verifyURL"])
 
-except HTTPError as e:
-    print("The server couldn\'t fulfill the request.")
-    print("Error code: ", e.code)
-    os.system(config["verification"]["server"])
+    try:
+        response = urlopen(req)
 
-except URLError as e:
-    print("We failed to reach a server.")
-    print("Reason: ", e.reason)
-    os.system(config["verification"]["server"])
+    except HTTPError as e:
+        print("The server couldn\'t fulfill the request.")
+        print("Error code: ", e.code)
+        os.system(config["verification"]["server"])
 
-else:
-    print (response.read().decode("utf-8"))
+    except URLError as e:
+        print("We failed to reach a server.")
+        print("Reason: ", e.reason)
+        os.system(config["verification"]["server"])
+
+    else:
+        print (response.read().decode("utf-8"))
+        pass
