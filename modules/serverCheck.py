@@ -5,7 +5,7 @@ import json
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
-with open("config.json") as file:
+with open("../config.json") as file:
     config = json.load(file)
 
 while True:
