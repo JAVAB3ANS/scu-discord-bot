@@ -2,28 +2,26 @@
 
 import os
 import json
-from urllib.request import Request, urlopen
+import requests
 from urllib.error import URLError, HTTPError
 
 with open("../config.json") as file:
     config = json.load(file)
 
-while True:
-    req = Request(config["verification"]["verifyURL"])
+try:
+    r = requests.get(config["verification"]["verifyURL"], timeout=5)
 
-    try:
-        response = urlopen(req)
+    if r.status_code != 200:
+        os.system(config["verification"]["server"])
+    else:
+        print(str(r.status_code) + ": Website is up!")
 
-    except HTTPError as e:
+except HTTPError as e:
         print("The server couldn\'t fulfill the request.")
         print("Error code: ", e.code)
         os.system(config["verification"]["server"])
 
-    except URLError as e:
-        print("We failed to reach a server.")
-        print("Reason: ", e.reason)
-        os.system(config["verification"]["server"])
-
-    else:
-        print (response.read().decode("utf-8"))
-        pass
+except URLError as e:
+    print("We failed to reach a server.")
+    print("Reason: ", e.reason)
+    os.system(config["verification"]["server"])
