@@ -28,10 +28,10 @@ module.exports = async (client, member) => {
       .setTitle("Invent the life you want to lead at Santa Clara University.")
       .setDescription(
         ":one:  If you are new to Discord, this short [tutorial](https://youtu.be/rnYGrq95ezA) can help you get started! \n\n" +
-        `:two: __**Please*s*__ fill out the Google Form :clipboard: in the <#${client.config.channels.roles}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
+        `:two: **Please fill out the Google Form :clipboard: in the <#${client.config.channels.roles}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
         `:three: Read the <#${client.config.channels.info}> channel and introduce yourself :wave: in the <#${client.config.channels.intros}> channel! \n\n` +
         `:four: Check out SCU updates :mega: in <#${client.config.channels.updates}> and keep your eyes peeled for cool servers :cool: in <#${client.config.channels.promos}>! \n\n` +
-        ":five: If you have any technical issues :computer:, feel free to contact **ADMIN** or **MOD** for help!\n\n" +
+        `:five: If you have any technical issues :computer:, feel free to resort to <#${client.config.channels.helpTickets}> !\n\n` +
         "Thank you for your cooperation and Go Broncos! :racehorse:"
       )
       .attachFiles(["./assets/logo-pic.png"])
