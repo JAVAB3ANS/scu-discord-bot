@@ -3,13 +3,13 @@
 import os
 import json
 import requests
-from urllib.error import URLError, HTTPError
+from urllib.error import URLError, HTTPError 
 
 with open("../config.json") as file:
     config = json.load(file)
 
-try:
-    r = requests.get(config["verification"]["verifyURL"], timeout=5)
+try:  
+    r = requests.get(config["verification"]["verifyURL"]) 
 
     if r.status_code != 200:
         os.system(config["verification"]["server"])
@@ -24,4 +24,16 @@ except HTTPError as e:
 except URLError as e:
     print("We failed to reach a server.")
     print("Reason: ", e.reason)
+    os.system(config["verification"]["server"])
+
+except requests.exceptions.HTTPError as errh:
+    print ("Http Error:", errh)
+    os.system(config["verification"]["server"])
+
+except requests.exceptions.ConnectionError as errc:
+    print ("Error Connecting:", errc)
+    os.system(config["verification"]["server"])
+
+except requests.exceptions.Timeout as errt:
+    print ("Timeout Error:", errt)     
     os.system(config["verification"]["server"])
