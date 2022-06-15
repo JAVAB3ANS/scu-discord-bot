@@ -3,13 +3,19 @@
 import os
 import json
 import requests
+from requests.adapters import HTTPAdapter, Retry
 from urllib.error import URLError, HTTPError 
 
 with open("../config.json") as file:
     config = json.load(file)
 
 try:  
-    r = requests.get(config["verification"]["verifyURL"]) 
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("http://", adapter)
+
+    r = session.get(config["verification"]["verifyURL"]) 
 
     if r.status_code != 200:
         os.system(config["verification"]["server"])
@@ -27,7 +33,7 @@ except URLError as e:
     os.system(config["verification"]["server"])
 
 except requests.exceptions.HTTPError as errh:
-    print ("Http Error:", errh)
+    print ("HTTP Error:", errh)
     os.system(config["verification"]["server"])
 
 except requests.exceptions.ConnectionError as errc:
