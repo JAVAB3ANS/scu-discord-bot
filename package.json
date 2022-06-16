@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "aki-api": "^5.2.1",
-    "axios": "^0.27.2",
+    "ansi-regex": "^5.0.1",
+    "axios": "^0.26.1",
     "cheerio": "^1.0.0-rc.6",
     "cors": "^2.8.5",
     "degenerator": "^3.0.1",
@@ -13,9 +14,9 @@
     "discord.js-commando": "^0.12.3",
     "discord.js-pagination": "^1.0.3",
     "dot": "^1.1.3",
-    "express": "^4.18.1",
+    "express": "^4.17.1",
     "figlet": "^1.5.2",
-    "follow-redirects": "^1.15.0",
+    "follow-redirects": "^1.14.8",
     "helmet": "^4.6.0",
     "jsdom": "^16.7.0",
     "lodash": "^4.17.21",
@@ -23,6 +24,7 @@
     "moment": "^2.29.1",
     "node-gyp": "^8.4.1",
     "nth-check": "^2.0.1",
+    "nwsapi": "^2.2.0",
     "pac-resolver": "^5.0.0",
     "pm2": "^5.1.2",
     "quick.db": "^7.1.3",
@@ -36,7 +38,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node .",
     "start": "pm2 start index.js && pm2 log",
-    "restart": "pm2 restart index.js && pm2 log"
+    "restart": "pm2 restart index.js && pm2 log",
+    "server": "sudo chmod 600 /home/pi/Documents/scu-discord-bot/.ssh/java96207336.SCU-BOT.pem && ssh -i /home/pi/Documents/scu-discord-bot/.ssh/java96207336.SCU-BOT.pem java96207336.SCU-BOT@java96207336-64476.portmap.io -f -N -R 64476:localhost:4000"
   },
   "repository": {
     "type": "git",
