@@ -6,7 +6,7 @@
   "dependencies": {
     "aki-api": "^5.2.1",
     "ansi-regex": "^5.0.1",
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.6",
     "cors": "^2.8.5",
     "degenerator": "^3.0.1",
