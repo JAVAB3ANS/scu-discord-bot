@@ -83,10 +83,12 @@ module.exports.run = async (client) => {
                 
                 member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)); //the Student role
    
+                const majorBody = req.body.major;
+
                 // The type of this object and the value of its forEach property can be controlled by the user. An attacker may craft the properties of the object to crash the application or bypass its logic. Consider checking the type of the object.
-                if (req.body.major != null && typeof res.body.major === "string") {
+                if (majorBody != null && typeof majorBody === "Object") {
                   try {
-                    req.body.major.forEach((major) => {
+                    majorBody.forEach((major) => {
                       // loops thru members' inputted major role(s) from the checklist 
                       // works for double and triple majors and also for one major [given that they're honest :) ]
                       let majorRole = guild.roles.cache.find((ma) => ma.name === major);
