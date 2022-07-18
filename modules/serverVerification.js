@@ -5,34 +5,51 @@ module.exports.run = async (client) => {
   const express = require("express");
   const cors = require("cors");
   const helmet = require("helmet");
+  const cookieParser = require("cookie-parser");
+  const csrf = require("csurf");
+  const bodyParser = require("body-parser");
+
+  // Node.js CSRF protection middleware. 
+  // Requires either a session middleware or cookie-parser to be initialized first.
+  // setup route middlewares
+  const csrfProtection = csrf({ cookie: true })
+  const parseForm = bodyParser.urlencoded({ extended: false })
   const app = express();
+
+  // parse cookies
+  // we need this because "cookie" is true in csrfProtection
+  app.use(cookieParser())
 
   const guild = client.guilds.cache.get(client.config.verification.guildID);
   app.use(express.json());
   app.use(cors());
   app.use(helmet());
-  //This will start on port 2000, if this collides with another service you may change it
+
+  // This will start on port 2000, if this collides with another service you may change it
   const verifyMSG = {
     title: "VERIFICATION SERVER",
     description: `Verification listening at port 4000 [here](${client.config.verification.verifyURL})! :white_check_mark:`,
     color: "GREEN", 
     timestamp: new Date()
   }
+
   app.listen(4000, () => {
     console.log(verifyMSG.description);
   });
+
   app.all("/", (req, res) => {
     res.status(200).send(`${verifyMSG.title} was deployed on ${verifyMSG.timestamp} ✅`);
   });
-  app.post("/verify", (req, res) => {
-    //some basic auth
+
+  app.post("/verify", parseForm, csrfProtection, (req, res) => {
+    // some basic auth
     if (req.headers["key"] !== client.config.verification.key) {
-      //api key checker
+      // api key checker
       res.status(401).send({ error: ":x: Invalid API Key " });
-      //data in body checker
+      // data in body checker
     } else if (Object.keys(req.body).length > 0) { //if member enters something, then fire this else block
       res.status(200).send({ status: "Successful" });
-      //find member in guild 
+      // find member in guild 
       try {
         let member = guild.members.cache.find((member) => member.user.tag === req.body.discord);
         //if the member isn't in the guild return an error in console 
@@ -40,7 +57,7 @@ module.exports.run = async (client) => {
           log (client, client.config.channels.auditlogs, { embed: { title: `__**:x: ${guild.name} Verification**__`, description: `> **${req.body.name}** returned **${req.body.discord}**, which is **${member}** in the server!\n> Please remove their response from the [form](${client.config.verification.googleresponse})!`, color: "red"}});
         } else if (member.roles.cache.has(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent))) {
             try {
-              //if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
+              // if the member already has the join role that means they are already verified so.. tell them that someone is about to hack them!!
               const dangerEmbed = {
                 title: `__**DANGER ALERT!**__`,
                 description: `:x: Someone tried to verify their Discord account as you! If this was you, you may ignore this message. If this was not you, please immediately inform an **ADMIN** or **MOD** immediately!`,
@@ -58,31 +75,32 @@ module.exports.run = async (client) => {
             log(client, client.config.channels.auditlogs, { embed: { title: "__**:white_check_mark: Verification Alert!**__", description: `New data from **${req.body.discord}** (**${req.body.name}**)`, color: client.config.school_color}}); //will display new verification message if member tag matches input in Google form
             
             if (req.body.status === "SCU Faculty/Staff") {
-              //changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
+              // changes nickname and grants verified personnel role but skips onwards to remove Unverified role, but won't receive major and verified Student roles
               member.setNickname(req.body.name);
               member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedPersonnel)); //the SCU Faculty/Staff role
             } else {
-                //gives member the verified student role
+                // gives member the verified student role
                 
                 member.roles.add(guild.roles.cache.find((role) => role.id === client.config.serverRoles.verifiedStudent)); //the Student role
-  
-                try {  
-                  if (req.body.major != null) {
+   
+                // The type of this object and the value of its forEach property can be controlled by the user. An attacker may craft the properties of the object to crash the application or bypass its logic. Consider checking the type of the object.
+                if (req.body.major != null && typeof res.body.major === "String") {
+                  try {
                     req.body.major.forEach((major) => {
-                      //loops thru members' inputted major role(s) from the checklist 
+                      // loops thru members' inputted major role(s) from the checklist 
                       // works for double and triple majors and also for one major [given that they're honest :) ]
-                      let majorRole = guild.roles.cache.find((ch) => ch.name === major);
+                      let majorRole = guild.roles.cache.find((ma) => ma.name === major);
                       member.roles.add(majorRole);
                     });
-                  }        
-                } catch (err) {
-                    if (err === "TypeError [INVALID_TYPE]: Supplied roles is not a Role, Snowflake or Array or Collection of Roles or Snowflakes.") return;
-                }
-                
+                  } catch (err) {
+                      if (err === "TypeError [INVALID_TYPE]: Supplied roles is not a Role, Snowflake or Array or Collection of Roles or Snowflakes." ) return;
+                  } 
+                }        
+               
                 member.roles.add(guild.roles.cache.find((role) => role.name === req.body.status));
             
-                //set their nickname like this: [First Name] || [Major]
-                //also, if nickname is over 32 characters, catch error and log it in #audit-logs so we could manually adjust it
+                // set their nickname like this: [First Name] || [Major]
+                // also, if nickname is over 32 characters, catch error and log it in #audit-logs so we could manually adjust it
               
                 const nickname = `${req.body.name} || ${req.body.major}`; 
                 
@@ -96,10 +114,10 @@ module.exports.run = async (client) => {
                 
                 member.setNickname(nickname);
             }
-            //remove Unverified role from member in all conditions
+            // remove Unverified role from member in all conditions
             member.roles.remove(guild.roles.cache.find((role) => role.id === client.config.serverRoles.unverifiedStudent));
   
-            //send them a confirmation
+            // send them a confirmation
             const verifyConfirmation = new MessageEmbed()
               .setTitle("__**Successful Verification**__")
               .setDescription(`You have been verified successfully in the **${guild.name}**! Here is your information for confirmation. If anything is inputted incorrectly, please tell contact **ADMIN** or **MOD** to quickly adjust your roles! Remember to read <#${client.config.channels.info}> for more information!`)
@@ -126,7 +144,7 @@ module.exports.run = async (client) => {
           if (err === "TypeError: Cannot read property 'members' of undefined") return;
       }
     } else {
-        //if no body.. return this
+        // if no body.. return this
         res.status(401).send({ error: "No data found" });
     }  
   });
