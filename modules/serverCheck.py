@@ -9,6 +9,18 @@ from urllib.error import URLError, HTTPError
 with open("../config.json") as file:
     config = json.load(file)
 
+"""
+
+1. We create a new session object.
+2. We create a new retry object.
+3. We create a new HTTPAdapter object.
+4. We mount the session to the HTTPAdapter object.
+5. We make a get request to the verifyURL.
+6. If the status code is not 200, we run the server.
+7. If the status code is 200, we print the status code and the website is up! 
+
+"""
+
 try:  
     session = requests.Session()
     retry = Retry(connect=3, backoff_factor=0.5)
