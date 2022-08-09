@@ -13,7 +13,7 @@
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "degenerator": "^3.0.1",
-    "discord.js": "^14.0.1",
+    "discord.js": "^14.0.2",
     "discord.js-commando": "^0.12.3",
     "discord.js-pagination": "^1.0.3",
     "dot": "^1.1.3",
