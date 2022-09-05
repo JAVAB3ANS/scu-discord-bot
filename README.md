@@ -41,17 +41,9 @@
 </p>
 
 ## Server Verification System
-- An Express.js server was created for a guild verification system that automatically assigns SCU students' graduating year, college major, and verified roles upon submission of their unique Google Form responses. Setting permissions via roles is the standard method of managing a Discord server that does not require manual content filtering.
+- To verify themselves in the server, students would type `&verify [their SCU email]` in a dedicated roles channel to have the bot direct-message them a confirmation message then promptly send them a unique keycode in their email. They would enter that keycode within 60 seconds to be properly granted a **Student** role and would be encouraged to add additional roles in my accompanied [OAuth roles system](https://github.com/JAVAB3ANS/discord-oauth-verification-system/).
 
-- Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students and alumni who enter their correct credentials within the university's domain.
-
-- A text pattern is used to assign roles to each user: ```<first name> || <current college major(s)>```. The server is divided into three types of roles, one for each major and one for each graduating year. This also accommodates students who are double and triple majors on the Google form, which is permitted by the Discord API as long as the user's nickname is less than 32 characters.
-
-- Detecting whether a user's response in the Google form was invalid posed a challenge. I used regex (regular expressions) to ensure that the numbers spelled their names correctly, starting with the first uppercase letter and so on. Furthermore, if users did not enter their correct Discord tag in the specific form input section, the bot would send an error message, forcing me to delete the user's response manually. They could then redo the form and receive Discord roles automatically via the Express.js server in response to a request from the Google forms/scripts API.
-
-<p align="center">
-  <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu_verification_process.gif?raw=true">
-</p>
+- Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students, faculty/staff, and alumni who enter their correct email credentials against the university's domain. 
 
 ## Server Modmail Ticketing System
 
