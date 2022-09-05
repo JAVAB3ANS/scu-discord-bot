@@ -41,7 +41,7 @@ module.exports = class verifyCommand extends Command {
         const guild = this.client.guilds.cache.get(this.client.config.guildID);
 
         if (message.member.roles.cache.some((role) => role.name === "student")) {
-            return this.client.error(`This user is already verified!`, message);
+            return this.client.error("This user is already verified!", message);
         }
 
         if (message.channel.id !== this.client.config.channels.access) {
@@ -62,7 +62,7 @@ module.exports = class verifyCommand extends Command {
             },
         });
 
-        const rawHTML = await fs.readFile(`./assets/templateFiles/email.html`, "utf8");
+        const rawHTML = await fs.readFile("./assets/templateFiles/email.html", "utf8");
         const tempFn = dot.template(rawHTML);
         const keycode = [0, 0, 0, 0].map(() => _.random(0, 9)).join("");
         const result = tempFn({
@@ -79,11 +79,11 @@ module.exports = class verifyCommand extends Command {
 
         await transporter.sendMail(mailOptions, async (error) => {
             if (error) {
-                return console.log(error);
+                return this.client.error("Error occurred while sending email. Please redo the command.", error.message);
             } else {
                 await message.author.send({
                     embed: {
-                        title: `Email sent successfully!`,
+                        title: "Email sent successfully!",
                         description: `Email sent to **${emailAddress}**. Check your school email for your verification code, then type the keycode in the <#${this.client.config.channels.access}> channel!`,
                         color: this.client.config.school_color
                     }
@@ -103,18 +103,18 @@ module.exports = class verifyCommand extends Command {
                     max: 1,
                     time: 60000,
                     errors: ["time"]
-                }).then(collected => collected.first().delete()) // about 60 seconds
+                }).then((collected) => collected.first().delete()); // about 60 seconds
 
                 await message.member.roles.add(guild.roles.cache.find((role) => role.name === "student")).then(() => {
                     message.author.send(`<@${message.author.id}>`, { embed: {
-                            title: `Welcome to the Santa Clara University Discord Network!`,
+                            title: "Welcome to the Santa Clara University Discord Network!",
                             description: `You have been given the **Student** role! You can now access the rest of the server and select your roles in the <#${this.client.config.channels.roles}> channel!`,
                             color: this.client.config.school_color
-                    }})
+                    }});
                 });
             }
         });
         
         uniqueID.delete(message.author.id); // Remove the user from the set
-    };
+    }
 };
