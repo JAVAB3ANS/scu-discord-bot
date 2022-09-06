@@ -90,7 +90,7 @@ module.exports = class verifyCommand extends Command {
                 await message.author.send({
                     embed: {
                         title: "Email sent successfully!",
-                        description: `Email sent to **${emailAddress}**. Check your school email for your verification code, then type the keycode in the <#${this.client.config.channels.access}> channel!`,
+                        description: `Email sent to **${emailAddress}**. Check your school email for your verification code, then type the keycode in the <#${this.client.config.channels.access}> channel in less than 5 minutes!`,
                         color: this.client.config.school_color
                     }
                 });
@@ -107,11 +107,12 @@ module.exports = class verifyCommand extends Command {
 
                 await message.channel.awaitMessages(keycodeFilter, {
                     max: 1,
-                    time: 60000,
+                    time: 300000,
                     errors: ["time"]
-                }).then((collected) => collected.first().delete()); // about 60 seconds
+                }).then((collected) => collected.first().delete()); // exactly 5 minutes
 
-                await message.member.roles.add(guild.roles.cache.find((role) => role.name === roleOptions)).then(() => {
+                let role = message.guild.roles.cache.find(role => role.name === roleOptions)
+                await message.member.roles.add(role).then(() => {
                     message.author.send(`<@${message.author.id}>`, { embed: {
                             title: "Welcome to the Santa Clara University Discord Network!",
                             description: `You have been verified! You can now access the rest of the server and select your roles in the <#${this.client.config.channels.roles}> channel!`,
