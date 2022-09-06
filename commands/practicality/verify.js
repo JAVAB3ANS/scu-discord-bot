@@ -34,7 +34,7 @@ module.exports = class verifyCommand extends Command {
             }, 
             {
                 key: "roleOptions",
-                prompt: "Please choose a valid option:",
+                prompt: "Please choose a valid option: \`student or scu faculty/staff\`",
                 type: "string",
                 oneOf: ["student", "scu faculty/staff"],
             },]
