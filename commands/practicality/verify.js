@@ -14,7 +14,7 @@ module.exports = class verifyCommand extends Command {
             name: "verify",
             group: "practicality",
             memberName: "verify",
-            description: "Verify yourself as a student.",
+            description: "Verify yourself as a student or faculty/staff member.",
             throttling: {
                 usages: 2,
                 duration: 5,
@@ -31,16 +31,22 @@ module.exports = class verifyCommand extends Command {
                         return "Please enter a valid email address!";
                     }
                 }
-            }, ]
+            }, 
+            {
+                key: "roleOptions",
+                prompt: "Please choose a valid option:",
+                type: "string",
+                oneOf: ["student", "scu faculty/staff"],
+            },]
         })
     }
 
-    async run(message, { emailAddress }) {
+    async run(message, { emailAddress, roleOptions }) {
         message.delete();
 
         const guild = this.client.guilds.cache.get(this.client.config.guildID);
 
-        if (message.member.roles.cache.some((role) => role.name === "student")) {
+        if (message.member.roles.cache.some((role) => role.name === "student") || message.member.roles.cache.some((role) => role.name === "scu faculty/staff")) {
             return this.client.error("This user is already verified!", message);
         }
 
@@ -105,10 +111,10 @@ module.exports = class verifyCommand extends Command {
                     errors: ["time"]
                 }).then((collected) => collected.first().delete()); // about 60 seconds
 
-                await message.member.roles.add(guild.roles.cache.find((role) => role.name === "student")).then(() => {
+                await message.member.roles.add(guild.roles.cache.find((role) => role.name === roleOptions)).then(() => {
                     message.author.send(`<@${message.author.id}>`, { embed: {
                             title: "Welcome to the Santa Clara University Discord Network!",
-                            description: `You have been given the **Student** role! You can now access the rest of the server and select your roles in the <#${this.client.config.channels.roles}> channel!`,
+                            description: `You have been verified! You can now access the rest of the server and select your roles in the <#${this.client.config.channels.roles}> channel!`,
                             color: this.client.config.school_color
                     }});
                 });
