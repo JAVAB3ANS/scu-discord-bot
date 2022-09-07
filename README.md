@@ -29,7 +29,7 @@
   - [Fun category!](https://github.com/JAVAB3ANS/scu-discord-bot/tree/master/commands/fun)
 
 ## Implementation
-- Node.js and the discord.js library are used to build the Discord bot. The library provides a simple way to interact with the Discord API. Node.js was chosen because various npm libraries proved to be extremely useful.
+- Node JS and the Discord JS library are used to build the Discord bot. The library provides a simple way to interact with the Discord API. Node.js was chosen because various npm libraries proved to be extremely useful.
 
 - The following section will go over each feature, their implementation options, and any mistakes or learning points that could be improved.
 
@@ -41,7 +41,7 @@
 </p>
 
 ## Server Verification System
-- To verify themselves in the server, students would type `&verify [their SCU email]` in a dedicated roles channel to have the bot direct-message them a confirmation message then promptly send them a unique keycode in their email. They would enter that keycode within 60 seconds to be properly granted a **Student** role and would be encouraged to add additional roles in my accompanied [OAuth roles system](https://github.com/JAVAB3ANS/discord-oauth-verification-system/).
+- To verify themselves in the server, students would type `&verify [their SCU email]` in a dedicated roles channel to have the bot direct-message them a confirmation message then promptly send them a unique keycode in their email. They would enter that keycode within 5 minutes to be properly granted a **Student** role and would be encouraged to add additional roles in my accompanied [OAuth roles system](https://github.com/JAVAB3ANS/discord-oauth-verification-system/).
 
 - Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students, faculty/staff, and alumni who enter their correct email credentials against the university's domain. 
 
@@ -85,9 +85,9 @@
 </p>
 
 ## Final Thoughts
-- This was an impromptu project for fun that grew into quite a big deal (well, at least for me). The Discord community's ability to listen to its user base is remarkable, both technically and socially. The developers are always responsive and willing to help, whether it is listening to user-experience suggestions or bug fixes for the app's online client. By also giving users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, which very few applications can encourage for an audience that is primarily comprised of end-users. Having said that, the platform is just as useful to the average person. Having said that, the platform is as useful to the average user as it is to those who want to work behind the scenes.
+- This was an impromptu project for fun that grew into quite a big deal (well, at least for me). The Discord community's ability to listen to its user base is remarkable, both technically and socially. The developers are always responsive and willing to help, whether it is listening to user-experience suggestions or bug fixes for the app's online client. By also giving users access to the Discord Developer portal to create automation tools, many users are instilled with a do-it-yourself attitude in their control, which very few applications can encourage for an audience that is primarily comprised of end-users. Having said that, the platform is as useful to the average user as it is to those who want to work behind the scenes.
 
-- Within the scope of this college server bot, I recently made my code more efficient by utilizing the Discord.js Commando framework, which employs a much more object-oriented programming approach. Looking back, this was a significant improvement over simply using if, else if, and else statements to have the bot scan for specific strings and prefixes and output whatever result the users desired.
+- Within the scope of this college server bot, I recently made my code more efficient by utilizing the Discord JS Commando framework, which employs a much more object-oriented programming approach. Looking back, this was a significant improvement over simply using if, else if, and else statements to have the bot scan for specific strings and prefixes and output whatever result the users desired.
 
 - Personally, I've been using the app for about three years to communicate with my colleagues and friends about anything, whether it's homework, programming, or making life decisions. People go out of their way to hang out in multiple chats and servers, so it's a great place to just hang out. The app's methods of personalizing human interaction as much as possible online are completely analogous to real life: a direct message is similar to a one-on-one interaction with another person, whereas a group server is similar to a community living room where several people do whatever they want. Furthermore, the servers' ability to handle an infinite number of messages and pictures without automatic deletion is quite impressive in its scope, just as you are not restricted in real life from discussing your beliefs and opinions. It's fascinating to examine the history of previous conversations, which is similar to how our minds can recall topics and conjure them back to memory for the sake of discussion.
 
