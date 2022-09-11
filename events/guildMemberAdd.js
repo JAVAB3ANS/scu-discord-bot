@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { log } = require("../functions/log.js");
 
 module.exports = async (client, member) => { 
-  const guild = client.guilds.cache.get(client.config.guildID);
+  const guild = client.guilds.cache.get(member.guild);
 
   if (member.user.bot) return;
 	
@@ -10,12 +10,10 @@ module.exports = async (client, member) => {
     
     await member.setNickname(`[Your Name] || [Your Majors/Minors]`)
 
-    log(client, client.config.channels.auditlogs, { embed: { title: "NEW JOIN ROLE ADDED!", description: `The **Unverified** role has been given to **<@${member.user.id}>** by **<@${client.user.id}>**!`, color: "GREEN"}});
-    
     const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
     .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
     .setDescription("We're glad to have you here! Follow instructions in your DM's and Go Broncos!") //Setting embed description
-    .setThumbnail("https://JAVAB3ANS.github.io/scu-discord-bot/assets/logo-pic.png")
+    .setThumbnail("https://JAVAB3ANS.github.io/scu-discord-bot/assets/logo-pic.png?raw=true")
     .setTimestamp() // Sets a timestamp at the end of the embed
     .attachFiles(["./assets/scu_banner.png"])
     .setImage("attachment://scu_banner.png")
