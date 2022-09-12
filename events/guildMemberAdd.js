@@ -2,14 +2,11 @@ const { MessageEmbed } = require("discord.js");
 const { log } = require("../functions/log.js");
 
 module.exports = async (client, member) => { 
-  const guild = client.guilds.cache.get(member.guild);
+  const guild = client.guilds.cache.get(client.config.verification.guildID);
 
   if (member.user.bot) return;
 	
   try {
-    
-    await member.setNickname(`[Your Name] || [Your Majors/Minors]`)
-
     const welcomeEmbed1 = new MessageEmbed() // triggers when new users joins to specific channel in server
     .setTitle(`Welcome to the **${guild.name}**!`) // Calling method setTitle on constructor.
     .setDescription("We're glad to have you here! Follow instructions in your DM's and Go Broncos!") //Setting embed description
@@ -23,10 +20,10 @@ module.exports = async (client, member) => {
     await guild.systemChannel.send(`<@${member.user.id}>`, { embed: welcomeEmbed1 });
 
     const welcomeEmbed2 = new MessageEmbed() //personal message to new user
-      .setTitle("Invent the life you want to lead at Santa Clara University.")
+      .setTitle("Invent the life you want to lead at Santa Clara University!")
       .setDescription(
-        ":one:  If you are new to Discord, this short [tutorial](https://youtu.be/rnYGrq95ezA) can help you get started! \n\n" +
-        `:two: __**Please*s*__ follow the instructions in the <#${client.config.channels.access}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
+        ":one:  If you're new to Discord, this short [tutorial](https://youtu.be/rnYGrq95ezA) can help you get started! \n\n" +
+        `:two: Please follow the instructions in the <#${client.config.channels.access}> to __**immediately**__ verify yourself and get roles in the SCU server! It'll only take a couple seconds! Note: If you're a **Guest** or **Prospective Student**, you are exempted from this requirement. \n\n` +
         ":three: If you have any technical issues :computer:, feel free to contact **ADMIN** or **MOD** for help!\n\n" +
         "Thank you for your cooperation and Go Broncos! :racehorse:"
       )
