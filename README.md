@@ -45,6 +45,11 @@
 
 - Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students, faculty/staff, and alumni who enter their correct email credentials against the university's domain. 
 
+<p align="center">
+  <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu-discord-verify-process.gif?raw=true">
+</p>
+
+
 ## Server Modmail Ticketing System
 
 <p align="center">
