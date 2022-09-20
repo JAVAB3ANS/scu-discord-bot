@@ -41,21 +41,21 @@
 </p>
 
 ## Server Verification System
-- To verify themselves in the server, students would type `&verify [their SCU email]` in a dedicated roles channel to have the bot direct-message them a confirmation message then promptly send them a unique keycode in their email. They would enter that keycode within 5 minutes to be properly granted a **Student** role and would be encouraged to add additional roles in my accompanied [OAuth roles system](https://github.com/JAVAB3ANS/discord-oauth-verification-system/).
-
-- Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students, faculty/staff, and alumni who enter their correct email credentials against the university's domain. 
+<p align="center">
+  <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/login.png?raw=true">
+</p>
 
 <p align="center">
   <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/dashboard.png?raw=true">
 </p>
 
 <p align="center">
-  <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/login.png?raw=true">
-</p>
-
-<p align="center">
   <img src="https://github.com/JAVAB3ANS/scu-discord-bot/blob/master/assets/scu-discord-verify-process.gif?raw=true">
 </p>
+
+- To verify themselves in the server, students would type `&verify [their SCU email]` in a dedicated roles channel to have the bot direct-message them a confirmation message then promptly send them a unique keycode in their email. They would enter that keycode within 5 minutes to be properly granted a **Student** role and would be encouraged to add additional roles in my accompanied [OAuth roles system](https://github.com/JAVAB3ANS/discord-oauth-verification-system/).
+
+- Certain voice and text channels on the server are restricted to those with specific roles. Without roles, anyone can set up an account and send spam messages, which the verification system effectively prevents. Unlike many servers with role-react systems, which give users access to a message with the click of an emoji, my method is effective and secure on multiple levels. In short, the only users who may have access to the server are current students, faculty/staff, and alumni who enter their correct email credentials against the university's domain. 
 
 ## Server Modmail Ticketing System
 
