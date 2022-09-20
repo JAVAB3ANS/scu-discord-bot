@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="noindex,nofollow" />
+        <title>SCU Discord Network Roles | Dashboard</title>
+        <meta name="description" content="Discord OAuth2 Roles System for SCU Discord Network">
+        <link rel="shortcut icon" href="./favicon.ico">
+        <link href="./main.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- IF UNPRIVILEGED, REDIRECT TO /login (use JS + backend to verify) -->
+        <main>
+            <header>
+                <h3>Member Roles</h3>
+            </div>
+            <div id="nav">
+                <div class="dropdown">
+                    <div
+                        id="user-block"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        <!-- data-offset="-5,10" -->
+                        <h4 id="username">Username</h4>
+                        <img 
+                            src="./discord-small.webp"
+                            draggable="false"
+                            width="35"
+                            height="35"
+                            id="avatar-icon"
+                            alt="Avatar icon"
+                        >
+                    </div>
+                </div>
+            </header> 
+            <section
+                class="container"
+                style="margin-bottom: 2rem"
+            >
+                <div
+                    class="flexCenter"
+                    style="margin:2em 0 3em 0"
+                >
+                    <div class="logoContainer">
+                        <img
+                            src="./discord-small.webp"
+                            draggable="false"
+                            width="60"
+                            height="60"
+                            id="guild-icon"
+                            alt="Guild icon"
+                        >
+                        <h2>
+                            Santa Clara University
+                            <br/>
+                            Discord Network
+                        </h2>
+                    </div>
+                    <div 
+                        id="controls"
+                    >
+                        <button class="scuRedButton" id="submit-changes">Submit Changes</button>
+                        <button class="grayButton" id="reset">Undo Changes</button>
+                    </div>
+                </div>
+                <div
+                    class="alertBanner"
+                    role="alert"
+                    id="submit-alert"
+                >
+                    Role changes have been submitted! Please wait at least <strong><span id="time">x</span></strong> second(s). The page will automatically refresh when complete.
+                </div>
+            </section> 
+            <section>
+                <h4 class="borderBottomTitle" style="margin-bottom:0.5em">Current Roles</h4>
+                <div>
+                    <div
+                        id="current-roles-container"
+                        class="loadingContainer"
+                    >
+                        <p style="text-align:center;">Loading...</p>
+                        <!-- <div class="role" style="border-color: rgb(150, 0, 0); background-color: rgb(150, 0, 0)">CS 121 <strong>x</strong></div> -->
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h4 class="borderBottomTitle" style="margin-bottom:0.5em">Assignable Roles</h4>
+                <div id="assignable-roles-accordion">
+                    <div class="loadingContainer">
+                        <p>Loading...</p>
+                    </div>
+
+                    <!-- EXAMPLE ROLE -->
+                    <!-- <details open>
+                        <summary id="identity-roles-header">
+                            Identity Roles
+                        </summary>
+                        <div id="identity-roles-container" style="margin-top: 1em">
+                            <div
+                                class="role"
+                                style="border-color: rgb(150, 0, 0); background-color: rgb(150, 0, 0)"
+                            >
+                                COEN 12 <strong>+</strong>
+                            </div>
+                        </div>
+                    </details> -->
+                </div>
+            </section>
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                "
+            >
+                <p>
+                    Feedback? Open a <a href="https://github.com/JAVAB3ANS/scu-discord-bot/pulls" draggable="false" target="_blank">pull request</a> / <a href="https://github.com/JAVAB3ANS/scu-discord-bot/issues" draggable="false" target="_blank"> issue</a>. <br><br>Help keep the site running <a target="_blank" href="https://tinyurl.com/javab3ans" draggable="false"> here</a>!
+                </p> 
+                <a draggable="false" href="/logout">Logout</a>
+            </div>
+            <hr/>
+            <footer>
+                <p>SCU Discord Network</p> 
+            </footer>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+        <script src="./dashboard.js" rel="script"></script>
+    </body>
+</html> 
