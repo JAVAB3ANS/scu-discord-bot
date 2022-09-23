@@ -72,7 +72,7 @@ function determineRoleCategory(name: string): string {
     for (const index in regexArray) {
         if (regexArray[index].test(name)) {
             return categoryArray[index]
-        };
+        }
     };
     return "";   // returns an empty string if there is no role
 };
@@ -183,11 +183,10 @@ router
             headers: headers
         }); 
 
-        const accessToken: AccessToken = await result.json();
-        console.log("Access Token: " + accessToken.accessToken + " " + accessToken.expiresIn);
+        const accessToken: AccessToken = await result.json(); 
 
         if (regex.test(accessToken.accessToken)) {
-            await ctx.cookies.set("discord-access-token", accessToken.accessToken)
+            await ctx.cookies.set("discord-access-token", accessToken.accessToken);
             await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
             ctx.response.redirect("/dashboard.html")
         } else {
@@ -223,7 +222,7 @@ router
     .post("/roles", async (ctx) => {
         ctx.response.body = await getRoles();
     })
-    .post("/save", async (ctx) => {
+    .post("/save", async ctx => {
         interface SavePayload {
             userID: string,
             rolesToAdd: string[],

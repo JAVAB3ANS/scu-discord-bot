@@ -10,7 +10,7 @@ async function getUserInfo() {
         redirectBrowser("/")
     }
     return await response.json()
-};
+}
 
 async function getRoles() { 
     let response = await fetch("/roles", {
