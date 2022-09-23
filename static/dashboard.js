@@ -1,19 +1,19 @@
 function redirectBrowser(location) {
     window.location.replace(location);
-};
+}
 
 async function getUserInfo() { 
     let response = await fetch("/identity", {
         method: "POST"
-    })
+    });
     if (response.redirected) {
-        redirectBrowser(response.url)
+        redirectBrowser(response.url);
     }
     if (response.status !== 200) {
         // Show message as a Bootstrap alert, redirect in __ seconds. 
-        redirectBrowser("/")
+        redirectBrowser("/");
     }
-    return await response.json()
+    return await response.json();
 };
 
 async function getRoles() { 
@@ -23,7 +23,7 @@ async function getRoles() {
 
     if (response.status === 401) {
         // Show message as a Bootstrap alert, redirect in __ seconds.
-        redirectBrowser("/login")
+        redirectBrowser("/login");
     }
     return await response.json();
 };
@@ -37,7 +37,7 @@ async function getUserRoles(userID) {
 async function getUserAvatar(userID, avatarID) { 
     let path = `avatars/${userID}/${avatarID}.png`;
     let image = await fetch(`/images/${path}`);
-    return await image.text()
+    return await image.text();
 };
 
 function decimalToRGB(number) {
@@ -114,7 +114,7 @@ function generateAndRenderAssignableRoles(assignableRoles) {
  * @return Role
  */
 function lookupRole(roles, roleID) {
-    return roles.find((role) => role.id === roleID)
+    return roles.find((role) => role.id === roleID);
 };
 
 let globalRoleMap = {
@@ -192,7 +192,7 @@ window.onload = async function() {
 
     // Render roles
     generateCurrentRoles(globalRoleMap.currentRoles);
-    generateAndRenderAssignableRoles(globalRoleMap.allRoles.filter(role => !globalRoleMap.currentRoles.includes(role)));
+    generateAndRenderAssignableRoles(globalRoleMap.allRoles.filter((role) => !globalRoleMap.currentRoles.includes(role)));
 
     document.getElementById("submit-changes").addEventListener("click", () => {
         submitRoleChanges(userInfo.id, globalRoleMap.rolesToAdd, globalRoleMap.rolesToRemove);
@@ -219,9 +219,9 @@ window.onload = async function() {
                         globalRoleMap.rolesToRemove.push(role.id);
 
                         // remove from rolesToAdd
-                        let index = globalRoleMap.rolesToAdd.indexOf(role.id)
+                        let index = globalRoleMap.rolesToAdd.indexOf(role.id);
                         if (index !== -1) {
-                            globalRoleMap.rolesToAdd.splice(index, 1)
+                            globalRoleMap.rolesToAdd.splice(index, 1);
                         };
 
                     } else if (role.classList.contains("assignable")) {
