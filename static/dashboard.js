@@ -10,7 +10,11 @@ async function getUserInfo() {
         redirectBrowser("/")
     }
     return await response.json()
-}
+};
+
+function redirectBrowser(location) {
+    window.location.replace(location);
+};
 
 async function getRoles() { 
     let response = await fetch("/roles", {
@@ -26,18 +30,14 @@ async function getRoles() {
 
 // getUserRoles(userID: string): string[]
 async function getUserRoles(userID) { 
-    let response = await fetch(`/userroles/${userID}`)  // todo check for identity
-    return (await response.json())["roles"]
+    let response = await fetch(`/userroles/${userID}`);  // todo check for identity
+    return (await response.json())["roles"];
 };
 
 async function getUserAvatar(userID, avatarID) { 
-    let path = `avatars/${userID}/${avatarID}.png`
-    let image = await fetch(`/images/${path}`)
+    let path = `avatars/${userID}/${avatarID}.png`;
+    let image = await fetch(`/images/${path}`);
     return await image.text()
-} ;
-
-function redirectBrowser(location) {
-    window.location.replace(location);
 };
 
 function decimalToRGB(number) {
@@ -87,7 +87,7 @@ function generateAndRenderAssignableRoles(assignableRoles) {
         const normalizedHeader = category.charAt(0).toUpperCase() + category.replace("_", " ").slice(1);
 
         let roleCollection = "";
-        assignableRoles.filter(role => role.category === category).map(role => {
+        assignableRoles.filter((role) => role.category === category).map((role) => {
             roleCollection += generateRoleTemplate(role, "+");
         });
 
@@ -114,24 +114,22 @@ function generateAndRenderAssignableRoles(assignableRoles) {
  * @return Role
  */
 function lookupRole(roles, roleID) {
-    return roles.find(role => role.id === roleID)
+    return roles.find((role) => role.id === roleID)
 };
 
-// generateCurrentRoles(userRoles: string[])     // this is only used when roles are given as strings
-function generateCurrentRoles(userRoles) {
-    let matchingRoles = userRoles.map(roleID => lookupRole(globalRoleMap.allRoles, roleID));
-    let orderedRoles = matchingRoles.sort((a, b) => b.priority - a.priority);
-
-    globalRoleMap.currentRoles = orderedRoles;   // globalRoleMap.currentRoles: Role[]
-    renderCurrentRoles(orderedRoles);
+let globalRoleMap = {
+    currentRoles: [],
+    allRoles: [],
+    rolesToAdd: [],
+    rolesToRemove: []
 };
 
 // renderCurrentRoles(currentRoles: Role[])
 function renderCurrentRoles(currentRoles) {
     let roleCollection = "";
 
-    currentRoles.map(role => {
-        if (globalRoleMap.allRoles.find(anyRole => anyRole.category === "restricted" && anyRole.id === role.id)) {
+    currentRoles.map((role) => {
+        if (globalRoleMap.allRoles.find((anyRole) => anyRole.category === "restricted" && anyRole.id === role.id)) {
             roleCollection += generateRoleTemplate(role, "", true, true);
         } else {
             roleCollection += generateRoleTemplate(role, "x", false, true);
@@ -139,6 +137,15 @@ function renderCurrentRoles(currentRoles) {
     });
 
     document.getElementById("current-roles-container").innerHTML = roleCollection;
+};
+
+// generateCurrentRoles(userRoles: string[])     // this is only used when roles are given as strings
+function generateCurrentRoles(userRoles) {
+    let matchingRoles = userRoles.map((roleID) => lookupRole(globalRoleMap.allRoles, roleID));
+    let orderedRoles = matchingRoles.sort((a, b) => b.priority - a.priority);
+
+    globalRoleMap.currentRoles = orderedRoles;   // globalRoleMap.currentRoles: Role[]
+    renderCurrentRoles(orderedRoles);
 };
 
 async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
@@ -158,19 +165,12 @@ async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
         })
     })
     if (response.redirected) {
-        redirectBrowser(response.url)
+        redirectBrowser(response.url);
     } else if (response.status !== 200) {
-        alert("There was an issue saving your role changes. Please try again.\n\n" + response.status + ": " + response.statusText)
+        alert("There was an issue saving your role changes. Please try again.\n\n" + response.status + ": " + response.statusText);
     } else {
         location.reload()   // refreshes the webpage
     };
-};
-
-let globalRoleMap = {
-    currentRoles: [],
-    allRoles: [],
-    rolesToAdd: [],
-    rolesToRemove: []
 };
 
 window.onload = async function() {  
@@ -205,15 +205,14 @@ window.onload = async function() {
     // click listener for each role element
 
     function reassignRoleEventListeners() {
-        Array.from(document.getElementsByClassName("role")).forEach(role => {
+        Array.from(document.getElementsByClassName("role")).forEach((role) => {
             if (!role.classList.contains("restricted")) {
-                role.addEventListener("click", () => {
-                    console.log("clicked! ID: " + role.id);
+                role.addEventListener("click", () => { 
 
                     // remove a current role
                     if (role.classList.contains("current")) {
                         // remove the Role from currentRoles
-                        let currentRoleIndex = globalRoleMap.currentRoles.findIndex(r => r.id === role.id);
+                        let currentRoleIndex = globalRoleMap.currentRoles.findIndex((r) => r.id === role.id);
                         globalRoleMap.currentRoles.splice(currentRoleIndex, 1);
 
                         // add to rolesToRemove
@@ -242,7 +241,7 @@ window.onload = async function() {
 
                     // re-render current and assignable roles
                     renderCurrentRoles(globalRoleMap.currentRoles);
-                    generateAndRenderAssignableRoles(globalRoleMap.allRoles.filter(r => !globalRoleMap.currentRoles.includes(r)));
+                    generateAndRenderAssignableRoles(globalRoleMap.allRoles.filter((r) => !globalRoleMap.currentRoles.includes(r)));
                     reassignRoleEventListeners();
                 })
             }
