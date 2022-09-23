@@ -2,43 +2,43 @@ import { Application, Router, Response, Cookies, send, config, Status } from "./
   
 const { BOT_ID, DISCORD_SECRET, BOT_SECRET, GUILD_ID, GUILD_ICON, OAUTH_RED, OAUTH_RED_URL } = config({ safe: true });
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const app = new Application()
-const router = new Router()
+const app = new Application();
+const router = new Router();
 
-const DEBUG = true  // set to true to enable debug mode
+const DEBUG = true;  // set to true to enable debug mode
 
-const DISCORD_API = "https://discord.com/api/"
-const DISCORD_CDN = "https://cdn.discordapp.com/" 
+const DISCORD_API = "https://discord.com/api/";
+const DISCORD_CDN = "https://cdn.discordapp.com/"; 
 
-const OAUTH_REDIRECT_URL = DEBUG ? "http://localhost:8000/auth" : OAUTH_RED
-const OAUTH_REDIRECT = DEBUG ? "http%3A%2F%2Flocalhost%3A8000%2Fauth" : OAUTH_RED_URL
-const OAUTH_AUTH = `oauth2/authorize?client_id=${BOT_ID}&redirect_uri=${OAUTH_REDIRECT}&response_type=code&scope=identify%20guilds` 
-const OAUTH_TOKEN = "oauth2/token"
+const OAUTH_REDIRECT_URL = DEBUG ? "http://localhost:8000/auth" : OAUTH_RED;
+const OAUTH_REDIRECT = DEBUG ? "http%3A%2F%2Flocalhost%3A8000%2Fauth" : OAUTH_RED_URL;
+const OAUTH_AUTH = `oauth2/authorize?client_id=${BOT_ID}&redirect_uri=${OAUTH_REDIRECT}&response_type=code&scope=identify%20guilds`; 
+const OAUTH_TOKEN = "oauth2/token";
 
 const GUILD_INFO = {
     id: GUILD_ID ?? "",
     icon: GUILD_ICON ?? ""
-}
+};
 
-const restrictedRegex = /(server|student|scu faculty\/staff|@everyone|owner|admin|moderator|bots|scu bot > &help|prospective student|----)/i
-const identityRegex = /^(he\/him|she\/her|they\/them|any pronouns|ask for pronouns)/i
-const memberRegex = /^(alumni|grad student|freshman|sophomore|junior|senior)/i
-const concentrationRegex = /^(aimes|asian sts|african american sts|pre-health sci|pre-law|pre-teaching|pastoral ministries|musical theatre|urban edu|catholic sts|med & ren sts|latin american sts|latina\/o\/x sts|actg|actg\/is|aero eng|ancient sts|anth|arabic|applied math|arth|biochem|bioe|biol|coen|busn anlyts|chem|chst|chinese|civil eng|clas|comms|csci|couns|couns psyc|econ (cas)|econ (lsb)|ecen|educ ldrsp|elen|eng mgmt|eng mgmt & ldrsp|eng phys|english|envr sci|envr sts|entr|ethn|fnce|fnc & anlyts|french|gen eng|german|greek lang\/lit|indv sts|info sys|ital|japn|j.d.|j.d.\/mba|j.d.\/msis|latin\/greek|latin lang\/lit|ll.m. u.s. law|mgmt|mgmt\/entr|hist|ll.m. intel property|ll.m. intl & comp law|mis|mktg|math|mech eng|mba|mils|music|neur|online mktg|phil|phys|poli sci|power sys & sust nrg|psyc|phsc|real estate|rels|retail|soci|spanish|studio art|sust food sys|teaching cred (mattc)|theatre\/dance|und busn|und arts|und eng|wde|wgst)/i
-const rlcRegex = /^(alpha|campisi|cura|cyphi|da vinci|modern perspectives|loyola|neighborhood units|nobili|sanfilippo|unity|university villas)/i
-const locationRegex = /^(bay area|rocky mountains|northeast|southeast|midwest|southwest|pacific|international)/i
-const othertagsRegex = /^(commuter|residential|community facilitator|club leader|orientation leader|peer advisor|school employee|ukraine)/i 
+const restrictedRegex = /(server|student|scu faculty\/staff|@everyone|owner|admin|moderator|bots|scu bot > &help|prospective student|----)/i;
+const identityRegex = /^(he\/him|she\/her|they\/them|any pronouns|ask for pronouns)/i;
+const memberRegex = /^(alumni|grad student|freshman|sophomore|junior|senior)/i;
+const concentrationRegex = /^(aimes|asian sts|african american sts|pre-health sci|pre-law|pre-teaching|pastoral ministries|musical theatre|urban edu|catholic sts|med & ren sts|latin american sts|latina\/o\/x sts|actg|actg\/is|aero eng|ancient sts|anth|arabic|applied math|arth|biochem|bioe|biol|coen|busn anlyts|chem|chst|chinese|civil eng|clas|comms|csci|couns|couns psyc|econ (cas)|econ (lsb)|ecen|educ ldrsp|elen|eng mgmt|eng mgmt & ldrsp|eng phys|english|envr sci|envr sts|entr|ethn|fnce|fnc & anlyts|french|gen eng|german|greek lang\/lit|indv sts|info sys|ital|japn|j.d.|j.d.\/mba|j.d.\/msis|latin\/greek|latin lang\/lit|ll.m. u.s. law|mgmt|mgmt\/entr|hist|ll.m. intel property|ll.m. intl & comp law|mis|mktg|math|mech eng|mba|mils|music|neur|online mktg|phil|phys|poli sci|power sys & sust nrg|psyc|phsc|real estate|rels|retail|soci|spanish|studio art|sust food sys|teaching cred (mattc)|theatre\/dance|und busn|und arts|und eng|wde|wgst)/i;
+const rlcRegex = /^(alpha|campisi|cura|cyphi|da vinci|modern perspectives|loyola|neighborhood units|nobili|sanfilippo|unity|university villas)/i;
+const locationRegex = /^(bay area|rocky mountains|northeast|southeast|midwest|southwest|pacific|international)/i;
+const othertagsRegex = /^(commuter|residential|community facilitator|club leader|orientation leader|peer advisor|school employee|ukraine)/i; 
 
-const regexArray = [restrictedRegex, memberRegex, concentrationRegex, rlcRegex, locationRegex, identityRegex, othertagsRegex]
+const regexArray = [restrictedRegex, memberRegex, concentrationRegex, rlcRegex, locationRegex, identityRegex, othertagsRegex];
 
-const categoryArray = ["restricted", "member", "concentration", "rlc", "location", "identity", "tags"]
+const categoryArray = ["restricted", "member", "concentration", "rlc", "location", "identity", "tags"];
 
 interface AccessToken {
-    access_token: string,
-    token_type: string,
-    expires_in: number,
-    refresh_token: string,
+    accessToken: string,
+    tokenType: string,
+    expiresIn: number,
+    refreshToken: string,
     scope: string
 }
 
@@ -65,17 +65,17 @@ interface Guild {
     owner: false,
     permissions: number,
     features: string[],
-    permissions_new: string
+    permissionsNew: string
 }
 
 function determineRoleCategory(name: string): string {
     for (const index in regexArray) {
         if (regexArray[index].test(name)) {
             return categoryArray[index]
-        }
-    }
+        };
+    };
     return ""   // returns an empty string if there is no role
-}
+};
 
 async function getRoles() {
     // requires Bot authorization
@@ -96,7 +96,7 @@ async function getRoles() {
             category: determineRoleCategory(item.name)
         }
     })
-}
+};
 
 /**
  *
@@ -131,7 +131,7 @@ async function getIdentity(cookies: Cookies, response: Response) {
     const guildInfo: Guild[] = await guilds.json()
 
     const inCorrectGuild = (guildsArray: Guild[], guildID: string) => {
-        return guildsArray.filter(guild => guild["id"] === guildID).length > 0
+        return guildsArray.filter((guild) => guild["id"] === guildID).length > 0
     }
 
     const user: User = {
@@ -140,18 +140,16 @@ async function getIdentity(cookies: Cookies, response: Response) {
         avatar: userInfo.avatar,
         discriminator: userInfo.discriminator,
         inCorrectGuild: inCorrectGuild(guildInfo, GUILD_INFO.id)
-    }
-
-    console.log(user)
+    } 
 
     return JSON.stringify(user)
-}
+};
 
 router
-    .get("/login", ctx => {
+    .get("/login", (ctx) => {
         ctx.response.redirect(DISCORD_API + OAUTH_AUTH)
     })
-    .get("/auth", async ctx => {
+    .get("/auth", async (ctx) => {
         // parse response from Discord API authorization (30 char alphanumerical)
         const regex = /^[A-Za-z0-9]{30}$/
         const code = ctx.request.url.searchParams.get("code") ?? ""
@@ -190,10 +188,10 @@ router
         console.log(result.statusText)
 
         const accessToken: AccessToken = await result.json()
-        console.log("Access Token: " + accessToken.access_token + " " + accessToken.expires_in)
+        console.log("Access Token: " + accessToken.accessToken + " " + accessToken.expiresIn)
 
-        if (regex.test(accessToken.access_token)) {
-            await ctx.cookies.set("discord-access-token", accessToken.access_token)
+        if (regex.test(accessToken.accessToken)) {
+            await ctx.cookies.set("discord-access-token", accessToken.accessToken)
             await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
             ctx.response.redirect("/dashboard.html")
         } else {
@@ -202,16 +200,16 @@ router
             return
         }
     })
-    .post("/identity", async ctx => {
+    .post("/identity", async (ctx) => {
         ctx.response.body = await getIdentity(ctx.cookies, ctx.response)
     })
-    .get("/images/:path*", ctx => {
+    .get("/images/:path*", (ctx) => {
         if (ctx.params && ctx.params.path) {
             console.log("Fetching image: " + ctx.params.path)
             ctx.response.body = DISCORD_CDN + ctx.params.path
         }
     })
-    .get("/userroles/:userid", async ctx => {
+    .get("/userroles/:userid", async (ctx) => {
         if (ctx.params && ctx.params.userid) {
             console.log("Fetching user roles: " + ctx.params.userid)
 
@@ -226,10 +224,10 @@ router
             ctx.response.body = await response.json()
         }
     })
-    .post("/roles", async ctx => {
+    .post("/roles", async (ctx) => {
         ctx.response.body = await getRoles()
     })
-    .post("/save", async ctx => {
+    .post("/save", async (ctx) => {
         interface SavePayload {
             userID: string,
             rolesToAdd: string[],
@@ -261,11 +259,11 @@ router
             }
 
             // sanitize roles (remove restricted roles)
-            savePayload.rolesToAdd = savePayload.rolesToAdd.filter(roleID => {
+            savePayload.rolesToAdd = savePayload.rolesToAdd.filter((roleID) => {
                 return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
             })
 
-            savePayload.rolesToRemove = savePayload.rolesToRemove.filter(roleID => {
+            savePayload.rolesToRemove = savePayload.rolesToRemove.filter((roleID) => {
                 return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
             })
 
@@ -298,14 +296,14 @@ router
                 }
 
                 fetch(DISCORD_API + roleAPI + roleID, options)
-                    .then(res => {
+                    .then((res) => {
                         console.log(res.status)
                         res.text().then(console.log)
                         if (res.status === 429) {
                             // rate limited
                         }
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.error(err)
                         ctx.response.status = Status.ServiceUnavailable
                         return
@@ -320,13 +318,13 @@ router
                         "Authorization": "Bot " + BOT_SECRET
                     },
                     method: "DELETE"
-                }).then(res => {
+                }).then((res) => {
                     console.log(res.status)
 		            console.log(res.body)
                     if (res.status === 429) {
                         // rate limited
                     }
-                }).catch(err => {
+                }).catch((err) => {
                     console.error(err)
                     ctx.response.status = Status.ServiceUnavailable
                     return
@@ -340,21 +338,21 @@ router
             ctx.response.status = Status.UnprocessableEntity
         }
     })
-    .get("/logout", ctx => {
+    .get("/logout", (ctx) => {
         ctx.cookies.delete("discord-access-token")
         ctx.response.redirect("/")
-    })
+    });
 
-app.use(router.routes())
-app.use(router.allowedMethods())
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-app.use(async ctx => {
+app.use(async (ctx) => {
     // ctx.response.headers.set("Cache-Control", "max-age=604800")
     await send(ctx, ctx.request.url.pathname, {
         root: DEBUG ? `${Deno.cwd()}/static` : "/home/scu-discord-bot/static",
         index: "index.html",
     })
-})
+});
 
 console.log(`🦕 Deno server running at http://localhost:8000/ 🦕`)
 await app.listen({ port: 8000 }) 

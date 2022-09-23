@@ -1,5 +1,4 @@
-async function getUserInfo() {
-    console.log("Getting user info.")
+async function getUserInfo() { 
     let response = await fetch("/identity", {
         method: "POST"
     })
@@ -7,15 +6,13 @@ async function getUserInfo() {
         redirectBrowser(response.url)
     }
     if (response.status !== 200) {
-        // Show message as a Bootstrap alert, redirect in __ seconds.
-        console.error("Failed to retrieve user info!")
+        // Show message as a Bootstrap alert, redirect in __ seconds. 
         redirectBrowser("/")
     }
     return await response.json()
-}
+};
 
-async function getRoles() {
-    console.log("Getting role info.")
+async function getRoles() { 
     let response = await fetch("/roles", {
         method: "POST"
     })
@@ -25,25 +22,23 @@ async function getRoles() {
         redirectBrowser("/login")
     }
     return await response.json()
-}
+};
 
 // getUserRoles(userID: string): string[]
-async function getUserRoles(userID) {
-    console.log("Getting user roles.")
+async function getUserRoles(userID) { 
     let response = await fetch(`/userroles/${userID}`)  // todo check for identity
     return (await response.json())["roles"]
-}
+};
 
-async function getUserAvatar(userID, avatarID) {
-    console.log("Getting user avatar.")
+async function getUserAvatar(userID, avatarID) { 
     let path = `avatars/${userID}/${avatarID}.png`
     let image = await fetch(`/images/${path}`)
     return await image.text()
-} 
+} ;
 
 function redirectBrowser(location) {
     window.location.replace(location)
-}
+};
 
 function decimalToRGB(number) {
     const r = (number & 0xff0000) >> 16
@@ -58,7 +53,7 @@ function decimalToRGB(number) {
     }
 
     return normalizedColor
-}
+};
 
 /**
  *
@@ -81,7 +76,7 @@ function generateRoleTemplate(role, endChar="", restricted=false, current=false)
             ${role.name} <strong>${endChar}</strong>
         </div>
     `
-}
+};
  
 function generateAndRenderAssignableRoles(assignableRoles) {
     const categoryArray = ["member", "concentration", "rlc", "location", "identity", "tags"]
@@ -110,7 +105,7 @@ function generateAndRenderAssignableRoles(assignableRoles) {
     })
 
     document.getElementById("assignable-roles-accordion").innerHTML = categoryCollection
-}
+};
 
 /**
  * Searches for a Role in an array of Role objects by ID
@@ -120,7 +115,7 @@ function generateAndRenderAssignableRoles(assignableRoles) {
  */
 function lookupRole(roles, roleID) {
     return roles.find(role => role.id === roleID)
-}
+};
 
 // generateCurrentRoles(userRoles: string[])     // this is only used when roles are given as strings
 function generateCurrentRoles(userRoles) {
@@ -129,7 +124,7 @@ function generateCurrentRoles(userRoles) {
 
     globalRoleMap.currentRoles = orderedRoles   // globalRoleMap.currentRoles: Role[]
     renderCurrentRoles(orderedRoles)
-}
+};
 
 // renderCurrentRoles(currentRoles: Role[])
 function renderCurrentRoles(currentRoles) {
@@ -144,7 +139,7 @@ function renderCurrentRoles(currentRoles) {
     })
 
     document.getElementById("current-roles-container").innerHTML = roleCollection
-}
+};
 
 async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
     console.log("Submitting role changes.")
@@ -170,14 +165,14 @@ async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
     } else {
         location.reload()   // refreshes the webpage
     }
-}
+};
 
 let globalRoleMap = {
     currentRoles: [],
     allRoles: [],
     rolesToAdd: [],
     rolesToRemove: []
-}
+};
 
 window.onload = async function() {  
     $("#submit-alert").hide()
@@ -255,7 +250,7 @@ window.onload = async function() {
                 })
             }
         })
-    }
+    };
 
     reassignRoleEventListeners()
-} 
+};

@@ -22,9 +22,9 @@ module.exports = class discordCommand extends Command {
         const body = await response.json();
  
         if (body.status.description === "All Systems Operational") {
-            message.channel.send({ embed: { title: `:white_check_mark: ${body.status.description}`, description: `Check the status [here](https://status.discord.com/api/v2/status.json)! :white_check_mark:`, color: "GREEN", timestamp: new Date()}});
+            message.channel.send({ embed: { title: `:white_check_mark: ${body.status.description}`, description: "Check the status [here](https://status.discord.com/api/v2/status.json)! :white_check_mark:", color: "GREEN", timestamp: new Date()}});
         } else {
-            client.error(`:x: ${body.status.description}`, msg);
+            this.client.error(`:x: ${body.status.description}`, msg);
         } 
     }
 };
