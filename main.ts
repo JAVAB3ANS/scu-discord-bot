@@ -40,7 +40,7 @@ interface AccessToken {
     expiresIn: number,
     refreshToken: string,
     scope: string
-}
+};
 
 interface User {
     id: string,
@@ -48,7 +48,7 @@ interface User {
     avatar: string,
     discriminator: string,
     inCorrectGuild: boolean
-}
+};
 
 interface Role {
     id: string,
@@ -56,7 +56,7 @@ interface Role {
     color: number,
     priority: number,
     category: string | undefined
-}
+};
 
 interface Guild {
     id: string,
@@ -66,7 +66,7 @@ interface Guild {
     permissions: number,
     features: string[],
     permissionsNew: string
-}
+};
 
 function determineRoleCategory(name: string): string {
     for (const index in regexArray) {
@@ -74,7 +74,7 @@ function determineRoleCategory(name: string): string {
             return categoryArray[index]
         };
     };
-    return ""   // returns an empty string if there is no role
+    return "";   // returns an empty string if there is no role
 };
 
 async function getRoles() {
@@ -82,11 +82,11 @@ async function getRoles() {
     const response = await fetch(DISCORD_API + "guilds/" + GUILD_INFO.id + "/roles", {
         headers: {
             "Authorization": "Bot " + BOT_SECRET
-        }
-    })
+        };
+    });
 
     // remove unnecessary role metadata
-    const json = await response.json()
+    const json = await response.json();
     return json.map((item: any) => {
         return {
             id: item.id,
@@ -94,8 +94,8 @@ async function getRoles() {
             color: item.color,
             priority: item.position,
             category: determineRoleCategory(item.name)
-        }
-    })
+        };
+    });
 };
 
 /**
@@ -105,34 +105,34 @@ async function getRoles() {
  * @param response
  */
 async function getIdentity(cookies: Cookies, response: Response) {
-    const accessToken = await cookies.get("discord-access-token") ?? ""
+    const accessToken = await cookies.get("discord-access-token") ?? "";
 
     const identity = await fetch(DISCORD_API + "users/@me", {
         headers: {
             "Authorization": "Bearer " + accessToken
-        }
-    })
+        };
+    });
     if (identity.status === 401) {
-        response.status = Status.Unauthorized
-        response.redirect("/bad-auth.html")
-        return ""
-    }
+        response.status = Status.Unauthorized;
+        response.redirect("/bad-auth.html");
+        return "";
+    };
 
     const guilds = await fetch(DISCORD_API + "users/@me/guilds", {
         headers: {
             "Authorization": "Bearer " + accessToken
         }
-    })
+    });
     if (guilds.status === 401) {
         response.status = Status.Unauthorized
-    }
+    };
 
-    const userInfo = await identity.json()
-    const guildInfo: Guild[] = await guilds.json()
+    const userInfo = await identity.json();
+    const guildInfo: Guild[] = await guilds.json();
 
     const inCorrectGuild = (guildsArray: Guild[], guildID: string) => {
         return guildsArray.filter((guild) => guild["id"] === guildID).length > 0
-    }
+    };
 
     const user: User = {
         id: userInfo.id,
@@ -140,9 +140,9 @@ async function getIdentity(cookies: Cookies, response: Response) {
         avatar: userInfo.avatar,
         discriminator: userInfo.discriminator,
         inCorrectGuild: inCorrectGuild(guildInfo, GUILD_INFO.id)
-    } 
+    } ;
 
-    return JSON.stringify(user)
+    return JSON.stringify(user);
 };
 
 router
@@ -174,21 +174,17 @@ router
 
         const headers = {
             "Content-Type": "application/x-www-form-urlencoded"
-        }
+        };
 
-        console.log("Exchanging auth grant for access token")
         // exchange authorization grant for access token
         const result = await fetch(DISCORD_API + OAUTH_TOKEN, {
             method: "POST",
             body: data,
             headers: headers
-        })
+        }); 
 
-        console.log(result.status)
-        console.log(result.statusText)
-
-        const accessToken: AccessToken = await result.json()
-        console.log("Access Token: " + accessToken.accessToken + " " + accessToken.expiresIn)
+        const accessToken: AccessToken = await result.json();
+        console.log("Access Token: " + accessToken.accessToken + " " + accessToken.expiresIn);
 
         if (regex.test(accessToken.accessToken)) {
             await ctx.cookies.set("discord-access-token", accessToken.accessToken)
@@ -198,7 +194,7 @@ router
             ctx.response.status = Status.BadRequest
             ctx.response.redirect("/bad-auth.html")
             return
-        }
+        };
     })
     .post("/identity", async (ctx) => {
         ctx.response.body = await getIdentity(ctx.cookies, ctx.response)
@@ -207,7 +203,7 @@ router
         if (ctx.params && ctx.params.path) {
             console.log("Fetching image: " + ctx.params.path)
             ctx.response.body = DISCORD_CDN + ctx.params.path
-        }
+        };
     })
     .get("/userroles/:userid", async (ctx) => {
         if (ctx.params && ctx.params.userid) {
@@ -217,74 +213,67 @@ router
                 headers: {
                     "Authorization": "Bot " + BOT_SECRET
                 }
-            })
+            });
 
             // todo need to verify identity?
 
-            ctx.response.body = await response.json()
+            ctx.response.body = await response.json();
         }
     })
     .post("/roles", async (ctx) => {
-        ctx.response.body = await getRoles()
+        ctx.response.body = await getRoles();
     })
     .post("/save", async (ctx) => {
         interface SavePayload {
             userID: string,
             rolesToAdd: string[],
             rolesToRemove: string[]
-        }
-
-        console.log("/save")
+        };
 
         // Grab latest copy of all roles
-        const roles = await getRoles()
+        const roles = await getRoles();
 
         const payload = ctx.request.body()
         if (payload.type == "json") {
-            const savePayload: SavePayload = await payload.value
+            const savePayload: SavePayload = await payload.value;
 
 	        // verify identity (make sure user is properly authenticated)
-            const identityResponse = await getIdentity(ctx.cookies, ctx.response)
+            const identityResponse = await getIdentity(ctx.cookies, ctx.response);
             if (identityResponse == "") {
                 ctx.response.status = Status.Unauthorized
                 ctx.response.redirect("/bad-auth.html")
                 return
-            }
+            };
 
-            const identity = JSON.parse(identityResponse).id
+            const identity = JSON.parse(identityResponse).id;
 
             if (identity !== savePayload.userID) {
                 ctx.response.status = Status.Unauthorized
                 return
-            }
+            };
 
             // sanitize roles (remove restricted roles)
             savePayload.rolesToAdd = savePayload.rolesToAdd.filter((roleID) => {
                 return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
-            })
+            });
 
             savePayload.rolesToRemove = savePayload.rolesToRemove.filter((roleID) => {
                 return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
-            })
+            });
 
             if (savePayload.rolesToAdd.length === 0 && savePayload.rolesToRemove.length === 0) {
                 ctx.response.status = Status.UnprocessableEntity
                 return
-            }
+            }; 
 
-            console.log("USER: " + savePayload.userID)
-            console.log("ADD: " + savePayload.rolesToAdd)
-            console.log("REMOVE: " + savePayload.rolesToRemove)
-
-            const roleAPI = `guilds/${GUILD_INFO.id}/members/${savePayload.userID}/roles/` // /{role.id}
-            console.log("accessing endpoint: " + roleAPI)
+            const roleAPI = `guilds/${GUILD_INFO.id}/members/${savePayload.userID}/roles/`; // /{role.id} 
 
             // assign roles
             for (const roleID of savePayload.rolesToAdd) {
-                console.log("Waiting...")
-                await wait(1000)
+                console.log("Waiting...");
+                await wait(1000);
 
-                console.log("PUT: " + DISCORD_API + roleAPI + roleID)
+                console.log("PUT: " + DISCORD_API + roleAPI + roleID);
 
                 const options = {
                     headers: {
@@ -293,7 +282,7 @@ router
                     },
                     method: "PUT",
                     body: null
-                }
+                };
 
                 fetch(DISCORD_API + roleAPI + roleID, options)
                     .then((res) => {
@@ -301,7 +290,7 @@ router
                         res.text().then(console.log)
                         if (res.status === 429) {
                             // rate limited
-                        }
+                        };
                     })
                     .catch((err) => {
                         console.error(err)
@@ -336,7 +325,7 @@ router
         } else {
             console.error("Bad payload received. " + payload.type)
             ctx.response.status = Status.UnprocessableEntity
-        }
+        };
     })
     .get("/logout", (ctx) => {
         ctx.cookies.delete("discord-access-token")
@@ -351,8 +340,8 @@ app.use(async (ctx) => {
     await send(ctx, ctx.request.url.pathname, {
         root: DEBUG ? `${Deno.cwd()}/static` : "/home/scu-discord-bot/static",
         index: "index.html",
-    })
+    });
 });
 
 console.log(`🦕 Deno server running at http://localhost:8000/ 🦕`)
-await app.listen({ port: 8000 }) 
+await app.listen({ port: 8000 });
