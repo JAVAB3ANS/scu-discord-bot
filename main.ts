@@ -82,7 +82,7 @@ async function getRoles() {
     const response = await fetch(DISCORD_API + "guilds/" + GUILD_INFO.id + "/roles", {
         headers: {
             "Authorization": "Bot " + BOT_SECRET
-        };
+        }
     });
 
     // remove unnecessary role metadata
@@ -110,7 +110,7 @@ async function getIdentity(cookies: Cookies, response: Response) {
     const identity = await fetch(DISCORD_API + "users/@me", {
         headers: {
             "Authorization": "Bearer " + accessToken
-        };
+        }
     });
     if (identity.status === 401) {
         response.status = Status.Unauthorized;
