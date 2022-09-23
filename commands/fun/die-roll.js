@@ -24,7 +24,7 @@ module.exports = class dieRollCommand extends Command {
         const embed = new MessageEmbed()  
         .setColor(this.client.config.school_color) 
         .setFooter("Created by the server lords!")
-        .setTimestamp()
+        .setTimestamp();
 
         if (firstDie === 1 && secondDie === 1) {
             embed

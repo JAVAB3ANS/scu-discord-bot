@@ -154,8 +154,7 @@ router
         const regex = /^[A-Za-z0-9]{30}$/
         const code = ctx.request.url.searchParams.get("code") ?? ""
 
-        const check = regex.test(code)
-        console.log("AUTH: code=" + code + " CHECK: " + check)
+        const check = regex.test(code) 
 
         // authorization code is bad
         if (!check) {
@@ -199,15 +198,12 @@ router
         ctx.response.body = await getIdentity(ctx.cookies, ctx.response)
     })
     .get("/images/:path*", (ctx) => {
-        if (ctx.params && ctx.params.path) {
-            console.log("Fetching image: " + ctx.params.path)
-            ctx.response.body = DISCORD_CDN + ctx.params.path
+        if (ctx.params && ctx.params.path) { 
+            ctx.response.body = DISCORD_CDN + ctx.params.path;
         };
     })
     .get("/userroles/:userid", async (ctx) => {
-        if (ctx.params && ctx.params.userid) {
-            console.log("Fetching user roles: " + ctx.params.userid)
-
+        if (ctx.params && ctx.params.userid) { 
             const response = await fetch(DISCORD_API + "guilds/" + GUILD_INFO.id + "/members/" + ctx.params.userid, {
                 headers: {
                     "Authorization": "Bot " + BOT_SECRET
@@ -233,12 +229,12 @@ router
         const roles = await getRoles();
 
         const payload = ctx.request.body()
-        if (payload.type == "json") {
+        if (payload.type === "json") {
             const savePayload: SavePayload = await payload.value;
 
 	        // verify identity (make sure user is properly authenticated)
             const identityResponse = await getIdentity(ctx.cookies, ctx.response);
-            if (identityResponse == "") {
+            if (identityResponse === "") {
                 ctx.response.status = Status.Unauthorized
                 ctx.response.redirect("/bad-auth.html")
                 return
@@ -268,11 +264,8 @@ router
             const roleAPI = `guilds/${GUILD_INFO.id}/members/${savePayload.userID}/roles/`; // /{role.id} 
 
             // assign roles
-            for (const roleID of savePayload.rolesToAdd) {
-                console.log("Waiting...");
-                await wait(1000);
-
-                console.log("PUT: " + DISCORD_API + roleAPI + roleID);
+            for (const roleID of savePayload.rolesToAdd) { 
+                await wait(1000); 
 
                 const options = {
                     headers: {
@@ -320,7 +313,7 @@ router
             }
 
             // console.log("SAVE: " + payload)
-            ctx.response.status = Status.OK
+            ctx.response.status = Status.OK;
         } else {
             console.error("Bad payload received. " + payload.type)
             ctx.response.status = Status.UnprocessableEntity

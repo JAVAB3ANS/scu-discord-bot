@@ -1,3 +1,7 @@
+function redirectBrowser(location) {
+    window.location.replace(location);
+};
+
 async function getUserInfo() { 
     let response = await fetch("/identity", {
         method: "POST"
@@ -10,10 +14,6 @@ async function getUserInfo() {
         redirectBrowser("/")
     }
     return await response.json()
-};
-
-function redirectBrowser(location) {
-    window.location.replace(location);
 };
 
 async function getRoles() { 
@@ -169,7 +169,7 @@ async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
     } else if (response.status !== 200) {
         alert("There was an issue saving your role changes. Please try again.\n\n" + response.status + ": " + response.statusText);
     } else {
-        location.reload()   // refreshes the webpage
+        location.reload();   // refreshes the webpage
     };
 };
 
@@ -235,7 +235,7 @@ window.onload = async function() {
                         // remove the ID from rolesToRemove
                         let index = globalRoleMap.rolesToRemove.indexOf(role.id);
                         if (index !== -1) {
-                            globalRoleMap.rolesToRemove.splice(index, 1)
+                            globalRoleMap.rolesToRemove.splice(index, 1);
                         };
                     };
 
@@ -248,5 +248,5 @@ window.onload = async function() {
         })
     };
 
-    reassignRoleEventListeners()
+    reassignRoleEventListeners();
 };

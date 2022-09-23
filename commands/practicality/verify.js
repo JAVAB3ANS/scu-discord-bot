@@ -38,13 +38,11 @@ module.exports = class verifyCommand extends Command {
                 type: "string",
                 oneOf: ["student", "scu faculty/staff"],
             },]
-        })
+        });
     }
 
     async run(message, { emailAddress, roleOptions }) {
         message.delete();
-
-        const guild = this.client.guilds.cache.get(this.client.config.guildID);
 
         if (message.member.roles.cache.some((role) => role.name === "student") || message.member.roles.cache.some((role) => role.name === "scu faculty/staff")) {
             return this.client.error("This user is already verified!", message);
@@ -111,7 +109,7 @@ module.exports = class verifyCommand extends Command {
                     errors: ["time"]
                 }).then((collected) => collected.first().delete()); // exactly 5 minutes
 
-                let role = message.guild.roles.cache.find(role => role.name === roleOptions)
+                let role = message.guild.roles.cache.find((role) => role.name === roleOptions);
                 await message.member.roles.add(role).then(() => {
                     message.author.send(`<@${message.author.id}>`, { embed: {
                             title: "Welcome to the Santa Clara University Discord Network!",
