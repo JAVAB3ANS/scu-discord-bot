@@ -3,6 +3,7 @@
 </p>
 
 # SCU DISCORD NETWORK
+[![Discord](https://img.shields.io/discord/709118412542050364.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discordapp.com/channels/709434647779606561/)
 ![Forks](https://img.shields.io/github/forks/JAVAB3ANS/scu-discord-bot)
 ![Stars](https://img.shields.io/github/stars/JAVAB3ANS/scu-discord-bot)
 ![License](https://img.shields.io/github/license/JAVAB3ANS/scu-discord-bot)
