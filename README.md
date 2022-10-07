@@ -12,7 +12,7 @@
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/JAVAB3ANS/scu-discord-bot/discord.js)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5c619058a31b4c7cb4c5390a670a505b)](https://www.codacy.com/gh/jasonanhvu/scu-discord-bot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jasonanhvu/scu-discord-bot&amp;utm_campaign=Badge_Grade)
 
-- This is a 24/7 bot that created for the **Santa Clara University Discord Network** to provide a comprehensive and effective social media platform for Santa Clara University students to use, particularly in the midst of the global COVID-19 pandemic.
+- This is a 24/7 bot that created for the **Santa Clara University Discord Network** to provide a comprehensive social media platform for Santa Clara University students to hang out and build community.
 
 - Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 1100 students, and performs a variety of automated tasks to improve the server experience.
 
