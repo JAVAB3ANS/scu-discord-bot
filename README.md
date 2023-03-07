@@ -14,7 +14,7 @@
 
 - This is a 24/7 bot that created for the **Santa Clara University Discord Network** to provide a comprehensive social media platform for Santa Clara University students to hang out and build community.
 
-- Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 1100 students, and performs a variety of automated tasks to improve the server experience.
+- Made use of the Node.js environment and the Node module Discord.js to create a bot that greets/sends direct messages, interacts with over 1200 students, and performs a variety of automated tasks to improve the server experience.
 
 - Student-run online network is currently publicly searchable as part of **Discord's Server Discovery** .
 
