@@ -22,9 +22,9 @@ const GUILD_INFO = {
     icon: GUILD_ICON ?? ""
 };
 
-const restrictedRegex = /(server|student|scu faculty\/staff|@everyone|owner|admin|moderator|bots|scu bot > &help|prospective student|----)/i;
+const restrictedRegex = /(server|student|scu faculty\/staff|@everyone|\*|admin|moderator|bots|scu bot > &help|prospective student|----)/i;
 const identityRegex = /^(he\/him|she\/her|they\/them|any pronouns|ask for pronouns)/i;
-const memberRegex = /^(alumni|grad student|freshman|sophomore|junior|senior)/i;
+const memberRegex = /^(alumni|grad|freshman|sophomore|junior|senior)/i;
 const concentrationRegex = /^(aimes|asian sts|african american sts|pre-health sci|pre-law|pre-teaching|pastoral ministries|musical theatre|urban edu|catholic sts|med & ren sts|latin american sts|latina\/o\/x sts|actg|actg\/is|aero eng|ancient sts|anth|arabic|applied math|arth|biochem|bioe|biol|coen|busn anlyts|chem|chst|chinese|civil eng|clas|comms|csci|couns|couns psyc|econ \(lsb\)|econ \(cas\)|ecen|educ ldrsp|elen|eng mgmt|eng mgmt & ldrsp|eng phys|english|envr sci|envr sts|entr|ethn|fnce|fnc & anlyts|french|gen eng|german|greek lang\/lit|indv sts|info sys|ital|japn|j\.d\.|j\.d\.\/mba|j\.d\.\/msis|latin\/greek|latin lang\/lit|ll\.m\. u\.s\. law|mgmt|mgmt\/entr|hist|ll\.m\. intel property|ll\.m\. intl & comp law|mis|mktg|math|mech eng|mba|mils|music|neur|online mktg|phil|phys|poli sci|power sys & sust nrg|psyc|phsc|real estate|rels|retail|soci|spanish|studio art|sust food sys|teaching cred \(mattc\)|theatre\/dance|und busn|und arts|und eng|wde|wgst)$/i;
 const rlcRegex = /^(alpha|campisi|cura|cyphi|da vinci|modern perspectives|loyola|neighborhood units|nobili|sanfilippo|unity|university villas)/i;
 const locationRegex = /^(bay area|rocky mountains|northeast|southeast|midwest|southwest|pacific|international)/i;

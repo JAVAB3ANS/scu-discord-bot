@@ -183,12 +183,19 @@ window.onload = async function() {
     globalRoleMap.allRoles = (await getRoles()).sort((roleA, roleB) => roleA.name > roleB.name ? 1 : -1);
     globalRoleMap.currentRoles = await getUserRoles(userInfo.id);
 
-    // Here, figure out how to remove "unverified" role from user to replace with "student" role  
-
     // Set identity details
     document.getElementById("username").innerText = userInfo.username + "#" + userInfo.discriminator;
-    document.getElementById("avatar-icon").setAttribute("src", userImageURL !== "null" ? userImageURL : "./discord-small.webp");
+
+    // Set the avatar icon's src attribute
+    const avatarIcon = document.getElementById("avatar-icon");
+    if (userImageURL !== "null") {
+        avatarIcon.setAttribute("src", userImageURL);
+    } else {
+        avatarIcon.setAttribute("src", "./discord-logo.webp"); // Change this to the appropriate image URL
+    }
+    
     document.getElementById("guild-icon").setAttribute("src", "./discord-small.webp");
+    
 
     // Render roles
     generateCurrentRoles(globalRoleMap.currentRoles);
