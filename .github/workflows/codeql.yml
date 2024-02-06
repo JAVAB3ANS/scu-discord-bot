@@ -17,9 +17,6 @@ jobs:
       actions: read
       contents: read
 
-    strategy:
-      fail-fast: false
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -28,8 +25,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
-        # Remove any custom configurations that conflict with the default setup.
+        languages: javascript, typescript
 
     # Autobuild attempts to build any compiled languages.
     - name: Autobuild
@@ -38,5 +34,3 @@ jobs:
     # Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:${{matrix.language}}"
