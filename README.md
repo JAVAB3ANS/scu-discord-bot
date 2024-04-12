@@ -9,8 +9,8 @@
 ![License](https://img.shields.io/github/license/JAVAB3ANS/scu-discord-bot)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/JAVAB3ANS/scu-discord-bot)
 ![GitHub repo size](https://img.shields.io/github/repo-size/JAVAB3ANS/scu-discord-bot)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/JAVAB3ANS/scu-discord-bot/discord.js)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5c619058a31b4c7cb4c5390a670a505b)](https://www.codacy.com/gh/jasonanhvu/scu-discord-bot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jasonanhvu/scu-discord-bot&amp;utm_campaign=Badge_Grade)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/JAVAB3ANS/scu-discord-bot/discord.js) 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5c619058a31b4c7cb4c5390a670a505b)](https://app.codacy.com/gh/JAVAB3ANS/scu-discord-bot/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 - This is a 24/7 bot that created for the **Santa Clara University Discord Network** to provide a comprehensive social media platform for Santa Clara University students to hang out and build community.
 
