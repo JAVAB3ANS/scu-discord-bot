@@ -35,10 +35,10 @@ const regexArray = [restrictedRegex, memberRegex, concentrationRegex, rlcRegex, 
 const categoryArray = ["restricted", "member", "concentration", "rlc", "location", "identity", "tags"];
 
 interface AccessToken {
-    accessToken: string,
-    tokenType: string,
-    expiresIn: number,
-    refreshToken: string,
+    access_token: string,
+    token_type: string,
+    expires_in: number,
+    refresh_token: string,
     scope: string
 };
 
@@ -176,23 +176,35 @@ router
         };
 
         // exchange authorization grant for access token
-        const result = await fetch(DISCORD_API + OAUTH_TOKEN, {
-            method: "POST",
-            body: data,
-            headers: headers
-        }); 
+        try {
+            const result = await fetch(DISCORD_API + OAUTH_TOKEN, {
+                method: "POST",
+                body: data,
+                headers: headers
+            }); 
 
-        const accessToken: AccessToken = await result.json(); 
+            const accessToken: AccessToken = await result.json(); 
 
-        if (regex.test(accessToken.accessToken)) {
-            await ctx.cookies.set("discord-access-token", accessToken.accessToken);
-            await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
-            ctx.response.redirect("/dashboard.html")
-        } else {
-            ctx.response.status = Status.BadRequest
-            ctx.response.redirect("/bad-auth.html")
-            return
-        };
+            console.log("Access Token: " + accessToken.access_token + " " + accessToken.expires_in)
+
+            if (regex.test(accessToken.access_token)) {
+                await ctx.cookies.set("discord-access-token", accessToken.access_token);
+                await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
+                console.log("User authenticated successfully. Redirecting to dashboard.html...");
+                ctx.response.redirect("/dashboard.html");
+            } else {
+                console.log("Invalid access token received. Redirecting to /bad-auth.html");
+                ctx.response.status = Status.BadRequest
+                ctx.response.redirect("/bad-auth.html")
+                return
+            }
+        } catch (error) {
+            console.error("Error fetching access token:", error);
+            console.log("Redirecting to /bad-auth.html due to an error.");
+            ctx.response.status = Status.InternalServerError;
+            ctx.response.redirect("/bad-auth.html");
+            return;
+        }
     })
     .post("/identity", async (ctx) => {
         ctx.response.body = await getIdentity(ctx.cookies, ctx.response)
@@ -259,7 +271,7 @@ router
             if (savePayload.rolesToAdd.length === 0 && savePayload.rolesToRemove.length === 0) {
                 ctx.response.status = Status.UnprocessableEntity
                 return
-            }; 
+            }
 
             const roleAPI = `guilds/${GUILD_INFO.id}/members/${savePayload.userID}/roles/`; // /{role.id} 
 
@@ -328,7 +340,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.use(async (ctx) => {
-    // ctx.response.headers.set("Cache-Control", "max-age=604800")
+    ctx.response.headers.set("Cache-Control", "max-age=604800")
     await send(ctx, ctx.request.url.pathname, {
         root: DEBUG ? `${Deno.cwd()}/static` : "/home/scu-discord-bot/static",
         index: "index.html",

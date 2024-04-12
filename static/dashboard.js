@@ -167,7 +167,7 @@ async function submitRoleChanges(userID, roleIDsToAdd, roleIDsToRemove) {
     if (response.redirected) {
         redirectBrowser(response.url);
     } else if (response.status !== 200) {
-        alert("There was an issue saving your role changes. Please try again.\n\n" + response.status + ": " + response.statusText);
+        console.log("There was an issue saving your role changes. Please try again.\n\n" + response.status + ": " + response.statusText);
     } else {
         location.reload();   // refreshes the webpage
     };
