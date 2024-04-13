@@ -1,27 +1,34 @@
-import { Application, Router, Response, Cookies, send, config, Status } from "./deps.ts"  
-  
-const { BOT_ID, DISCORD_SECRET, BOT_SECRET, GUILD_ID, GUILD_ICON, OAUTH_RED, OAUTH_RED_URL } = config({ safe: true });
+import { Application, Router, Response, Cookies, send, Status } from "./deps.ts"  
+
+const jsonFile = await Deno.readFile("./config.json");
+const config = JSON.parse(new TextDecoder().decode(jsonFile));
+
+const { bot_id, token, discord_token, oauth_red, oauth_red_url, verification } = config;
+
+// Access nested properties separately
+const { guildID, guildIcon } = verification;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const app = new Application();
 const router = new Router();
 
-const DEBUG = true;  // set to true to enable debug mode
+const DEBUG = false;  // set to true to enable debug mode
 
 const DISCORD_API = "https://discord.com/api/";
-const DISCORD_CDN = "https://cdn.discordapp.com/"; 
+const DISCORD_CDN = "https://cdn.discordapp.com/";
 
-const OAUTH_REDIRECT_URL = DEBUG ? "http://localhost:8000/auth" : OAUTH_RED;
-const OAUTH_REDIRECT = DEBUG ? "http%3A%2F%2Flocalhost%3A8000%2Fauth" : OAUTH_RED_URL;
-const OAUTH_AUTH = `oauth2/authorize?client_id=${BOT_ID}&redirect_uri=${OAUTH_REDIRECT}&response_type=code&scope=identify%20guilds`; 
+const OAUTH_REDIRECT_URL = DEBUG ? "http://localhost:8000/auth" : `${oauth_red}`;
+const OAUTH_REDIRECT = DEBUG ? "http%3A%2F%2Flocalhost%3A8000%2Fauth" : `${oauth_red_url}`;
+const OAUTH_AUTH = `oauth2/authorize?client_id=${bot_id}&redirect_uri=${OAUTH_REDIRECT}&response_type=code&scope=identify%20guilds`
 const OAUTH_TOKEN = "oauth2/token";
 
 const GUILD_INFO = {
-    id: GUILD_ID ?? "",
-    icon: GUILD_ICON ?? ""
+    id: guildID,
+    icon: guildIcon
 };
 
+const digitRegex = /^\d+$/;
 const restrictedRegex = /(server|student|scu faculty\/staff|@everyone|\*|admin|moderator|bots|scu bot > &help|prospective student|----)/i;
 const identityRegex = /^(he\/him|she\/her|they\/them|any pronouns|ask for pronouns)/i;
 const memberRegex = /^(alumni|grad|freshman|sophomore|junior|senior)/i;
@@ -81,7 +88,7 @@ async function getRoles() {
     // requires Bot authorization
     const response = await fetch(DISCORD_API + "guilds/" + GUILD_INFO.id + "/roles", {
         headers: {
-            "Authorization": "Bot " + BOT_SECRET
+            "Authorization": "Bot " + `${token}`
         }
     });
 
@@ -107,28 +114,35 @@ async function getRoles() {
 async function getIdentity(cookies: Cookies, response: Response) {
     const accessToken = await cookies.get("discord-access-token") ?? "";
 
-    const identity = await fetch(DISCORD_API + "users/@me", {
+    const identityResponse = await fetch(DISCORD_API + "users/@me", {
         headers: {
             "Authorization": "Bearer " + accessToken
         }
     });
-    if (identity.status === 401) {
-        response.status = Status.Unauthorized;
-        response.redirect("/bad-auth.html");
+    if (!identityResponse.ok) {
+        if (identityResponse.status === 401) {
+            response.status = Status.Unauthorized;
+            response.redirect("/bad-auth.html?error=invalid_token");
+        } else {
+            response.status = Status.InternalServerError;
+            response.redirect("/bad-auth.html?error=server_error");
+        }
         return "";
     };
 
-    const guilds = await fetch(DISCORD_API + "users/@me/guilds", {
+    const guildsResponse  = await fetch(DISCORD_API + "users/@me/guilds", {
         headers: {
             "Authorization": "Bearer " + accessToken
         }
     });
-    if (guilds.status === 401) {
+    if ( !guildsResponse.ok && guildsResponse.status === 401) {
         response.status = Status.Unauthorized
+        response.redirect("/bad-auth.html?error=invalid_token");
+        return "";
     };
 
-    const userInfo = await identity.json();
-    const guildInfo: Guild[] = await guilds.json();
+    const userInfo = await identityResponse.json();
+    const guildInfo: Guild[] = await guildsResponse.json();
 
     const inCorrectGuild = (guildsArray: Guild[], guildID: string) => {
         return guildsArray.filter((guild) => guild["id"] === guildID).length > 0
@@ -141,7 +155,7 @@ async function getIdentity(cookies: Cookies, response: Response) {
         discriminator: userInfo.discriminator,
         inCorrectGuild: inCorrectGuild(guildInfo, GUILD_INFO.id)
     } ;
-
+ 
     return JSON.stringify(user);
 };
 
@@ -150,62 +164,66 @@ router
         ctx.response.redirect(DISCORD_API + OAUTH_AUTH)
     })
     .get("/auth", async (ctx) => {
-        // parse response from Discord API authorization (30 char alphanumerical)
-        const regex = /^[A-Za-z0-9]{30}$/
-        const code = ctx.request.url.searchParams.get("code") ?? ""
+    // parse response from Discord API authorization (30 char alphanumerical)
+    const regex = /^[A-Za-z0-9]{30}$/
+    const code = ctx.request.url.searchParams.get("code");
 
-        const check = regex.test(code) 
+    console.log("Received authorization code:", code);
 
-        // authorization code is bad
-        if (!check) {
+    const check = regex.test(code) 
+
+    // authorization code is bad
+    if (!check) {
+        console.log("Invalid authorization code. Redirecting to /bad-auth.html");
+        ctx.response.redirect("/bad-auth.html")
+        return
+    }
+
+    const data = new URLSearchParams({
+        client_id: `${bot_id}`,
+        client_secret: `${discord_token}`,
+        grant_type: "authorization_code",
+        code: code,
+        redirect_uri: OAUTH_REDIRECT_URL,
+        scope: "identify email guilds"
+    })
+
+    const headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    };
+
+    // exchange authorization grant for access token
+    try {
+        const result = await fetch(DISCORD_API + OAUTH_TOKEN, {
+            method: "POST",
+            body: data,
+            headers: headers
+        }); 
+
+        const accessToken: AccessToken = await result.json(); 
+
+        console.log("Access Token: " + accessToken.access_token + " " + accessToken.expires_in)
+
+        if (regex.test(accessToken.access_token)) {
+            await ctx.cookies.set("discord-access-token", accessToken.access_token);
+            await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
+            console.log("User authenticated successfully. Redirecting to dashboard.html...");
+            ctx.response.redirect("/dashboard.html");
+        } else {
+            console.log("Invalid access token received. Redirecting to /bad-auth.html");
+            ctx.response.status = Status.BadRequest
             ctx.response.redirect("/bad-auth.html")
             return
         }
+    } catch (error) {
+        console.error("Error fetching access token:", error);
+        console.log("Redirecting to /bad-auth.html due to an error.");
+        ctx.response.status = Status.InternalServerError;
+        ctx.response.redirect("/bad-auth.html");
+        return;
+    }
+})
 
-        const data = new URLSearchParams({
-            client_id: BOT_ID,
-            client_secret: DISCORD_SECRET,
-            grant_type: "authorization_code",
-            code: code,
-            redirect_uri: OAUTH_REDIRECT_URL,
-            scope: "identify email guilds"
-        })
-
-        const headers = {
-            "Content-Type": "application/x-www-form-urlencoded"
-        };
-
-        // exchange authorization grant for access token
-        try {
-            const result = await fetch(DISCORD_API + OAUTH_TOKEN, {
-                method: "POST",
-                body: data,
-                headers: headers
-            }); 
-
-            const accessToken: AccessToken = await result.json(); 
-
-            console.log("Access Token: " + accessToken.access_token + " " + accessToken.expires_in)
-
-            if (regex.test(accessToken.access_token)) {
-                await ctx.cookies.set("discord-access-token", accessToken.access_token);
-                await ctx.cookies.set("discord-token-expiration", Date.now().toString())  // todo cookie math
-                console.log("User authenticated successfully. Redirecting to dashboard.html...");
-                ctx.response.redirect("/dashboard.html");
-            } else {
-                console.log("Invalid access token received. Redirecting to /bad-auth.html");
-                ctx.response.status = Status.BadRequest
-                ctx.response.redirect("/bad-auth.html")
-                return
-            }
-        } catch (error) {
-            console.error("Error fetching access token:", error);
-            console.log("Redirecting to /bad-auth.html due to an error.");
-            ctx.response.status = Status.InternalServerError;
-            ctx.response.redirect("/bad-auth.html");
-            return;
-        }
-    })
     .post("/identity", async (ctx) => {
         ctx.response.body = await getIdentity(ctx.cookies, ctx.response)
     })
@@ -216,9 +234,17 @@ router
     })
     .get("/userroles/:userid", async (ctx) => {
         if (ctx.params && ctx.params.userid) { 
+            // verify that the userid is a number
+            if (!digitRegex.test(ctx.params.userid)) {
+                ctx.response.status = Status.BadRequest
+                return
+            }
+
+            console.log("Fetching user roles: " + ctx.params.userid)
+
             const response = await fetch(DISCORD_API + "guilds/" + GUILD_INFO.id + "/members/" + ctx.params.userid, {
                 headers: {
-                    "Authorization": "Bot " + BOT_SECRET
+                    "Authorization": "Bot " + `${token}`
                 }
             });
 
@@ -244,7 +270,7 @@ router
         if (payload.type === "json") {
             const savePayload: SavePayload = await payload.value;
 
-	        // verify identity (make sure user is properly authenticated)
+                // verify identity (make sure user is properly authenticated)
             const identityResponse = await getIdentity(ctx.cookies, ctx.response);
             if (identityResponse === "") {
                 ctx.response.status = Status.Unauthorized
@@ -261,17 +287,17 @@ router
 
             // sanitize roles (remove restricted roles)
             savePayload.rolesToAdd = savePayload.rolesToAdd.filter((roleID) => {
-                return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
+                return digitRegex.test(roleID) && !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
             });
 
             savePayload.rolesToRemove = savePayload.rolesToRemove.filter((roleID) => {
-                return !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
-            });
+                return digitRegex.test(roleID) && !roles.some((role: Role) => role.category === "restricted" && role.id === roleID)
+            }); 
 
             if (savePayload.rolesToAdd.length === 0 && savePayload.rolesToRemove.length === 0) {
                 ctx.response.status = Status.UnprocessableEntity
                 return
-            }
+            };
 
             const roleAPI = `guilds/${GUILD_INFO.id}/members/${savePayload.userID}/roles/`; // /{role.id} 
 
@@ -281,7 +307,7 @@ router
 
                 const options = {
                     headers: {
-                        "Authorization": "Bot " + BOT_SECRET,
+                        "Authorization": "Bot " + `${token}`,
                         "Content-Length": "0"
                     },
                     method: "PUT",
@@ -308,12 +334,12 @@ router
                 await wait(1000)
                 fetch(DISCORD_API + roleAPI + roleID, {
                     headers: {
-                        "Authorization": "Bot " + BOT_SECRET
+                        "Authorization": "Bot " + `${token}`
                     },
                     method: "DELETE"
                 }).then((res) => {
                     console.log(res.status)
-		            console.log(res.body)
+                            console.log(res.body)
                     if (res.status === 429) {
                         // rate limited
                     }
