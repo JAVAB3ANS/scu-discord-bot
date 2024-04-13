@@ -191,10 +191,10 @@ window.onload = async function() {
     if (userImageURL !== "null") {
         avatarIcon.setAttribute("src", userImageURL);
     } else {
-        avatarIcon.setAttribute("src", "./discord-logo.webp"); // Change this to the appropriate image URL
+        avatarIcon.setAttribute("src", "./discord-logo.png"); // Change this to the appropriate image URL
     }
     
-    document.getElementById("guild-icon").setAttribute("src", "./discord-small.webp");
+    document.getElementById("guild-icon").setAttribute("src", "./discord-small.png");
     
 
     // Render roles
