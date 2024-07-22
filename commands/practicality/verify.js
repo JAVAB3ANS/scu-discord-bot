@@ -25,7 +25,7 @@ module.exports = class verifyCommand extends Command {
                 type: "string",
                 oneOf: ["bbronco@scu.edu"],
                 validate: (emailAddress) => {
-                    if (/\w+@scu.edu$/.test(emailAddress)) { // Correct email
+                    if (/\w+@scu.edu$/.test(emailAddress) || /\w+@alumni.scu.edu/.test(emailAddress)) { // Correct email
                         return true;
                     } else {
                         return "Please enter a valid email address!";
@@ -57,7 +57,7 @@ module.exports = class verifyCommand extends Command {
         }
 
         const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+            host: this.client.config.email.domain,
             port: 465,
             secure: true, // use SSL
             auth: {
@@ -71,7 +71,7 @@ module.exports = class verifyCommand extends Command {
         const keycode = [0, 0, 0, 0].map(() => _.random(0, 9)).join("");
         const result = tempFn({
             keycode
-        });
+        }); 
 
         const mailOptions = {
             from: `${message.guild.name} <${this.client.config.email.username}>`,
