@@ -12,7 +12,7 @@
   "dependencies": {
     "aki-api": "^5.2.1",
     "ansi-regex": "^5.0.1",
-    "axios": "^1.6.0",
+    "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.6",
     "degenerator": "^3.0.1",
     "discord.js": "^12.5.3",
