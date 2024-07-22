@@ -27,7 +27,7 @@
     "minimist": "^1.2.6",
     "moment": "^2.29.1",
     "node-gyp": "^8.4.1",
-    "nodemailer": "^6.9.9",
+    "nodemailer": "^6.9.14",
     "npm": "^10.5.2",
     "nth-check": "^2.0.1",
     "nwsapi": "^2.2.0",
