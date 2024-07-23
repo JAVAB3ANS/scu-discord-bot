@@ -14,7 +14,7 @@
     "ansi-regex": "^5.0.1",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.6",
-    "degenerator": "^3.0.1",
+    "degenerator": "^3.0.4",
     "discord.js": "^12.5.3",
     "discord.js-commando": "^0.12.3",
     "discord.js-pagination": "^1.0.3",
