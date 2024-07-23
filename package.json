@@ -30,7 +30,7 @@
     "nodemailer": "^6.9.14",
     "npm": "^10.8.2",
     "nth-check": "^2.0.1",
-    "nwsapi": "^2.2.0",
+    "nwsapi": "^2.2.10",
     "pac-resolver": "^7.0.1",
     "pm2": "^5.1.2",
     "quick.db": "^7.1.3",
