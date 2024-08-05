@@ -10,7 +10,7 @@
     "restart": "pm2 restart index.js && pm2 restart main.ts --interpreter='deno' --interpreter-args='run -A --allow-net --allow-read' && pm2 log"
   },
   "dependencies": {
-    "aki-api": "^5.2.1",
+    "aki-api": "^7.0.1",
     "ansi-regex": "^5.0.1",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.6",
