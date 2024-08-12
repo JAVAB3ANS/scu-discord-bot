@@ -13,7 +13,7 @@
     "aki-api": "^7.0.1",
     "ansi-regex": "^5.0.1",
     "axios": "^1.7.3",
-    "cheerio": "^1.0.0-rc.6",
+    "cheerio": "^1.0.0",
     "degenerator": "^5.0.1",
     "discord.js": "^12.5.3",
     "discord.js-commando": "^0.12.3",
